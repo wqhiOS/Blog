@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
@@ -28,8 +28,8 @@
 </style>
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -39,7 +39,7 @@
 
 
 
-  <meta name="baidu-site-verification" content="yNO1FYVZIJ" />
+  <meta name="baidu-site-verification" content="yNO1FYVZIJ">
 
 
 
@@ -49,7 +49,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -83,23 +83,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="内存管理," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="吴启晗的技术博客" type="application/atom+xml" />
+  <meta name="keywords" content="内存管理,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+  <link rel="alternate" href="/atom.xml" title="吴启晗的技术博客" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
 
 
 
@@ -111,12 +111,13 @@
 <meta property="og:title" content="iOS内存管理详解">
 <meta property="og:url" content="http://www.wuqihan.cn/2016/08/20/iOS内存管理/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/wqhiOS/blogSources/master/arc/arc.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fnxex4oeslj308w05rgn5.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fnxiv07q3tj30hs081ae7.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1fq5cw1ev3tj30ye0frwux.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1fqjgq5m20tj30rs05iwg1.jpg">
-<meta property="og:updated_time" content="2018-08-18T02:55:09.786Z">
+<meta property="og:updated_time" content="2018-08-18T03:09:24.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS内存管理详解">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/wqhiOS/blogSources/master/arc/arc.jpg">
@@ -147,7 +148,7 @@
 
 
 
-  <link rel="canonical" href="http://www.wuqihan.cn/2016/08/20/iOS内存管理/"/>
+  <link rel="canonical" href="http://www.wuqihan.cn/2016/08/20/iOS内存管理/">
 
 
 
@@ -191,7 +192,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
     
-    <a href="https://github.com/wqhiOS" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <a href="https://github.com/wqhiOS" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
@@ -199,7 +200,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">吴启晗的技术博客</span>
         <span class="logo-line-after"><i></i></span>
@@ -229,7 +230,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -239,7 +240,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -249,7 +250,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -259,7 +260,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -269,7 +270,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -308,7 +309,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="吴启晗">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fqi3aph1t8j30dc0dcjsf.jpg">
     </span>
 
@@ -351,7 +352,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -404,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,162
+                  3,309
                 </span>
               
 
@@ -420,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  12
+                  13
                 </span>
               
             </div>
@@ -470,13 +471,13 @@
 <p>​    这些有关Objective-C内存管理的方法，实际上不包括在该语言中，而是包含在Cocoa框架中用于OS X、iOS应用开发。<strong>Cocoa框架中Foundation框架类库的NSObject类担负内存管理的职责</strong>。<img src="https://ws1.sinaimg.cn/large/006tKfTcly1fnxex4oeslj308w05rgn5.jpg" alt="IMG_3B1C737308BF-1"></p>
 <ul>
 <li><p>自己生成的对象，自己持有</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 自己生成并持有对象</span></div><div class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自己生成并持有对象</span></span><br><span class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
 <p>使用alloc/new/copy/mutableCopy的方法，取得的对象都是自己生成并持有的。</p>
 <p>用这些以外的方法取得的对象，因为非自己生成，所以自己不是对象的持有者。</p>
 <p>copy方法利用基于NSCopying方法约定，由各类实现的copyWithZone:方法生成并持有对象的副本，mutable与copy类似  。用copy/mutableCopy方法生成的对象，虽然是对象的副本，但同allco、new方法一样，在“自己生成并持有对象”这点上没有改变。</p>
 </li>
 <li><p>非自己生成的对象，自己也能持有</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">/*</span></div><div class="line">取得非自己生成对象，不持有</div><div class="line">*/</div><div class="line"><span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> array];</div><div class="line"><span class="comment">/*</span></div><div class="line">自己持有</div><div class="line">*/</div><div class="line">[obj reatin];</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment">取得非自己生成对象，不持有</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">自己持有</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">[obj reatin];</span><br></pre></td></tr></table></figure>
 <p>通过retain方法，非自己生成的像 可以被自己所持有。</p>
 </li>
 <li><p>不再需要自己持有的对象时释放</p>
@@ -491,16 +492,16 @@
 <p>如果一个对象使用了alloc，[mutable] copy，retain，那么你必须使用相应的[auto]release</p>
 </blockquote>
 <h3 id="苹果对于引用计数的实现"><a href="#苹果对于引用计数的实现" class="headerlink" title="苹果对于引用计数的实现"></a>苹果对于引用计数的实现</h3><p>在NSObject类的alloc类方法上设置断点，追踪程序的执行。以下列出了执行所调用的方法和函数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+alloc</div><div class="line">+allocWithZone:</div><div class="line">class_createInstance</div><div class="line"><span class="built_in">calloc</span></div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+alloc</span><br><span class="line">+allocWithZone:</span><br><span class="line">class_createInstance</span><br><span class="line"><span class="built_in">calloc</span></span><br></pre></td></tr></table></figure>
 <p>alloc类方法首先调用allocWithZone:类方法，然后调用class_createInstance函数，最后通过调用calloc来分配内存块。</p>
 <p>retainCount/retain/release实例方法又是怎么实现呢？同刚才的方法一样，下面列出各个方法分别调用的方法和函数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-retainCount</div><div class="line">__CFDoExternRefOperation</div><div class="line">CFBasicHashGetCountOfKey</div></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-retain</div><div class="line">__CFDoExternRefOperation</div><div class="line">CFBasicHashAddValue</div></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-release</div><div class="line">__<span class="function">CFDoExternRefOperation</span></div><div class="line"><span class="title">CFBasicHashRemoveValue</span></div><div class="line"><span class="params">(CFBasicHashRemoveValue返回<span class="number">0</span>时，-release调用dealloc)</span></div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-retainCount</span><br><span class="line">__CFDoExternRefOperation</span><br><span class="line">CFBasicHashGetCountOfKey</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-retain</span><br><span class="line">__CFDoExternRefOperation</span><br><span class="line">CFBasicHashAddValue</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-release</span><br><span class="line">__CFDoExternRefOperation</span><br><span class="line">CFBasicHashRemoveValue</span><br><span class="line">(CFBasicHashRemoveValue返回<span class="number">0</span>时，-release调用dealloc)</span><br></pre></td></tr></table></figure>
 <p>各个方法都通过同一个__CFDoExternRefOperation函数，调用了一系列名称相似的函数。如这些函数名的前缀”CF”所示，她们包含于CoreFoundation框架源代码中，即是CFRuntime.c的CFDoExternRefOperation函数。为了理解其实现，下面简化该函数的源代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> __CFDoExternRefOperation(<span class="keyword">uintptr_t</span> op, id obj) &#123;</div><div class="line"></div><div class="line">    CFBasicHashRef table = 取得对象的散列表(obj);</div><div class="line">    <span class="keyword">int</span> count;</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> (op) &#123;</div><div class="line">    <span class="keyword">case</span> OPERATION_retainCount:</div><div class="line">        count = CFBasicHashGetCountOfKey(table, obj);</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line"></div><div class="line">    <span class="keyword">case</span> OPERATION_retain:</div><div class="line">        count = CFBasicHashAddValue(table, obj);</div><div class="line">        <span class="keyword">return</span> obj;</div><div class="line"></div><div class="line">    <span class="keyword">case</span> OPERATION_release:</div><div class="line">        count = CFBasicHashRemoveValue(table, obj);</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span> == count;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __CFDoExternRefOperation(<span class="keyword">uintptr_t</span> op, id obj) &#123;</span><br><span class="line"></span><br><span class="line">    CFBasicHashRef table = 取得对象的散列表(obj);</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">    <span class="keyword">case</span> OPERATION_retainCount:</span><br><span class="line">        count = CFBasicHashGetCountOfKey(table, obj);</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> OPERATION_retain:</span><br><span class="line">        count = CFBasicHashAddValue(table, obj);</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> OPERATION_release:</span><br><span class="line">        count = CFBasicHashRemoveValue(table, obj);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span> == count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>__CFDoExternRefOperation通过switch语句 针对不同的操作来进行具体的方法调用，retainCount/retain/release实例方法也许如下面代码所示：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSUInteger</span>)retainCount</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="built_in">NSUInteger</span>)____CFDoExternRefOperation(OPERATION_retainCount,<span class="keyword">self</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)<span class="keyword">retain</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">id</span>)____CFDoExternRefOperation(OPERATION_retain,<span class="keyword">self</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)release</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> ____CFDoExternRefOperation(OPERATION_release,<span class="keyword">self</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSUInteger</span>)retainCount</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">NSUInteger</span>)____CFDoExternRefOperation(OPERATION_retainCount,<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)<span class="keyword">retain</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">id</span>)____CFDoExternRefOperation(OPERATION_retain,<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)release</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> ____CFDoExternRefOperation(OPERATION_release,<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过以上，可以看出苹果的大概实现就是将引用计数保存在引用计数表的记录中，而不是保存在对象占用内存块头部中。采用散列表(引用计数表)来管理引用计数。</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fnxiv07q3tj30hs081ae7.jpg" alt="IMG_75C55E500AB3-1"></p>
 <p>这样的好处是：</p>
@@ -518,27 +519,27 @@
 <p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fq5cw1ev3tj30ye0frwux.jpg" alt="image-20180408170302393"></p>
 <p>NSAutoreleasePool对象的生存周期相当于C语言变量的作用域。对于所有调用过autorelease实例方法的对象，在废弃NSAutoreleasePool对象时，都将调用release实例方法。</p>
 <p>用源代码表示如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NSAutoReleasePool *pool = [[NSAutoReleasePool alloc] init];</div><div class="line">id obj = [[NSObject alloc] init];</div><div class="line">[obj autorelease];</div><div class="line">[pool drain];</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSAutoReleasePool *pool = [[NSAutoReleasePool alloc] init];</span><br><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">[obj autorelease];</span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>NSAutoreleasePool对象的销毁是调用 drain() 方法</p>
 </blockquote>
 <p>ARC中使用NSAutoReleasePool：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool&#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"><span class="comment">//在&#123;&#125;中存放的对象会在&#125;后释放掉</span></div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@autoreleasepool&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在&#123;&#125;中存放的对象会在&#125;后释放掉</span></span><br></pre></td></tr></table></figure>
 <h3 id="使用NSAutoreleasePool减少内存峰值"><a href="#使用NSAutoreleasePool减少内存峰值" class="headerlink" title="使用NSAutoreleasePool减少内存峰值"></a>使用NSAutoreleasePool减少内存峰值</h3><p>在大量产生autorelease的对象时，只要不废弃NSAutoReleasePool对象，那么生成的对象就不能被释放，因此有时会产生内存不足的现象。典型的例子是读入大量图象的同时改变其尺寸。图象文件读入到NSData对象，并生成UIImage对象，改变该对象的尺寸后生成新的UIImage对象。这种情况下，就会大量生成autorelease对象。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, i &lt; 图像数, ++i) &#123;</div><div class="line">    <span class="comment">/*</span></div><div class="line">     *读入图像</div><div class="line">     *大量产生autorelease对象</div><div class="line">     *由于没有废弃NSAutoreleasePool对象</div><div class="line">     *最终导致内存不足</div><div class="line">     */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, i &lt; 图像数, ++i) &#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *读入图像</span></span><br><span class="line"><span class="comment">     *大量产生autorelease对象</span></span><br><span class="line"><span class="comment">     *由于没有废弃NSAutoreleasePool对象</span></span><br><span class="line"><span class="comment">     *最终导致内存不足</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在此情况下，有必要在适当地方生成、持有或废弃NSAutoreleasePool对象。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; 图像数; ++i) &#123;</div><div class="line">    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</div><div class="line">    <span class="comment">/*</span></div><div class="line">     *读入图像</div><div class="line">     */</div><div class="line">    [pool drain];</div><div class="line">    <span class="comment">/*</span></div><div class="line">    *通过[pool drain],</div><div class="line">    *autorelease的对象被一起废弃</div><div class="line">    */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; 图像数; ++i) &#123;</span><br><span class="line">    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *读入图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    [pool drain];</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    *通过[pool drain],</span></span><br><span class="line"><span class="comment">    *autorelease的对象被一起废弃</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="autorelease对象什么时候释放"><a href="#autorelease对象什么时候释放" class="headerlink" title="autorelease对象什么时候释放"></a>autorelease对象什么时候释放</h3><p>很多人的答案是“当前作用域大括号结束时释放”，显然没有正确理解autorelease的机制。在没有手动添加autoreleasepool的情况下，<strong>autorelease对象是在当前runloop迭代结束时释放的</strong>。而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop。</p>
 <p>看下面代码：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    __autoreleasing Person *p = [[Person alloc] init];</div><div class="line">    reference = p;</div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: &lt;Person: 0x60000000f170&gt;</span></div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: &lt;Person: 0x60000000f170&gt;</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    __autoreleasing Person *p = [[Person alloc] init];</span><br><span class="line">    reference = p;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: &lt;Person: 0x60000000f170&gt;</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: &lt;Person: 0x60000000f170&gt;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由于这个vc在loadView之后便add到了window层级上，所以<code>viewDidLoad</code>和<code>viewWillAppear</code>是在同一个runloop调用的，因此在<code>viewWillAppear</code>中，这个autorelease的变量依然有值。当然我们也可以手动干预autorelease对象的释放时机：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    <span class="keyword">@autoreleasepool</span> &#123;</div><div class="line">        __autoreleasing Person *p = [[Person alloc] init];</div><div class="line">        reference = p;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        __autoreleasing Person *p = [[Person alloc] init];</span><br><span class="line">        reference = p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="苹果对于autorelease的实现"><a href="#苹果对于autorelease的实现" class="headerlink" title="苹果对于autorelease的实现"></a>苹果对于autorelease的实现</h3><p>autorelease实例方法的本质就是调用NSAutoreleasePool对象的addObject方法。</p>
 <p>系统在每个runloop迭代中都加入了自动释放池的Push和Pop方法。具体为runloop开始的时候调用AutoreleasePoolPage的Push方法，结束的时候调用Pop方法。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> *<span class="title">objc_autoreleasePoolPush</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> AutoreleasePoolPage::push();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_autoreleasePoolPop</span><span class="params">(<span class="keyword">void</span> *ctxt)</span> </span>&#123;</div><div class="line">    AutoreleasePoolPage::pop(ctxt);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">objc_autoreleasePoolPush</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> AutoreleasePoolPage::push();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_autoreleasePoolPop</span><span class="params">(<span class="keyword">void</span> *ctxt)</span> </span>&#123;</span><br><span class="line">    AutoreleasePoolPage::pop(ctxt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那么AutoreleasePoolPage是什么东西呢？</p>
 <p>AutoReleasePoolPage是一个C++的类，在NSObject.mm中定义是：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoreleasePoolPage</span> &#123;</span></div><div class="line">    <span class="keyword">magic_t</span> <span class="keyword">const</span> magic;</div><div class="line">    id *next;</div><div class="line">    <span class="keyword">pthread_t</span> <span class="keyword">const</span> thread;</div><div class="line">    AutoreleasePoolPage * <span class="keyword">const</span> parent;</div><div class="line">    AutoreleasePoolPage *child;</div><div class="line">    <span class="keyword">uint32_t</span> <span class="keyword">const</span> depth;</div><div class="line">    <span class="keyword">uint32_t</span> hiwat;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoreleasePoolPage</span> &#123;</span></span><br><span class="line">    <span class="keyword">magic_t</span> <span class="keyword">const</span> magic;</span><br><span class="line">    id *next;</span><br><span class="line">    <span class="keyword">pthread_t</span> <span class="keyword">const</span> thread;</span><br><span class="line">    AutoreleasePoolPage * <span class="keyword">const</span> parent;</span><br><span class="line">    AutoreleasePoolPage *child;</span><br><span class="line">    <span class="keyword">uint32_t</span> <span class="keyword">const</span> depth;</span><br><span class="line">    <span class="keyword">uint32_t</span> hiwat;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>magic 用于对当前 AutoreleasePoolPage`<strong>完整性</strong>的校验</p>
 </li>
@@ -568,28 +569,28 @@
 <p>和__weak一样都是弱引用。但是当引用的对象被废弃后，指针不会置为nil，会造成野指针</p>
 </li>
 <li><p>__autoreleasing</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* ARC无效 */</span></div><div class="line"><span class="built_in">NSAutoreleasePool</span> *pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</div><div class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div><div class="line">[obj autorelease];</div><div class="line">[pool drain];</div><div class="line"></div><div class="line"><span class="comment">/* ARC有效 与上面代码等价 */</span></div><div class="line"><span class="keyword">@autoreleasepool</span> &#123;</div><div class="line">  <span class="keyword">id</span> __autoreleaseing obj = [[<span class="built_in">NSObject</span> alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ARC无效 */</span></span><br><span class="line"><span class="built_in">NSAutoreleasePool</span> *pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br><span class="line">[obj autorelease];</span><br><span class="line">[pool drain];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ARC有效 与上面代码等价 */</span></span><br><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">  <span class="keyword">id</span> __autoreleaseing obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ARC有效时，autorelease功能是起作用的。用@autorelasepool块替代NSAutoreleasePool类，用附有__autoreleasing修饰符的变量替代autorelease方法。</p>
 <p>对象赋值给附有__autorelease修饰符的变量等价于在ARC无效时调用对象的autorelease方法，即对象被注册到autoreleasepool。</p>
 <p>显示地附加_<em>autoreleaseing修饰符同显示地附加\</em>_strong修饰符一样罕见，所以在ARC中经常非显示地使用___autoreleasing修饰符。</p>
 <p>非显示地使用__autoreleaseing修饰符的列子：</p>
 <p>1)  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;	</div><div class="line">NSLog(@&quot;class=%@&quot;,[obj1 class]);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id __weak obj1 = obj0;	</span><br><span class="line">NSLog(@&quot;class=%@&quot;,[obj1 class]);</span><br></pre></td></tr></table></figure>
 <p>下面的代码与上面的相同：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;</div><div class="line">id __autoreleasing tmp = obj1;</div><div class="line">NSLog(@&quot;class=%@&quot;,[tmp class]);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id __weak obj1 = obj0;</span><br><span class="line">id __autoreleasing tmp = obj1;</span><br><span class="line">NSLog(@&quot;class=%@&quot;,[tmp class]);</span><br></pre></td></tr></table></figure>
 <p><strong>在访问到weak修饰符的变量时必须访问注册到autoreleasepool的对象</strong>。这是因为weak修饰符只持有对象的弱引用，而在访问引用对象的过程中，该对象有可能被废弃。如果把要访问的对象注册到autoreleasepool中，那么在@autoreleasepool块结束之前都能确保该对象存在。因此，使用富有weak修饰符的变量时就必定要使用注册到autoreleasepool中的对象。</p>
 <p>2）</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">id</span>)array &#123;</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSMutableArray</span> new];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)array &#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述源代码等同于：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">id</span>)array &#123;</div><div class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> new];</div><div class="line">    <span class="keyword">return</span> obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)array &#123;</span><br><span class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由于return使得对象变量超出其作用域，所以该强引用对应的自己持有的对象会被自动释放，但该对象作为返回值，编译器会自动将其注册到autoreleasePool。</p>
 <p>3)</p>
 <p>id的指针或对象的指针在没有显示指定时会被附加上__autoreleasing修饰符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSError *error = nil;</div><div class="line">Bool result = [obj performOperationWithError:&amp;error];</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">Bool result = [obj performOperationWithError:&amp;error];</span><br></pre></td></tr></table></figure>
 <p>该方法的声明为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL)performOperationWithError:(NSError **)error;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError **)error;</span><br></pre></td></tr></table></figure>
 <p>等同于一下源代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL)performOperationWithError:(NSError * __autoreleasing*)error;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError * __autoreleasing*)error;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><ul>
@@ -638,13 +639,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="吴启晗 WeChat Pay"/>
+          <img id="wechat_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="吴启晗 WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="吴启晗 Alipay"/>
+          <img id="alipay_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="吴启晗 Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -735,7 +736,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -779,7 +780,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -790,9 +791,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="https://ws3.sinaimg.cn/large/006tNc79gy1fqi3aph1t8j30dc0dcjsf.jpg"
-               alt="吴启晗" />
+          <img class="site-author-image" itemprop="image" src="https://ws3.sinaimg.cn/large/006tNc79gy1fqi3aph1t8j30dc0dcjsf.jpg" alt="吴启晗">
           <p class="site-author-name" itemprop="name">吴启晗</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -803,7 +802,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -814,7 +813,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -825,7 +824,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -925,10 +924,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-吴启晗"></i>
   </span>
@@ -954,7 +953,7 @@
 <div class="theme-info">
   <div class="powered-by">  
   </div>
-  <span class="post-count">博客全站共22.0k字</span>
+  <span class="post-count">博客全站共23.7k字</span>
   <!--以下3行为一条竖线和Coding Page-->
 </div>
         
