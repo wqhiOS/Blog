@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>iOS内存管理详解 - 吴启晗的技术博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="keywords" content="内存管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS内存管理详解">
+<meta property="og:url" content="http://www.wuqihan.cn/2016/08/20/iOS内存管理/index.html">
+<meta property="og:site_name" content="吴启晗的技术博客">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta property="og:updated_time" content="2018-08-18T03:09:24.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS内存管理详解">
+<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/avatar.jpg" alt="iOS内存管理详解" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/wqhiOS">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <time class="level-item has-text-grey" datetime="2016-08-20T08:16:43.000Z">2016-08-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    23 分钟 读完 (大约 3501 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                iOS内存管理详解
+            
+        </h1>
+        <div class="content">
+            <p><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/arc/arc.jpg" alt="arc"><br><a id="more"></a></p>
+<h2 id="内存管理-引用计数"><a href="#内存管理-引用计数" class="headerlink" title="内存管理/引用计数"></a>内存管理/引用计数</h2><p>Objective-C的内存管理方式：引用计数</p>
+<h3 id="内存管理的思考方式"><a href="#内存管理的思考方式" class="headerlink" title="内存管理的思考方式"></a>内存管理的思考方式</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">对象操作</th>
+<th>Objective-C方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">生成并持有对象</td>
+<td>alloc/new/copy/mutableCopy等方法</td>
+</tr>
+<tr>
+<td style="text-align:left">持有对象</td>
+<td>retain方法</td>
+</tr>
+<tr>
+<td style="text-align:left">释放对象</td>
+<td>release方法</td>
+</tr>
+<tr>
+<td style="text-align:left">废弃对象</td>
+<td>dealloc方法</td>
+</tr>
+</tbody>
+</table>
+<p>​    这些有关Objective-C内存管理的方法，实际上不包括在该语言中，而是包含在Cocoa框架中用于OS X、iOS应用开发。<strong>Cocoa框架中Foundation框架类库的NSObject类担负内存管理的职责</strong>。<img src="https://ws1.sinaimg.cn/large/006tKfTcly1fnxex4oeslj308w05rgn5.jpg" alt="IMG_3B1C737308BF-1"></p>
+<ul>
+<li><p>自己生成的对象，自己持有</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自己生成并持有对象</span></span><br><span class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
+<p>使用alloc/new/copy/mutableCopy的方法，取得的对象都是自己生成并持有的。</p>
+<p>用这些以外的方法取得的对象，因为非自己生成，所以自己不是对象的持有者。</p>
+<p>copy方法利用基于NSCopying方法约定，由各类实现的copyWithZone:方法生成并持有对象的副本，mutable与copy类似  。用copy/mutableCopy方法生成的对象，虽然是对象的副本，但同allco、new方法一样，在“自己生成并持有对象”这点上没有改变。</p>
+</li>
+<li><p>非自己生成的对象，自己也能持有</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment">取得非自己生成对象，不持有</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">自己持有</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">[obj reatin];</span><br></pre></td></tr></table></figure>
+<p>通过retain方法，非自己生成的像 可以被自己所持有。</p>
+</li>
+<li><p>不再需要自己持有的对象时释放</p>
+<p>用alloc/new/copy/mutableCopy方法生成并持有的对象，或者用retain方法持有的对象，一旦不再需要，务必要用release方法进行释放。</p>
+</li>
+<li><p>无法释放非自己持有的对象</p>
+</li>
+</ul>
+<blockquote>
+<p>内存管理黄金法则：</p>
+<p>The basic rule to apple is everything thatincreases the reference counter with alloc,[mutable]copy[WithZone:] or retainis in charge of the corresponding [auto]release.</p>
+<p>如果一个对象使用了alloc，[mutable] copy，retain，那么你必须使用相应的[auto]release</p>
+</blockquote>
+<h3 id="苹果对于引用计数的实现"><a href="#苹果对于引用计数的实现" class="headerlink" title="苹果对于引用计数的实现"></a>苹果对于引用计数的实现</h3><p>在NSObject类的alloc类方法上设置断点，追踪程序的执行。以下列出了执行所调用的方法和函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+alloc</span><br><span class="line">+allocWithZone:</span><br><span class="line">class_createInstance</span><br><span class="line"><span class="built_in">calloc</span></span><br></pre></td></tr></table></figure>
+<p>alloc类方法首先调用allocWithZone:类方法，然后调用class_createInstance函数，最后通过调用calloc来分配内存块。</p>
+<p>retainCount/retain/release实例方法又是怎么实现呢？同刚才的方法一样，下面列出各个方法分别调用的方法和函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-retainCount</span><br><span class="line">__CFDoExternRefOperation</span><br><span class="line">CFBasicHashGetCountOfKey</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-retain</span><br><span class="line">__CFDoExternRefOperation</span><br><span class="line">CFBasicHashAddValue</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-release</span><br><span class="line">__CFDoExternRefOperation</span><br><span class="line">CFBasicHashRemoveValue</span><br><span class="line">(CFBasicHashRemoveValue返回<span class="number">0</span>时，-release调用dealloc)</span><br></pre></td></tr></table></figure>
+<p>各个方法都通过同一个__CFDoExternRefOperation函数，调用了一系列名称相似的函数。如这些函数名的前缀”CF”所示，她们包含于CoreFoundation框架源代码中，即是CFRuntime.c的CFDoExternRefOperation函数。为了理解其实现，下面简化该函数的源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __CFDoExternRefOperation(<span class="keyword">uintptr_t</span> op, id obj) &#123;</span><br><span class="line"></span><br><span class="line">    CFBasicHashRef table = 取得对象的散列表(obj);</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">    <span class="keyword">case</span> OPERATION_retainCount:</span><br><span class="line">        count = CFBasicHashGetCountOfKey(table, obj);</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> OPERATION_retain:</span><br><span class="line">        count = CFBasicHashAddValue(table, obj);</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> OPERATION_release:</span><br><span class="line">        count = CFBasicHashRemoveValue(table, obj);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span> == count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>__CFDoExternRefOperation通过switch语句 针对不同的操作来进行具体的方法调用，retainCount/retain/release实例方法也许如下面代码所示：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSUInteger</span>)retainCount</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">NSUInteger</span>)____CFDoExternRefOperation(OPERATION_retainCount,<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)<span class="keyword">retain</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">id</span>)____CFDoExternRefOperation(OPERATION_retain,<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)release</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> ____CFDoExternRefOperation(OPERATION_release,<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过以上，可以看出苹果的大概实现就是将引用计数保存在引用计数表的记录中，而不是保存在对象占用内存块头部中。采用散列表(引用计数表)来管理引用计数。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fnxiv07q3tj30hs081ae7.jpg" alt="IMG_75C55E500AB3-1"></p>
+<p>这样的好处是：</p>
+<ul>
+<li>不用在每个对象内存块中考虑引用计数所占的内存</li>
+<li>引用技术表各记录中存有内存地址，可从各个记录追溯到各对象的内存块（即使出现故障导致对象占用的内存块损坏，但只要引用计数表没有被破坏，就能够确认各个内存块的位置）</li>
+</ul>
+<p>另外，在利用工具检测内存泄漏时，引用计数表的各记录也有助于检测各对象的持有者是否存在。</p>
+<h2 id="Autorelease"><a href="#Autorelease" class="headerlink" title="Autorelease"></a>Autorelease</h2><p>使用autorelease，可使取得的对象存在但自己不持有对象。autorelease提供 这样的功能，使对象在超出指定的生存范围时能够自动并正确地释放(自动调用release方法)。</p>
+<h3 id="autorelease的具体使用方法如下"><a href="#autorelease的具体使用方法如下" class="headerlink" title="autorelease的具体使用方法如下"></a>autorelease的具体使用方法如下</h3><ol>
+<li>生成并持有NSAutoreleasePool对象</li>
+<li>调用已分配对象的autorelease实例方法</li>
+<li>废弃NSAutoreleasePool对象</li>
+</ol>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fq5cw1ev3tj30ye0frwux.jpg" alt="image-20180408170302393"></p>
+<p>NSAutoreleasePool对象的生存周期相当于C语言变量的作用域。对于所有调用过autorelease实例方法的对象，在废弃NSAutoreleasePool对象时，都将调用release实例方法。</p>
+<p>用源代码表示如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSAutoReleasePool *pool = [[NSAutoReleasePool alloc] init];</span><br><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">[obj autorelease];</span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>NSAutoreleasePool对象的销毁是调用 drain() 方法</p>
+</blockquote>
+<p>ARC中使用NSAutoReleasePool：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@autoreleasepool&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在&#123;&#125;中存放的对象会在&#125;后释放掉</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用NSAutoreleasePool减少内存峰值"><a href="#使用NSAutoreleasePool减少内存峰值" class="headerlink" title="使用NSAutoreleasePool减少内存峰值"></a>使用NSAutoreleasePool减少内存峰值</h3><p>在大量产生autorelease的对象时，只要不废弃NSAutoReleasePool对象，那么生成的对象就不能被释放，因此有时会产生内存不足的现象。典型的例子是读入大量图象的同时改变其尺寸。图象文件读入到NSData对象，并生成UIImage对象，改变该对象的尺寸后生成新的UIImage对象。这种情况下，就会大量生成autorelease对象。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, i &lt; 图像数, ++i) &#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *读入图像</span></span><br><span class="line"><span class="comment">     *大量产生autorelease对象</span></span><br><span class="line"><span class="comment">     *由于没有废弃NSAutoreleasePool对象</span></span><br><span class="line"><span class="comment">     *最终导致内存不足</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在此情况下，有必要在适当地方生成、持有或废弃NSAutoreleasePool对象。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; 图像数; ++i) &#123;</span><br><span class="line">    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *读入图像</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    [pool drain];</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    *通过[pool drain],</span></span><br><span class="line"><span class="comment">    *autorelease的对象被一起废弃</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="autorelease对象什么时候释放"><a href="#autorelease对象什么时候释放" class="headerlink" title="autorelease对象什么时候释放"></a>autorelease对象什么时候释放</h3><p>很多人的答案是“当前作用域大括号结束时释放”，显然没有正确理解autorelease的机制。在没有手动添加autoreleasepool的情况下，<strong>autorelease对象是在当前runloop迭代结束时释放的</strong>。而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop。</p>
+<p>看下面代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    __autoreleasing Person *p = [[Person alloc] init];</span><br><span class="line">    reference = p;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: &lt;Person: 0x60000000f170&gt;</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: &lt;Person: 0x60000000f170&gt;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于这个vc在loadView之后便add到了window层级上，所以<code>viewDidLoad</code>和<code>viewWillAppear</code>是在同一个runloop调用的，因此在<code>viewWillAppear</code>中，这个autorelease的变量依然有值。当然我们也可以手动干预autorelease对象的释放时机：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> <span class="keyword">id</span> reference = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        __autoreleasing Person *p = [[Person alloc] init];</span><br><span class="line">        reference = p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,reference);<span class="comment">//Console: (null)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="苹果对于autorelease的实现"><a href="#苹果对于autorelease的实现" class="headerlink" title="苹果对于autorelease的实现"></a>苹果对于autorelease的实现</h3><p>autorelease实例方法的本质就是调用NSAutoreleasePool对象的addObject方法。</p>
+<p>系统在每个runloop迭代中都加入了自动释放池的Push和Pop方法。具体为runloop开始的时候调用AutoreleasePoolPage的Push方法，结束的时候调用Pop方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">objc_autoreleasePoolPush</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> AutoreleasePoolPage::push();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_autoreleasePoolPop</span><span class="params">(<span class="keyword">void</span> *ctxt)</span> </span>&#123;</span><br><span class="line">    AutoreleasePoolPage::pop(ctxt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么AutoreleasePoolPage是什么东西呢？</p>
+<p>AutoReleasePoolPage是一个C++的类，在NSObject.mm中定义是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoreleasePoolPage</span> &#123;</span></span><br><span class="line">    <span class="keyword">magic_t</span> <span class="keyword">const</span> magic;</span><br><span class="line">    id *next;</span><br><span class="line">    <span class="keyword">pthread_t</span> <span class="keyword">const</span> thread;</span><br><span class="line">    AutoreleasePoolPage * <span class="keyword">const</span> parent;</span><br><span class="line">    AutoreleasePoolPage *child;</span><br><span class="line">    <span class="keyword">uint32_t</span> <span class="keyword">const</span> depth;</span><br><span class="line">    <span class="keyword">uint32_t</span> hiwat;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>magic 用于对当前 AutoreleasePoolPage`<strong>完整性</strong>的校验</p>
+</li>
+<li><p>thread 保存了当前所在的线程</p>
+<p>​</p>
+</li>
+</ul>
+<p>每一个自动释放池都是由一系列的AutoreleasePoolPage组成的，并且每一个AutoreleasePoolPage的大小都是4096字节(0x1000)</p>
+<p>自动释放池中的AutoreleasePoolPage是以<strong>双向链表</strong>的形式链接起来的：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqjgq5m20tj30rs05iwg1.jpg" alt="image-20180420215336249"></p>
+<p>parent 和 child 就是用来构造双向链表的指针。</p>
+<h3 id="autorelease和runloop的关系"><a href="#autorelease和runloop的关系" class="headerlink" title="autorelease和runloop的关系"></a>autorelease和runloop的关系</h3><p>runloop开始启动的时候会创建autoreleasePool，结束的时候会销毁autoreleasePool</p>
+<h2 id="ARC"><a href="#ARC" class="headerlink" title="ARC"></a>ARC</h2><p>引用计数内存管理的本质部分在ARC中并没有改变。ARC只是自动帮我们处理“引用计数”的相关部分。</p>
+<h3 id="所有权修饰符"><a href="#所有权修饰符" class="headerlink" title="所有权修饰符"></a>所有权修饰符</h3><p>ARC有效时，id类型和对象类型同C语言其他类型不同，其类型上必须附加所有权修饰符。所有权修饰符一共有4中。</p>
+<ul>
+<li><p>__strong</p>
+<p>__strong修饰符是id类型和对象类型默认的所有权修饰符。__strong修饰符表示对对象的“强引用”，持有强引用的变量在超出其作用域时被废弃，随着强引用的失效，引用的对象会随之释放。</p>
+<p>__strong修饰符修饰的变量，不仅仅只在变量作用域中，在赋值上也能够正确地管理其对象的所有者。</p>
+<p>通过__strong修饰符，不必再键入retain或者release，完美地满足了“引用技术内存管理的思考方式”</p>
+</li>
+<li><p>__weak</p>
+<p>多用来解决“循环引用”的问题。</p>
+<p>__weak修饰符还有另外一个优点，在持有某对象的弱引用时，若该对象被废弃，则此弱引用将自动失效且处于nil被赋值的状态（空弱引用）。</p>
+</li>
+<li><p>__unsafe_unretained</p>
+<p>__unsafe_unretained修饰符正如其名unsafe所示，是不安全的所有权修饰符。尽管ARC式的内存管理是编译器的工作，但附有 __unsafe_unretained修饰符的变量不属于编译器的内存管理对象。</p>
+<p>和__weak一样都是弱引用。但是当引用的对象被废弃后，指针不会置为nil，会造成野指针</p>
+</li>
+<li><p>__autoreleasing</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ARC无效 */</span></span><br><span class="line"><span class="built_in">NSAutoreleasePool</span> *pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br><span class="line">[obj autorelease];</span><br><span class="line">[pool drain];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ARC有效 与上面代码等价 */</span></span><br><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">  <span class="keyword">id</span> __autoreleaseing obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ARC有效时，autorelease功能是起作用的。用@autorelasepool块替代NSAutoreleasePool类，用附有__autoreleasing修饰符的变量替代autorelease方法。</p>
+<p>对象赋值给附有__autorelease修饰符的变量等价于在ARC无效时调用对象的autorelease方法，即对象被注册到autoreleasepool。</p>
+<p>显示地附加_<em>autoreleaseing修饰符同显示地附加\</em>_strong修饰符一样罕见，所以在ARC中经常非显示地使用___autoreleasing修饰符。</p>
+<p>非显示地使用__autoreleaseing修饰符的列子：</p>
+<p>1)  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id __weak obj1 = obj0;	</span><br><span class="line">NSLog(@&quot;class=%@&quot;,[obj1 class]);</span><br></pre></td></tr></table></figure>
+<p>下面的代码与上面的相同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id __weak obj1 = obj0;</span><br><span class="line">id __autoreleasing tmp = obj1;</span><br><span class="line">NSLog(@&quot;class=%@&quot;,[tmp class]);</span><br></pre></td></tr></table></figure>
+<p><strong>在访问到weak修饰符的变量时必须访问注册到autoreleasepool的对象</strong>。这是因为weak修饰符只持有对象的弱引用，而在访问引用对象的过程中，该对象有可能被废弃。如果把要访问的对象注册到autoreleasepool中，那么在@autoreleasepool块结束之前都能确保该对象存在。因此，使用富有weak修饰符的变量时就必定要使用注册到autoreleasepool中的对象。</p>
+<p>2）</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)array &#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述源代码等同于：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)array &#123;</span><br><span class="line">    <span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于return使得对象变量超出其作用域，所以该强引用对应的自己持有的对象会被自动释放，但该对象作为返回值，编译器会自动将其注册到autoreleasePool。</p>
+<p>3)</p>
+<p>id的指针或对象的指针在没有显示指定时会被附加上__autoreleasing修饰符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">Bool result = [obj performOperationWithError:&amp;error];</span><br></pre></td></tr></table></figure>
+<p>该方法的声明为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError **)error;</span><br></pre></td></tr></table></figure>
+<p>等同于一下源代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError * __autoreleasing*)error;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><ul>
+<li><p>不能使用retain/release/retainCount/autorelease</p>
+</li>
+<li><p>不能使用NSAllocateObject/NSDeallocateObject</p>
+</li>
+<li><p>须遵守内存管理的方法命名规则</p>
+</li>
+<li><p>不要显示调用dealloc</p>
+</li>
+<li><p>使用@autoreleasepool块代替NSAutoreleasePool</p>
+</li>
+<li><p>不能使用区域(NSZone)</p>
+<p>不管ARC是否有效，区域在现在的运行时系统中已单纯地被忽略</p>
+</li>
+<li><p>对象型变量不能作为C语言结构体的成员</p>
+<p>C语言的规约上没有方法来管理结构体成员的生命周期。因为ARC把内存管理的工作分配给编译器，所以编译器必须能够知道并管理对象的生命周期。例如C语言的自动变量(局部变量)可使用该变量的作用于来管理对象。但是对于C语言的结构体成员来说，这在标准上就是不可实现的。</p>
+<p>如果非要把对象型变量加入到结构体重时，可强制转换为void *或是附加见面所述的__unsafe_unretained修饰符（附有___unsafe_unretained修饰符的变量不属于编译器的内存管理对象。如果管理时不注意赋值对象的所有者，便有可能遭遇内存泄漏或程序崩溃）</p>
+</li>
+<li><p>显示转换id和void *</p>
+<p>通过_<em>bridge，id和void能够相互转换。但是\</em>_bridge转换，其安全性与赋值给__unsafe_unretained修饰符相近，甚至会更低。如果管理时不注意赋值对象的所有者，就会因悬垂指针而导致程序崩溃。</p>
+<p>__bridge转换中还有另外两种转换，分别是__bridge_retained转换和__bridge_transfer转换</p>
+</li>
+</ul>
+<p>## </p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/内存管理/">内存管理</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2016/12/14/RAC-一-函数式编程概述/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">RAC(一)函数响应式编程概述</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2016/07/18/Grand-Central-Dispatch/">
+                <span class="level-item">Grand Central Dispatch</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript> Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <figure class="image is-128x128 has-mb-6">
+                            <img class="is-rounded" src="/images/avatar.jpg" alt="吴启晗">
+                        </figure>
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>上海</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        13
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        2
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        5
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/wqhiOS" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Email" href="mailto:wuqh_ios@icloud.com">
+                
+                <i class="fab fa-envelope"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 15px;">多线程</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+        
+            
+
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/05/18/优雅的使用NSNotification-name/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="优雅的使用NSNotification.Name">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-18T04:34:36.000Z">2018-05-18</time></div>
+                    <a href="/2018/05/18/优雅的使用NSNotification-name/" class="has-link-black-ter is-size-6">优雅的使用NSNotification.Name</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/01/11/深入理解Block/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入理解Block">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-01-11T08:52:33.000Z">2018-01-11</time></div>
+                    <a href="/2018/01/11/深入理解Block/" class="has-link-black-ter is-size-6">深入理解Block</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/05/15/如何继承类簇/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="如何继承类簇（例如NSString）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-05-15T08:51:53.000Z">2017-05-15</time></div>
+                    <a href="/2017/05/15/如何继承类簇/" class="has-link-black-ter is-size-6">如何继承类簇（例如NSString）</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-03-10T06:42:50.000Z">2017-03-10</time></div>
+                    <a href="/2017/03/10/RAC-四-信号高阶操作/" class="has-link-black-ter is-size-6">RAC(四)信号高阶操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-01-08T05:20:24.000Z">2017-01-08</time></div>
+                    <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="has-link-black-ter is-size-6">RAC(三)RACSignal各类操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+    
+        
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/05/18/优雅的使用NSNotification-name/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="优雅的使用NSNotification.Name">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-18T04:34:36.000Z">2018-05-18</time></div>
+                    <a href="/2018/05/18/优雅的使用NSNotification-name/" class="has-link-black-ter is-size-6">优雅的使用NSNotification.Name</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/01/11/深入理解Block/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入理解Block">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-01-11T08:52:33.000Z">2018-01-11</time></div>
+                    <a href="/2018/01/11/深入理解Block/" class="has-link-black-ter is-size-6">深入理解Block</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/05/15/如何继承类簇/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="如何继承类簇（例如NSString）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-05-15T08:51:53.000Z">2017-05-15</time></div>
+                    <a href="/2017/05/15/如何继承类簇/" class="has-link-black-ter is-size-6">如何继承类簇（例如NSString）</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-03-10T06:42:50.000Z">2017-03-10</time></div>
+                    <a href="/2017/03/10/RAC-四-信号高阶操作/" class="has-link-black-ter is-size-6">RAC(四)信号高阶操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-01-08T05:20:24.000Z">2017-01-08</time></div>
+                    <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="has-link-black-ter is-size-6">RAC(三)RACSignal各类操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/avatar.jpg" alt="iOS内存管理详解" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 吴启晗&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
