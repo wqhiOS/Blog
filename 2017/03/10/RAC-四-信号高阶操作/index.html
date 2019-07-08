@@ -1,112 +1,13 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+<title>RAC(四)信号高阶操作 - 吴启晗的技术博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
-<style>
-    .pace .pace-progress {
-        background: #ffffff; /*进度条颜色1E92FB*/
-        height: 3px;
-    }
-    .pace .pace-progress-inner {
-         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
-    }
-    .pace .pace-activity {
-        border-top-color: #1E92FB;    /*上边框颜色*/
-        border-left-color: #1E92FB;    /*左边框颜色*/
-    }
-</style>
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-  <meta name="baidu-site-verification" content="yNO1FYVZIJ">
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="ReactiveCocoa,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="吴启晗的技术博客" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
-
-
-
-
-
-
-<meta name="description" content="高阶信号对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。">
+    <meta name="description" content="高阶信号对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。">
 <meta name="keywords" content="ReactiveCocoa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RAC(四)信号高阶操作">
@@ -114,355 +15,185 @@
 <meta property="og:site_name" content="吴启晗的技术博客">
 <meta property="og:description" content="高阶信号对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fqc24yeimhj31d404k75z.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsukkquuj30kz06lmxt.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgt45kmhqj30k009dmyo.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgt3zw110j30jh090gmt.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgt4a6g9cj30ji08zt9q.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt60x0arj30mh0a5q4t.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgt6aqxf6j30jr08ygmo.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt6jnkalj30jd08vq3y.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt6mylwlj30is08zt9k.jpg">
+<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
 <meta property="og:updated_time" content="2018-08-18T03:09:24.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RAC(四)信号高阶操作">
 <meta name="twitter:description" content="高阶信号对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。">
-<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fqc24yeimhj31d404k75z.jpg">
+<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
 </script>
 
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
 
 
-  <link rel="canonical" href="http://www.wuqihan.cn/2017/03/10/RAC-四-信号高阶操作/">
-
-
-
-
-
-  <title> RAC(四)信号高阶操作 | 吴启晗的技术博客 </title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-    
-    <a href="https://github.com/wqhiOS" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">吴启晗的技术博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <h1 class="site-subtitle" itemprop="description">hard work pays off</h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+                <img src="/images/avatar.jpg" alt="RAC(四)信号高阶操作" height="28">
             
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.wuqihan.cn/2017/03/10/RAC-四-信号高阶操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴启晗">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fqi3aph1t8j30dc0dcjsf.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="吴启晗的技术博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                RAC(四)信号高阶操作
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T14:42:50+08:00">
-                2017-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Objective-C/" itemprop="url" rel="index">
-                    <span itemprop="name">Objective-C</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/03/10/RAC-四-信号高阶操作/" class="leancloud_visitors" data-flag-title="RAC(四)信号高阶操作">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  915
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
+            </a>
         </div>
-      </header>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/wqhiOS">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
     
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fqc24yeimhj31d404k75z.jpg" alt="image-20180414120959021"></p>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-03-10T06:42:50.000Z">2017-03-10</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes read (About 995 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                RAC(四)信号高阶操作
+            
+        </h1>
+        <div class="content">
+            <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fqc24yeimhj31d404k75z.jpg" alt="image-20180414120959021"></p>
 <h3 id="高阶信号"><a href="#高阶信号" class="headerlink" title="高阶信号"></a>高阶信号</h3><p>对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。</p>
 <a id="more"></a>
 <h4 id="升阶和降阶"><a href="#升阶和降阶" class="headerlink" title="升阶和降阶"></a>升阶和降阶</h4><p><strong>(下图菱形图例代表信号，圆圈代表值)</strong></p>
 <p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsukkquuj30kz06lmxt.jpg" alt="image-20180418143626144"></p>
-<h4 id="创建高阶信号"><a href="#创建高阶信号" class="headerlink" title="创建高阶信号"></a>创建高阶信号</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RACSiganl *siganl = [RACSignal <span class="keyword">return</span>:@<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">RACSiganl *signalHighOrder = [RACSiganl <span class="keyword">return</span>:signal];</span><br><span class="line">RACSiganl *anotherSignal = [signal map:^<span class="keyword">id</span>(<span class="keyword">id</span> value) &#123;</span><br><span class="line">	<span class="keyword">return</span> [RACSignal <span class="keyword">return</span>:value];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<h4 id="订阅高级信号"><a href="#订阅高级信号" class="headerlink" title="订阅高级信号"></a>订阅高级信号</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RACSiganl *siganl = @[@<span class="number">1</span>,@<span class="number">2</span>,@<span class="number">3</span>].rac_sequence.signal;</span><br><span class="line">RACSignal *highOrderSignal = [signal map:^<span class="keyword">id</span>(RACSiganl *aSiganl) &#123;</span><br><span class="line">    [aSignal subscribeNext:^(<span class="keyword">id</span> x) &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h4 id="创建高阶信号"><a href="#创建高阶信号" class="headerlink" title="创建高阶信号"></a>创建高阶信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RACSiganl *siganl = [RACSignal <span class="hljs-keyword">return</span>:@<span class="hljs-number">1</span>];</span><br><span class="line"></span><br><span class="line">RACSiganl *signalHighOrder = [RACSiganl <span class="hljs-keyword">return</span>:signal];</span><br><span class="line">RACSiganl *anotherSignal = [signal map:^<span class="hljs-keyword">id</span>(<span class="hljs-keyword">id</span> value) &#123;</span><br><span class="line">	<span class="hljs-keyword">return</span> [RACSignal <span class="hljs-keyword">return</span>:value];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h4 id="订阅高级信号"><a href="#订阅高级信号" class="headerlink" title="订阅高级信号"></a>订阅高级信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RACSiganl *siganl = @[@<span class="hljs-number">1</span>,@<span class="hljs-number">2</span>,@<span class="hljs-number">3</span>].rac_sequence.signal;</span><br><span class="line">RACSignal *highOrderSignal = [signal map:^<span class="hljs-keyword">id</span>(RACSiganl *aSiganl) &#123;</span><br><span class="line">    [aSignal subscribeNext:^(<span class="hljs-keyword">id</span> x) &#123;</span><br><span class="line">        <span class="hljs-comment">//...</span></span><br><span class="line">    &#125;];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <h3 id="降阶操作"><a href="#降阶操作" class="headerlink" title="降阶操作"></a>降阶操作</h3><h4 id="SwitchToLatests"><a href="#SwitchToLatests" class="headerlink" title="SwitchToLatests"></a>SwitchToLatests</h4><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgt45kmhqj30k009dmyo.jpg" alt="image-20180418144538812"></p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgt3zw110j30jh090gmt.jpg" alt="image-20180418144441907"></p>
 <p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgt4a6g9cj30ji08zt9q.jpg" alt="image-20180418144546449"></p>
 <p>使用switchToLatests方法降阶时，需要注意的是<strong>新的信号会把旧的信号截断</strong></p>
 <h4 id="if-then-else"><a href="#if-then-else" class="headerlink" title="if/then/else"></a>if/then/else</h4><p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt60x0arj30mh0a5q4t.jpg" alt="image-20180418144726566"></p>
 <p>看一下ifThenElse方法的实现代码，可以很容易理解。它的本质还是使用了SwitchToLatests。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)if:(RACSignal *)boolSignal then:(RACSignal *)trueSignal else:(RACSignal *)falseSignal &#123;</span><br><span class="line">	NSCParameterAssert(boolSignal != nil);</span><br><span class="line">	NSCParameterAssert(trueSignal != nil);</span><br><span class="line">	NSCParameterAssert(falseSignal != nil);</span><br><span class="line"></span><br><span class="line">	return [[[boolSignal</span><br><span class="line">		map:^(NSNumber *value) &#123;</span><br><span class="line">			NSCAssert([value isKindOfClass:NSNumber.class], @&quot;Expected %@ to send BOOLs, not %@&quot;, boolSignal, value);</span><br><span class="line"></span><br><span class="line">			return (value.boolValue ? trueSignal : falseSignal);</span><br><span class="line">		&#125;]</span><br><span class="line">		switchToLatest]</span><br><span class="line">		setNameWithFormat:@&quot;+if: %@ then: %@ else: %@&quot;, boolSignal, trueSignal, falseSignal];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)if:(RACSignal *)boolSignal then:(RACSignal *)trueSignal else:(RACSignal *)falseSignal &#123;</span><br><span class="line">	NSCParameterAssert(boolSignal != nil);</span><br><span class="line">	NSCParameterAssert(trueSignal != nil);</span><br><span class="line">	NSCParameterAssert(falseSignal != nil);</span><br><span class="line"></span><br><span class="line">	return [[[boolSignal</span><br><span class="line">		map:^(NSNumber *value) &#123;</span><br><span class="line">			NSCAssert([value isKindOfClass:NSNumber.class], @&quot;Expected %@ to send BOOLs, not %@&quot;, boolSignal, value);</span><br><span class="line"></span><br><span class="line">			return (value.boolValue ? trueSignal : falseSignal);</span><br><span class="line">		&#125;]</span><br><span class="line">		switchToLatest]</span><br><span class="line">		setNameWithFormat:@&quot;+if: %@ then: %@ else: %@&quot;, boolSignal, trueSignal, falseSignal];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>类似的方法还有SwitchCasesDefaultSignal:</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)<span class="keyword">switch</span>:(RACSignal *)signal cases:(<span class="built_in">NSDictionary</span> *)cases <span class="keyword">default</span>:(RACSignal *)defaultSignal &#123;</span><br><span class="line">	<span class="built_in">NSCParameterAssert</span>(signal != <span class="literal">nil</span>);</span><br><span class="line">	<span class="built_in">NSCParameterAssert</span>(cases != <span class="literal">nil</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">id</span> key <span class="keyword">in</span> cases) &#123;</span><br><span class="line">		<span class="keyword">id</span> value __attribute__((unused)) = cases[key];</span><br><span class="line">		<span class="built_in">NSCAssert</span>([value isKindOfClass:RACSignal.class], <span class="string">@"Expected all cases to be RACSignals, %@ isn't"</span>, value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">NSDictionary</span> *<span class="keyword">copy</span> = [cases <span class="keyword">copy</span>];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> [[[signal</span><br><span class="line">		map:^(<span class="keyword">id</span> key) &#123;</span><br><span class="line">			<span class="keyword">if</span> (key == <span class="literal">nil</span>) key = RACTupleNil.tupleNil;</span><br><span class="line"></span><br><span class="line">			RACSignal *signal = <span class="keyword">copy</span>[key] ?: defaultSignal;</span><br><span class="line">			<span class="keyword">if</span> (signal == <span class="literal">nil</span>) &#123;</span><br><span class="line">				<span class="built_in">NSString</span> *description = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"No matching signal found for value %@"</span>, <span class="string">@""</span>), key];</span><br><span class="line">				<span class="keyword">return</span> [RACSignal error:[<span class="built_in">NSError</span> errorWithDomain:RACSignalErrorDomain code:RACSignalErrorNoMatchingCase userInfo:@&#123; <span class="built_in">NSLocalizedDescriptionKey</span>: description &#125;]];</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> signal;</span><br><span class="line">		&#125;]</span><br><span class="line">		switchToLatest]</span><br><span class="line">		setNameWithFormat:<span class="string">@"+switch: %@ cases: %@ default: %@"</span>, signal, cases, defaultSignal];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)<span class="hljs-keyword">switch</span>:(RACSignal *)signal cases:(<span class="hljs-built_in">NSDictionary</span> *)cases <span class="hljs-keyword">default</span>:(RACSignal *)defaultSignal &#123;</span><br><span class="line">	<span class="hljs-built_in">NSCParameterAssert</span>(signal != <span class="hljs-literal">nil</span>);</span><br><span class="line">	<span class="hljs-built_in">NSCParameterAssert</span>(cases != <span class="hljs-literal">nil</span>);</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">id</span> key <span class="hljs-keyword">in</span> cases) &#123;</span><br><span class="line">		<span class="hljs-keyword">id</span> value __attribute__((unused)) = cases[key];</span><br><span class="line">		<span class="hljs-built_in">NSCAssert</span>([value isKindOfClass:RACSignal.class], <span class="hljs-string">@"Expected all cases to be RACSignals, %@ isn't"</span>, value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-built_in">NSDictionary</span> *<span class="hljs-keyword">copy</span> = [cases <span class="hljs-keyword">copy</span>];</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">return</span> [[[signal</span><br><span class="line">		map:^(<span class="hljs-keyword">id</span> key) &#123;</span><br><span class="line">			<span class="hljs-keyword">if</span> (key == <span class="hljs-literal">nil</span>) key = RACTupleNil.tupleNil;</span><br><span class="line"></span><br><span class="line">			RACSignal *signal = <span class="hljs-keyword">copy</span>[key] ?: defaultSignal;</span><br><span class="line">			<span class="hljs-keyword">if</span> (signal == <span class="hljs-literal">nil</span>) &#123;</span><br><span class="line">				<span class="hljs-built_in">NSString</span> *description = [<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-built_in">NSLocalizedString</span>(<span class="hljs-string">@"No matching signal found for value %@"</span>, <span class="hljs-string">@""</span>), key];</span><br><span class="line">				<span class="hljs-keyword">return</span> [RACSignal error:[<span class="hljs-built_in">NSError</span> errorWithDomain:RACSignalErrorDomain code:RACSignalErrorNoMatchingCase userInfo:@&#123; <span class="hljs-built_in">NSLocalizedDescriptionKey</span>: description &#125;]];</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="hljs-keyword">return</span> signal;</span><br><span class="line">		&#125;]</span><br><span class="line">		switchToLatest]</span><br><span class="line">		setNameWithFormat:<span class="hljs-string">@"+switch: %@ cases: %@ default: %@"</span>, signal, cases, defaultSignal];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Flatten"><a href="#Flatten" class="headerlink" title="Flatten"></a>Flatten</h4><p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgt6aqxf6j30jr08ygmo.jpg" alt="image-20180418144742256"></p>
 <p>flatten与SwitchToLatests不同的是，新的信号不会截断旧的信号。它相当于是使用<strong>**merge:</strong>方法把信号中的所有信号都合并在了一起。</p>
 <p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt6jnkalj30jd08vq3y.jpg" alt="image-20180418144755171"></p>
@@ -472,612 +203,1029 @@
 <p>对于高级信号，也有一个- (RACSIgnal *)concat;方法，就是相当于调用flatten:1</p>
 <h4 id="FlattenMap"><a href="#FlattenMap" class="headerlink" title="FlattenMap"></a>FlattenMap</h4><p>flattenMap就是 先map为高阶信号在调用flatten降阶</p>
 <p>看一下 RACStream.m文件中 flattenMap: 、flatten、map：的实现</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (__kindof RACStream *)flattenMap:(__kindof RACStream * (^)(<span class="keyword">id</span> value))block &#123;</span><br><span class="line">	Class <span class="keyword">class</span> = <span class="keyword">self</span>.class;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> [[<span class="keyword">self</span> bind:^&#123;</span><br><span class="line">		<span class="keyword">return</span> ^(<span class="keyword">id</span> value, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">			<span class="keyword">id</span> stream = block(value) ?: [<span class="keyword">class</span> empty];</span><br><span class="line">			<span class="built_in">NSCAssert</span>([stream isKindOfClass:RACStream.class], <span class="string">@"Value returned from -flattenMap: is not a stream: %@"</span>, stream);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> stream;</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;] setNameWithFormat:<span class="string">@"[%@] -flattenMap:"</span>, <span class="keyword">self</span>.name];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (__kindof RACStream *)flatten &#123;</span><br><span class="line">	<span class="keyword">return</span> [[<span class="keyword">self</span> flattenMap:^(<span class="keyword">id</span> value) &#123;</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;] setNameWithFormat:<span class="string">@"[%@] -flatten"</span>, <span class="keyword">self</span>.name];</span><br><span class="line">&#125;</span><br><span class="line">- (__kindof RACStream *)map:(<span class="keyword">id</span> (^)(<span class="keyword">id</span> value))block &#123;</span><br><span class="line">	<span class="built_in">NSCParameterAssert</span>(block != <span class="literal">nil</span>);</span><br><span class="line"></span><br><span class="line">	Class <span class="keyword">class</span> = <span class="keyword">self</span>.class;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> [[<span class="keyword">self</span> flattenMap:^(<span class="keyword">id</span> value) &#123;</span><br><span class="line">		<span class="keyword">return</span> [<span class="keyword">class</span> <span class="keyword">return</span>:block(value)];</span><br><span class="line">	&#125;] setNameWithFormat:<span class="string">@"[%@] -map:"</span>, <span class="keyword">self</span>.name];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (__kindof RACStream *)flattenMap:(__kindof RACStream * (^)(<span class="hljs-keyword">id</span> value))block &#123;</span><br><span class="line">	Class <span class="hljs-keyword">class</span> = <span class="hljs-keyword">self</span>.class;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">return</span> [[<span class="hljs-keyword">self</span> bind:^&#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> ^(<span class="hljs-keyword">id</span> value, <span class="hljs-built_in">BOOL</span> *stop) &#123;</span><br><span class="line">			<span class="hljs-keyword">id</span> stream = block(value) ?: [<span class="hljs-keyword">class</span> empty];</span><br><span class="line">			<span class="hljs-built_in">NSCAssert</span>([stream isKindOfClass:RACStream.class], <span class="hljs-string">@"Value returned from -flattenMap: is not a stream: %@"</span>, stream);</span><br><span class="line"></span><br><span class="line">			<span class="hljs-keyword">return</span> stream;</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;] setNameWithFormat:<span class="hljs-string">@"[%@] -flattenMap:"</span>, <span class="hljs-keyword">self</span>.name];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (__kindof RACStream *)flatten &#123;</span><br><span class="line">	<span class="hljs-keyword">return</span> [[<span class="hljs-keyword">self</span> flattenMap:^(<span class="hljs-keyword">id</span> value) &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> value;</span><br><span class="line">	&#125;] setNameWithFormat:<span class="hljs-string">@"[%@] -flatten"</span>, <span class="hljs-keyword">self</span>.name];</span><br><span class="line">&#125;</span><br><span class="line">- (__kindof RACStream *)map:(<span class="hljs-keyword">id</span> (^)(<span class="hljs-keyword">id</span> value))block &#123;</span><br><span class="line">	<span class="hljs-built_in">NSCParameterAssert</span>(block != <span class="hljs-literal">nil</span>);</span><br><span class="line"></span><br><span class="line">	Class <span class="hljs-keyword">class</span> = <span class="hljs-keyword">self</span>.class;</span><br><span class="line">	</span><br><span class="line">	<span class="hljs-keyword">return</span> [[<span class="hljs-keyword">self</span> flattenMap:^(<span class="hljs-keyword">id</span> value) &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> [<span class="hljs-keyword">class</span> <span class="hljs-keyword">return</span>:block(value)];</span><br><span class="line">	&#125;] setNameWithFormat:<span class="hljs-string">@"[%@] -map:"</span>, <span class="hljs-keyword">self</span>.name];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过看方法的实现，可以看出，flatten和map方法都是基于flattenMap:的，还有filter：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (__kindof RACStream *)filter:(<span class="built_in">BOOL</span> (^)(<span class="keyword">id</span> value))block &#123;</span><br><span class="line">	<span class="built_in">NSCParameterAssert</span>(block != <span class="literal">nil</span>);</span><br><span class="line"></span><br><span class="line">	Class <span class="keyword">class</span> = <span class="keyword">self</span>.class;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> [[<span class="keyword">self</span> flattenMap:^ <span class="keyword">id</span> (<span class="keyword">id</span> value) &#123;</span><br><span class="line">		<span class="keyword">if</span> (block(value)) &#123;</span><br><span class="line">			<span class="keyword">return</span> [<span class="keyword">class</span> <span class="keyword">return</span>:value];</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">class</span>.empty;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;] setNameWithFormat:<span class="string">@"[%@] -filter:"</span>, <span class="keyword">self</span>.name];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (__kindof RACStream *)filter:(<span class="hljs-built_in">BOOL</span> (^)(<span class="hljs-keyword">id</span> value))block &#123;</span><br><span class="line">	<span class="hljs-built_in">NSCParameterAssert</span>(block != <span class="hljs-literal">nil</span>);</span><br><span class="line"></span><br><span class="line">	Class <span class="hljs-keyword">class</span> = <span class="hljs-keyword">self</span>.class;</span><br><span class="line">	</span><br><span class="line">	<span class="hljs-keyword">return</span> [[<span class="hljs-keyword">self</span> flattenMap:^ <span class="hljs-keyword">id</span> (<span class="hljs-keyword">id</span> value) &#123;</span><br><span class="line">		<span class="hljs-keyword">if</span> (block(value)) &#123;</span><br><span class="line">			<span class="hljs-keyword">return</span> [<span class="hljs-keyword">class</span> <span class="hljs-keyword">return</span>:value];</span><br><span class="line">		&#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">			<span class="hljs-keyword">return</span> <span class="hljs-keyword">class</span>.empty;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;] setNameWithFormat:<span class="hljs-string">@"[%@] -filter:"</span>, <span class="hljs-keyword">self</span>.name];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>查看flattenMap方法实现。发现它是基于bind:方法的。RAC中的方法几乎所有都是基于bind方法实现的，它是RAC的核心方法。<strong>这个bind方法感觉比较复杂，我暂时也不太理解，以后再研究</strong>。</p>
 
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>谢谢</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="吴启晗 WeChat Pay">
-          <p>微信打赏</p>
         </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="吴启晗 Alipay">
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <div>
-      
         
-  <ul class="post-copyright">
-    <li class="post-copyright-author">
-      <strong>本文作者：</strong>
-      吴启晗
-    </li>
-    <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="http://www.wuqihan.cn/2017/03/10/RAC-四-信号高阶操作/" title="RAC(四)信号高阶操作">http://www.wuqihan.cn/2017/03/10/RAC-四-信号高阶操作/</a>
-    </li>
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong>
-      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/ReactiveCocoa/" rel="tag"><i class="fa fa-tag"></i> ReactiveCocoa</a>
-          
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a>
+                </div>
+            </div>
         </div>
-      
-
-      
         
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/01/08/RAC-三-RACSignal基本使用/" rel="next" title="RAC(三)RACSignal各类操作">
-                <i class="fa fa-chevron-left"></i> RAC(三)RACSignal各类操作
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/15/如何继承类簇/" rel="prev" title="如何继承类簇（例如NSString）">
-                如何继承类簇（例如NSString） <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
+        
+        
+    </div>
 </div>
-<script type="text/javascript">
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
-    </div>
-  </div>
 
 
-          </div>
-          
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="Alipay"></div>
+</a>
 
-          
-  <div class="comments" id="comments">
-    
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ=="></div>
-    
-  </div>
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="Wechat"></div>
+</a>
 
-
+                
         </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
-  </div>
+</div>
 
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="https://ws3.sinaimg.cn/large/006tNc79gy1fqi3aph1t8j30dc0dcjsf.jpg" alt="吴启晗">
-          <p class="site-author-name" itemprop="name">吴启晗</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-           
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">13</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
         
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2017/05/15/如何继承类簇/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">如何继承类簇（例如NSString）</span>
             </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/wqhiOS" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/2065544495" target="_blank" title="微博">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  微博
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg" target="_blank" title="微信">
-                  
-                    <i class="fa fa-fw fa-weixin"></i>
-                  
-                  微信
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="mailto:wuqh_ios@icloud.com" target="_blank" title="邮箱">
-                  
-                    <i class="fa fa-fw fa-envelope"></i>
-                  
-                  邮箱
-                </a>
-              </span>
-            
-          
         </div>
-
         
         
-
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2017/01/08/RAC-三-RACSignal基本使用/">
+                <span class="level-item">RAC(三)RACSignal各类操作</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
         
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶信号"><span class="nav-number">1.</span> <span class="nav-text">高阶信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#升阶和降阶"><span class="nav-number">1.1.</span> <span class="nav-text">升阶和降阶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建高阶信号"><span class="nav-number">1.2.</span> <span class="nav-text">创建高阶信号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#订阅高级信号"><span class="nav-number">1.3.</span> <span class="nav-text">订阅高级信号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#降阶操作"><span class="nav-number">2.</span> <span class="nav-text">降阶操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SwitchToLatests"><span class="nav-number">2.1.</span> <span class="nav-text">SwitchToLatests</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-then-else"><span class="nav-number">2.2.</span> <span class="nav-text">if/then/else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flatten"><span class="nav-number">2.3.</span> <span class="nav-text">Flatten</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Concat"><span class="nav-number">2.4.</span> <span class="nav-text">Concat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FlattenMap"><span class="nav-number">2.5.</span> <span class="nav-text">FlattenMap</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
     </div>
-  </aside>
+</div>
 
 
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
         
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-吴启晗"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">吴启晗</span>
-   <div class="powered-by">  
-  </div>
-  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <figure class="image is-128x128 has-mb-6">
+                            <img class="is-rounded" src="/images/avatar.jpg" alt="吴启晗">
+                        </figure>
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>上海</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Articles
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        13
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Catégories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        2
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        5
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/wqhiOS" target="_blank">
+                SUIVRE</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Email" href="mailto:wuqh_ios@icloud.com">
+                
+                <i class="fab fa-envelope"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
 </div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
-
-
-<div class="theme-info">
-  <div class="powered-by">  
-  </div>
-  <span class="post-count">博客全站共23.7k字</span>
-  <!--以下3行为一条竖线和Coding Page-->
-</div>
+    
+        
+    
         
 
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Liens
+        </h3>
+        <ul class="menu-list">
         
-      </div>
-    </footer>
+            <li>
+                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Hexo</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">hexo.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">PPOffice</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
 
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
         
-      </div>
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catégories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Objective-C/">
+            <span class="level-start">
+                <span class="level-item">Objective-C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Swift/">
+            <span class="level-start">
+                <span class="level-item">Swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Nuage de tags
+        </h3>
+        <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 15px;">多线程</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Récents
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/05/18/优雅的使用NSNotification-name/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="优雅的使用NSNotification.Name">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-18T04:34:36.000Z">2018-05-18</time></div>
+                    <a href="/2018/05/18/优雅的使用NSNotification-name/" class="has-link-black-ter is-size-6">优雅的使用NSNotification.Name</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/01/11/深入理解Block/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入理解Block">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-01-11T08:52:33.000Z">2018-01-11</time></div>
+                    <a href="/2018/01/11/深入理解Block/" class="has-link-black-ter is-size-6">深入理解Block</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/05/15/如何继承类簇/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="如何继承类簇（例如NSString）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-05-15T08:51:53.000Z">2017-05-15</time></div>
+                    <a href="/2017/05/15/如何继承类簇/" class="has-link-black-ter is-size-6">如何继承类簇（例如NSString）</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-03-10T06:42:50.000Z">2017-03-10</time></div>
+                    <a href="/2017/03/10/RAC-四-信号高阶操作/" class="has-link-black-ter is-size-6">RAC(四)信号高阶操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-01-08T05:20:24.000Z">2017-01-08</time></div>
+                    <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="has-link-black-ter is-size-6">RAC(三)RACSignal各类操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Block/">
+                        <span class="tag">Block</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ReactiveCocoa/">
+                        <span class="tag">ReactiveCocoa</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/swift-tips/">
+                        <span class="tag">swift tips</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内存管理/">
+                        <span class="tag">内存管理</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/多线程/">
+                        <span class="tag">多线程</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Récents
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/05/18/优雅的使用NSNotification-name/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="优雅的使用NSNotification.Name">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-18T04:34:36.000Z">2018-05-18</time></div>
+                    <a href="/2018/05/18/优雅的使用NSNotification-name/" class="has-link-black-ter is-size-6">优雅的使用NSNotification.Name</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Swift/">Swift</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/01/11/深入理解Block/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入理解Block">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-01-11T08:52:33.000Z">2018-01-11</time></div>
+                    <a href="/2018/01/11/深入理解Block/" class="has-link-black-ter is-size-6">深入理解Block</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/05/15/如何继承类簇/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="如何继承类簇（例如NSString）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-05-15T08:51:53.000Z">2017-05-15</time></div>
+                    <a href="/2017/05/15/如何继承类簇/" class="has-link-black-ter is-size-6">如何继承类簇（例如NSString）</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-03-10T06:42:50.000Z">2017-03-10</time></div>
+                    <a href="/2017/03/10/RAC-四-信号高阶操作/" class="has-link-black-ter is-size-6">RAC(四)信号高阶操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-01-08T05:20:24.000Z">2017-01-08</time></div>
+                    <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="has-link-black-ter is-size-6">RAC(三)RACSignal各类操作</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2016/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2016</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Block/">
+                        <span class="tag">Block</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ReactiveCocoa/">
+                        <span class="tag">ReactiveCocoa</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/swift-tips/">
+                        <span class="tag">swift tips</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内存管理/">
+                        <span class="tag">内存管理</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/多线程/">
+                        <span class="tag">多线程</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/avatar.jpg" alt="RAC(四)信号高阶操作" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 吴启晗&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
     
 
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("KXABwl4zSzu6qMd615bfkNMa-gzGzoHsz", "DHuYDbwQ3dhuayE2GvMDaLWl");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
 </script>
 
 
-  
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
 
-  
+    
+    
 
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Articles',
+                PAGES: 'Pages',
+                CATEGORIES: 'Catégories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
 </body>
 </html>
-<!-- 页面点击小红心 -->
-<!-- <script type="text/javascript" src="/js/src/love.js"></script> -->
