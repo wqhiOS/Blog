@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="吴启晗的技术博客">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-08T15:14:51.249Z">
+<meta property="og:updated_time" content="2019-07-09T13:00:40.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解Block">
 <meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
@@ -171,7 +171,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    1 小时 读完 (大约 6723 个字)
+                    1 小时 读完 (大约 6725 个字)
                 </span>
                 
                 
@@ -189,7 +189,7 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fp58b4pem0j308c04owem.jpg" alt="961b7caed0225e03fea7cb75de43b540"></p>
+            <p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="961b7caed0225e03fea7cb75de43b540"></p>
 <a id="more"></a>
 <h4 id="Block的实质"><a href="#Block的实质" class="headerlink" title="Block的实质"></a>Block的实质</h4><p>Block是“带有自动变量值的匿名函数”，Block实际上是作为极普通的C语言源代码来处理的。通过支持Block的编译器，含有Block语法的源代码转换为一般C语言编译器能够处理的源代码，并作为极普通的C语言源代码被编译。</p>
 <p>在实际编译时无法转换为我们能够理解的源代码，但clang(LLVM编译器)具有转换为我们可读源代码的功能。通过“-rewrite-objc”选项就能将含有Block语法的源代码转换为C++源代码。说是C++，其实也仅仅是使用了struct结构体，本质是C语言源代码。</p>
@@ -300,8 +300,8 @@ var _hmt = _hmt || [];
 <p>在一个block中使用_<em>block变量，则当该block从栈复制到堆时，使用的所有\</em>_block变量也必定配置在栈上。这些__block变量也全部从栈复制到对上。此时block持有__block变量。即使在该block已复制到堆的情况下，复制Block也对所使用的__block变量没有任何影响。</p>
 <p>在多个block中使用__block变量，因为最先会将所有的block配置在栈上，所以__block变量也会配置在栈上。在任何一个block从栈复制到堆时，__block变量也会一并从栈复制到堆并被该block所持有。当剩下的block从栈复制到堆时，被复制的block持有__block变量，并增加__block变量的引用计数。</p>
 <p>如果配置在堆上的block被废弃，那么它会释放所持有的_<em>block变量，当该\</em>_block变量没有持有者时，就会释放。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fpkftl2r3nj30zk0rhk62.jpg" alt="IMG_49827612A50D-1"></p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fpr8jswvinj31a40zqn1e.jpg" alt="01522122826_.pic_h"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block1.jpg" alt="IMG_49827612A50D-1"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block2.jpg" alt="01522122826_.pic_h"></p>
 <p>到这里我们可以看出，此思考方式与OC的引用计数内存管理完全相同。</p>
 <p>看如下源代码：</p>
 <figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    __block <span class="hljs-keyword">int</span> val = <span class="hljs-number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//在arc下，不用copy就可以了。因为默认会有__strong修饰符</span></span><br><span class="line">    <span class="hljs-keyword">void</span> (^blk)(<span class="hljs-keyword">void</span>) = [^&#123;++val;&#125; copy];</span><br><span class="line">    </span><br><span class="line">    ++val;</span><br><span class="line">    </span><br><span class="line">    blk();</span><br><span class="line">    <span class="hljs-comment">//打印结果为2。说明栈上的val结构体，和堆上的val结构体，指向同一块内存地址。为什么呢？下面会给出答案。</span></span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>,val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -310,7 +310,7 @@ var _hmt = _hmt || [];
 <p>在上述源代码中，利用copy方法复制使用了_<em>block变量的block，block和\</em>_block变量两者均从栈复制到了堆上。代码中有两处使用到了val，一处是在block的匿名函数里，使用的是堆上的val，另一处是复制前栈上的__block变量的结构体实例的地址。</p>
 <p>那是如何保证，不管__block变量是配置在栈上还是堆上，都能够正确的访问该变量呢？</p>
 <p><strong>因为栈上的_<em>block变量用结构体实例在\</em>_block变量从栈复制到堆上时，会将成员变量__forwarding的值替换为复制目标上的__block变量结构体实例的地址。所以就算使用栈上的__block变量。访问的其实还是堆上的那个。</strong>如下图所示：</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fprelrguffj30ms0h3tgb.jpg" alt="mage-20180327152425"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block3.jpg" alt="mage-20180327152425"></p>
 <p>通过该功能，无论是在block语法中、block语法外使用_<em>block变量，还是\</em>_block变量配置在栈上或堆上，都可以顺利地访问同一个__block变量。</p>
 <h4 id="截获对象"><a href="#截获对象" class="headerlink" title="截获对象"></a>截获对象</h4><p>来看一下在block语法中使用对象的语法：</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">blk_t blk;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-built_in">NSMutableArray</span> *array = [[<span class="hljs-built_in">NSMutableArray</span> alloc] init];</span><br><span class="line">    blk = ^(<span class="hljs-keyword">id</span> obj) &#123;</span><br><span class="line">        [array addObject:obj];</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">blk([<span class="hljs-built_in">NSObject</span> new]);</span><br><span class="line">blk([<span class="hljs-built_in">NSObject</span> new]);</span><br><span class="line">blk([<span class="hljs-built_in">NSObject</span> new]);</span><br></pre></td></tr></table></figure>
