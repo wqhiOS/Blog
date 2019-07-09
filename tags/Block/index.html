@@ -88,6 +88,8 @@ var _hmt = _hmt || [];
     
     
     
+
+    
     
     
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -162,6 +164,12 @@ var _hmt = _hmt || [];
 
     <div class="card">
     
+    <div class="card-image">
+        <a href="/2018/01/11/深入理解Block/" class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="深入理解Block">
+        </a>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -179,7 +187,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    1 小时 读完 (大约 6725 个字)
+                    1 小时 读完 (大约 6705 个字)
                 </span>
                 
                 
@@ -192,7 +200,8 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="961b7caed0225e03fea7cb75de43b540"></p>
+            <h4 id="Block的实质"><a href="#Block的实质" class="headerlink" title="Block的实质"></a>Block的实质</h4><p>Block是“带有自动变量值的匿名函数”，Block实际上是作为极普通的C语言源代码来处理的。通过支持Block的编译器，含有Block语法的源代码转换为一般C语言编译器能够处理的源代码，并作为极普通的C语言源代码被编译。</p>
+<p>在实际编译时无法转换为我们能够理解的源代码，但clang(LLVM编译器)具有转换为我们可读源代码的功能。通过“-rewrite-objc”选项就能将含有Block语法的源代码转换为C++源代码。说是C++，其实也仅仅是使用了struct结构体，本质是C语言源代码。</p>
         </div>
         
         
@@ -230,9 +239,7 @@ var _hmt = _hmt || [];
             <div class="level-item has-text-centered" style="flex-shrink: 1">
                 <div>
                     
-                        <figure class="image is-128x128 has-mb-6">
-                            <img class="is-rounded" src="/images/avatar.jpg" alt="吴启晗">
-                        </figure>
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
                     
                     
                     <p class="is-size-4 is-block">
@@ -286,8 +293,8 @@ var _hmt = _hmt || [];
             </div>
         </nav>
         <div class="level">
-            <a class="level-item button is-link is-rounded" href="https://github.com/wqhiOS" target="_blank">
-                关注我</a>
+            <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
+                联系我</a>
         </div>
         
         
@@ -311,13 +318,7 @@ var _hmt = _hmt || [];
                 
             </a>
             
-            <a class="level-item button is-white is-marginless" target="_blank" title="Email" href="mailto:wuqh_ios@icloud.com">
-                
-                <i class="fab fa-envelope"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
                 
                 <i class="fas fa-rss"></i>
                 
@@ -527,7 +528,7 @@ var _hmt = _hmt || [];
             
             <a href="/2018/01/11/深入理解Block/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入理解Block">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="深入理解Block">
                 </p>
             </a>
             
@@ -646,7 +647,7 @@ var _hmt = _hmt || [];
             
             <a href="/2018/01/11/深入理解Block/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入理解Block">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="深入理解Block">
                 </p>
             </a>
             
@@ -869,6 +870,11 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
     
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
     
     
     
