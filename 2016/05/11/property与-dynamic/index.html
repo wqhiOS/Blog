@@ -7,16 +7,19 @@
 
 
 
-    <meta property="og:type" content="article">
+    <meta name="description" content="我们经常使用@property 声明一个属性，但是了解@property到底做了哪些事情呢？">
+<meta property="og:type" content="article">
 <meta property="og:title" content="@property与@dynamic">
 <meta property="og:url" content="http://www.wuqihan.cn/2016/05/11/property与-dynamic/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
+<meta property="og:description" content="我们经常使用@property 声明一个属性，但是了解@property到底做了哪些事情呢？">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2018-08-18T03:09:24.798Z">
+<meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/property.jpg">
+<meta property="og:updated_time" content="2019-07-11T13:28:19.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="@property与@dynamic">
-<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta name="twitter:description" content="我们经常使用@property 声明一个属性，但是了解@property到底做了哪些事情呢？">
+<meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/property.jpg">
 
 
 
@@ -151,6 +154,12 @@ var _hmt = _hmt || [];
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/property.jpg" alt="@property与@dynamic">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -168,7 +177,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 317 个字)
+                    2 分钟 读完 (大约 305 个字)
                 </span>
                 
                 
@@ -186,9 +195,8 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <p><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/bg/%40dynamic_logo.jpg" alt="bg"></p>
+            <p>我们经常使用@property 声明一个属性，但是了解@property到底做了哪些事情呢？</p>
 <a id="more"></a>
-<p>我们经常使用@property 声明一个属性，但是了解@property到底做了哪些事情呢？</p>
 <p>其实property仅仅是声明了 setter 和 getter 方法（没有实现）。</p>
 <p>@property 对应的是 @synthesize 和 @dynamic</p>
 <p>在Xcode4.5及以后的版本中，可以省略@synthesize，编译器会默认帮你加上@synthesize ivar = _ivar;</p>

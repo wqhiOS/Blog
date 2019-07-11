@@ -7,17 +7,20 @@
 
 
 
-    <meta name="keywords" content="内存管理">
+    <meta name="description" content="内存管理/引用计数Objective-C的内存管理方式：引用计数 内存管理的思考方式   对象操作 Objective-C方法     生成并持有对象 alloc/new/copy/mutableCopy等方法   持有对象 retain方法   释放对象 release方法   废弃对象 dealloc方法    ​">
+<meta name="keywords" content="内存管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS内存管理详解">
 <meta property="og:url" content="http://www.wuqihan.cn/2016/08/20/iOS内存管理/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
+<meta property="og:description" content="内存管理/引用计数Objective-C的内存管理方式：引用计数 内存管理的思考方式   对象操作 Objective-C方法     生成并持有对象 alloc/new/copy/mutableCopy等方法   持有对象 retain方法   释放对象 release方法   废弃对象 dealloc方法    ​">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2018-08-18T03:09:24.798Z">
+<meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/arc.jpg">
+<meta property="og:updated_time" content="2019-07-11T13:27:07.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS内存管理详解">
-<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta name="twitter:description" content="内存管理/引用计数Objective-C的内存管理方式：引用计数 内存管理的思考方式   对象操作 Objective-C方法     生成并持有对象 alloc/new/copy/mutableCopy等方法   持有对象 retain方法   释放对象 release方法   废弃对象 dealloc方法    ​">
+<meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/arc.jpg">
 
 
 
@@ -152,6 +155,12 @@ var _hmt = _hmt || [];
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/arc.jpg" alt="iOS内存管理详解">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -169,7 +178,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    23 分钟 读完 (大约 3501 个字)
+                    23 分钟 读完 (大约 3494 个字)
                 </span>
                 
                 
@@ -187,8 +196,7 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <p><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/arc/arc.jpg" alt="arc"><br><a id="more"></a></p>
-<h2 id="内存管理-引用计数"><a href="#内存管理-引用计数" class="headerlink" title="内存管理/引用计数"></a>内存管理/引用计数</h2><p>Objective-C的内存管理方式：引用计数</p>
+            <h2 id="内存管理-引用计数"><a href="#内存管理-引用计数" class="headerlink" title="内存管理/引用计数"></a>内存管理/引用计数</h2><p>Objective-C的内存管理方式：引用计数</p>
 <h3 id="内存管理的思考方式"><a href="#内存管理的思考方式" class="headerlink" title="内存管理的思考方式"></a>内存管理的思考方式</h3><table>
 <thead>
 <tr>
@@ -215,7 +223,9 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<p>​    这些有关Objective-C内存管理的方法，实际上不包括在该语言中，而是包含在Cocoa框架中用于OS X、iOS应用开发。<strong>Cocoa框架中Foundation框架类库的NSObject类担负内存管理的职责</strong>。<img src="https://ws1.sinaimg.cn/large/006tKfTcly1fnxex4oeslj308w05rgn5.jpg" alt="IMG_3B1C737308BF-1"></p>
+<p>​    <a id="more"></a></p>
+<p>​    这些有关Objective-C内存管理的方法，实际上不包括在该语言中，而是包含在Cocoa框架中用于OS X、iOS应用开发。<strong>Cocoa框架中Foundation框架类库的NSObject类担负内存管理的职责</strong>。</p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/arc1.jpg" alt="IMG_3B1C737308BF-1"></p>
 <ul>
 <li><p>自己生成的对象，自己持有</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 自己生成并持有对象</span></span><br><span class="line"><span class="hljs-keyword">id</span> obj = [[<span class="hljs-built_in">NSObject</span> alloc] init];</span><br></pre></td></tr></table></figure>
@@ -250,7 +260,7 @@ var _hmt = _hmt || [];
 <p>__CFDoExternRefOperation通过switch语句 针对不同的操作来进行具体的方法调用，retainCount/retain/release实例方法也许如下面代码所示：</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="hljs-built_in">NSUInteger</span>)retainCount</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> (<span class="hljs-built_in">NSUInteger</span>)____CFDoExternRefOperation(OPERATION_retainCount,<span class="hljs-keyword">self</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="hljs-keyword">id</span>)<span class="hljs-keyword">retain</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">id</span>)____CFDoExternRefOperation(OPERATION_retain,<span class="hljs-keyword">self</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="hljs-keyword">void</span>)release</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> ____CFDoExternRefOperation(OPERATION_release,<span class="hljs-keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过以上，可以看出苹果的大概实现就是将引用计数保存在引用计数表的记录中，而不是保存在对象占用内存块头部中。采用散列表(引用计数表)来管理引用计数。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fnxiv07q3tj30hs081ae7.jpg" alt="IMG_75C55E500AB3-1"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/arc2.jpg" alt="IMG_75C55E500AB3-1"></p>
 <p>这样的好处是：</p>
 <ul>
 <li>不用在每个对象内存块中考虑引用计数所占的内存</li>
@@ -263,7 +273,7 @@ var _hmt = _hmt || [];
 <li>调用已分配对象的autorelease实例方法</li>
 <li>废弃NSAutoreleasePool对象</li>
 </ol>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fq5cw1ev3tj30ye0frwux.jpg" alt="image-20180408170302393"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/arc3.jpg" alt="image-20180408170302393"></p>
 <p>NSAutoreleasePool对象的生存周期相当于C语言变量的作用域。对于所有调用过autorelease实例方法的对象，在废弃NSAutoreleasePool对象时，都将调用release实例方法。</p>
 <p>用源代码表示如下：</p>
 <figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSAutoReleasePool *pool = [[NSAutoReleasePool alloc] init];</span><br><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">[obj autorelease];</span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
@@ -291,12 +301,11 @@ var _hmt = _hmt || [];
 <li><p>magic 用于对当前 AutoreleasePoolPage`<strong>完整性</strong>的校验</p>
 </li>
 <li><p>thread 保存了当前所在的线程</p>
-<p>​</p>
 </li>
 </ul>
 <p>每一个自动释放池都是由一系列的AutoreleasePoolPage组成的，并且每一个AutoreleasePoolPage的大小都是4096字节(0x1000)</p>
 <p>自动释放池中的AutoreleasePoolPage是以<strong>双向链表</strong>的形式链接起来的：</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqjgq5m20tj30rs05iwg1.jpg" alt="image-20180420215336249"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/arc4.jpg" alt="image-20180420215336249"></p>
 <p>parent 和 child 就是用来构造双向链表的指针。</p>
 <h3 id="autorelease和runloop的关系"><a href="#autorelease和runloop的关系" class="headerlink" title="autorelease和runloop的关系"></a>autorelease和runloop的关系</h3><p>runloop开始启动的时候会创建autoreleasePool，结束的时候会销毁autoreleasePool</p>
 <h2 id="ARC"><a href="#ARC" class="headerlink" title="ARC"></a>ARC</h2><p>引用计数内存管理的本质部分在ARC中并没有改变。ARC只是自动帮我们处理“引用计数”的相关部分。</p>
