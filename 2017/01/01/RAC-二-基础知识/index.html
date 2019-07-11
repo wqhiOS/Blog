@@ -16,7 +16,7 @@
 <meta property="og:description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
-<meta property="og:updated_time" content="2019-07-09T13:29:34.294Z">
+<meta property="og:updated_time" content="2019-07-11T13:41:31.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RAC(二)基础知识">
 <meta name="twitter:description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
@@ -178,7 +178,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 869 个字)
+                    6 分钟 读完 (大约 867 个字)
                 </span>
                 
                 
@@ -204,7 +204,7 @@ var _hmt = _hmt || [];
 <li>Cocoa框架适配工具</li>
 </ul>
 <a id="more"></a>
-<h3 id="RACStream的两个子类：Sequence-amp-Signal"><a href="#RACStream的两个子类：Sequence-amp-Signal" class="headerlink" title="RACStream的两个子类：Sequence &amp; Signal"></a>RACStream的两个子类：Sequence &amp; Signal</h3><p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqc2p2ji01j30f309q3ys.jpg" alt="image-20180414122918648"></p>
+<h3 id="RACStream的两个子类：Sequence-amp-Signal"><a href="#RACStream的两个子类：Sequence-amp-Signal" class="headerlink" title="RACStream的两个子类：Sequence &amp; Signal"></a>RACStream的两个子类：Sequence &amp; Signal</h3><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac2_1.jpg" alt="image-20180414122918648"></p>
 <p>RACStream表示一个数据流的类。这个流不一定是基于时间的，所以它有两个子类RACSequence和RACSignal。</p>
 <ul>
 <li>RACSequence是基于空间的数据流</li>
@@ -226,7 +226,7 @@ var _hmt = _hmt || [];
 <h3 id="RACSubscriber-amp-RACDisposable"><a href="#RACSubscriber-amp-RACDisposable" class="headerlink" title="RACSubscriber &amp; RACDisposable"></a>RACSubscriber &amp; RACDisposable</h3><p>Subscription(订阅者)表⽰等待或者能够等待信号发送事件的任意对象。在框架中使用RACSubscriber协议表示,也即任意实现了RACSubscriber协议的对象都可以是订阅者。可以通过调⽤ -subscribeNext:error:completed:⽅法来创建订阅。RACStream和RACSignal类的大多操作也会⾃己创建订阅。订阅会对Signals对象引⽤计数加1,当信号发送错误或者完成事件后,会⾃动被处理,不需要⽤户关⼼内存管理。当然,⽤户也可以⼿动处理。</p>
 <p>RACDisposable类⽤于取消订阅或者清理资源。</p>
 <p>下图展示了Subscriber、Disposable、Signal三者的关系</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fqc8cu2wgsj30gk08pdg4.jpg" alt="image-20180414154509246"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac2_2.jpg" alt="image-20180414154509246"></p>
 <h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><ul>
 <li>用来做调度</li>
 <li>代替GCD</li>
@@ -675,7 +675,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(四)信号高阶操作">
                 </p>
             </a>
             
@@ -694,7 +694,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
                 </p>
             </a>
             
@@ -794,7 +794,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(四)信号高阶操作">
                 </p>
             </a>
             
@@ -813,7 +813,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
                 </p>
             </a>
             

@@ -7,20 +7,20 @@
 
 
 
-    <meta name="description" content="获得一个信号的方式单元信号1234RACSignal *signal1 = [RACSignal return:@&quot;Some value&quot;];RACSignal *signal2 = [RACSignal error:errorObject];RACSignal *signal3 = [RACSignal empty];RACSignal *signal4 = [RACSignal never]">
+    <meta name="description" content="获得一个信号的方式单元信号1234RACSignal *signal1 = [RACSignal return:@&quot;Some value&quot;];RACSignal *signal2 = [RACSignal error:errorObject];RACSignal *signal3 = [RACSignal empty];RACSignal *signal4 = [RACSignal never];">
 <meta name="keywords" content="ReactiveCocoa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RAC(三)RACSignal各类操作">
 <meta property="og:url" content="http://www.wuqihan.cn/2017/01/08/RAC-三-RACSignal基本使用/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
-<meta property="og:description" content="获得一个信号的方式单元信号1234RACSignal *signal1 = [RACSignal return:@&quot;Some value&quot;];RACSignal *signal2 = [RACSignal error:errorObject];RACSignal *signal3 = [RACSignal empty];RACSignal *signal4 = [RACSignal never]">
+<meta property="og:description" content="获得一个信号的方式单元信号1234RACSignal *signal1 = [RACSignal return:@&quot;Some value&quot;];RACSignal *signal2 = [RACSignal error:errorObject];RACSignal *signal3 = [RACSignal empty];RACSignal *signal4 = [RACSignal never];">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2018-08-18T03:09:24.797Z">
+<meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
+<meta property="og:updated_time" content="2019-07-11T13:40:48.989Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RAC(三)RACSignal各类操作">
-<meta name="twitter:description" content="获得一个信号的方式单元信号1234RACSignal *signal1 = [RACSignal return:@&quot;Some value&quot;];RACSignal *signal2 = [RACSignal error:errorObject];RACSignal *signal3 = [RACSignal empty];RACSignal *signal4 = [RACSignal never]">
-<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta name="twitter:description" content="获得一个信号的方式单元信号1234RACSignal *signal1 = [RACSignal return:@&quot;Some value&quot;];RACSignal *signal2 = [RACSignal error:errorObject];RACSignal *signal3 = [RACSignal empty];RACSignal *signal4 = [RACSignal never];">
+<meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
 
 
 
@@ -155,6 +155,12 @@ var _hmt = _hmt || [];
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -172,7 +178,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    8 分钟 读完 (大约 1178 个字)
+                    8 分钟 读完 (大约 1209 个字)
                 </span>
                 
                 
@@ -190,8 +196,7 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fqc24yeimhj31d404k75z.jpg" alt="image-20180414120959021"></p>
-<h3 id="获得一个信号的方式"><a href="#获得一个信号的方式" class="headerlink" title="获得一个信号的方式"></a>获得一个信号的方式</h3><h4 id="单元信号"><a href="#单元信号" class="headerlink" title="单元信号"></a>单元信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal1 = [RACSignal <span class="hljs-keyword">return</span>:<span class="hljs-string">@"Some value"</span>];</span><br><span class="line">RACSignal *signal2 = [RACSignal error:errorObject];</span><br><span class="line">RACSignal *signal3 = [RACSignal empty];</span><br><span class="line">RACSignal *signal4 = [RACSignal never];</span><br></pre></td></tr></table></figure>
+            <h3 id="获得一个信号的方式"><a href="#获得一个信号的方式" class="headerlink" title="获得一个信号的方式"></a>获得一个信号的方式</h3><h4 id="单元信号"><a href="#单元信号" class="headerlink" title="单元信号"></a>单元信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal1 = [RACSignal <span class="hljs-keyword">return</span>:<span class="hljs-string">@"Some value"</span>];</span><br><span class="line">RACSignal *signal2 = [RACSignal error:errorObject];</span><br><span class="line">RACSignal *signal3 = [RACSignal empty];</span><br><span class="line">RACSignal *signal4 = [RACSignal never];</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h4 id="动态信号"><a href="#动态信号" class="headerlink" title="动态信号"></a>动态信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal5 = [RACSignal createSignal:^RACDisposable * _Nullable(<span class="hljs-keyword">id</span>&lt;RACSubscriber&gt;  _Nonnull subscriber) &#123;</span><br><span class="line">    [subscriber sendNext:@<span class="hljs-number">1</span>];</span><br><span class="line">    [subscriber sendNext:@<span class="hljs-number">2</span>];</span><br><span class="line">    [subscriber sendError:errorObject];</span><br><span class="line">    [subscriber sendCompleted];</span><br><span class="line">    <span class="hljs-keyword">return</span> [RACDisposable disposableWithBlock:^&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <h4 id="Cocoa桥接"><a href="#Cocoa桥接" class="headerlink" title="Cocoa桥接"></a>Cocoa桥接</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal6 = [button rac_signalForSelector:<span class="hljs-keyword">@selector</span>(setFrame:)];</span><br><span class="line">RACSignal *signal7 = [button rac_signalForControlEvents:<span class="hljs-built_in">UIControlEventTouchUpInside</span>];</span><br><span class="line">RACSignal *signal8 = [button rac_willDeallocSignal];</span><br><span class="line">RACSignal *signal9 = RACObserve(button, backgroundColor);</span><br></pre></td></tr></table></figure>
@@ -219,35 +224,35 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="RACTuple"><a href="#RACTuple" class="headerlink" title="RACTuple"></a>RACTuple</h3><p>RAC定义的一种数据类型。类似Swift中的tuple。这里不多介绍。</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RACTuple *tuple = RACTuplePack(@<span class="hljs-number">1</span>,<span class="hljs-string">@"haha"</span>);</span><br><span class="line"><span class="hljs-keyword">id</span> first = tuple.first;</span><br><span class="line"><span class="hljs-keyword">id</span> last = tuple.last;</span><br><span class="line"><span class="hljs-keyword">id</span> idnex1 = tuple[<span class="hljs-number">1</span>];</span><br><span class="line">RACTupleUnpack(<span class="hljs-built_in">NSNumber</span> *num,<span class="hljs-built_in">NSString</span> *str) = tuple;</span><br></pre></td></tr></table></figure>
-<h3 id="RACSignal各类操作"><a href="#RACSignal各类操作" class="headerlink" title="RACSignal各类操作"></a>RACSignal各类操作</h3><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsdbj5vej30q00bfjsr.jpg" alt="image-20180418141948795"></p>
-<h4 id="对值操作"><a href="#对值操作" class="headerlink" title="对值操作"></a>对值操作</h4><h5 id="map-mapReplace"><a href="#map-mapReplace" class="headerlink" title="map/mapReplace"></a>map/mapReplace</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsefandlj30oj07wwfq.jpg" alt="image-20180418142054959"></p>
+<h3 id="RACSignal各类操作"><a href="#RACSignal各类操作" class="headerlink" title="RACSignal各类操作"></a>RACSignal各类操作</h3><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_1.jpg" alt="image-20180418141948795"></p>
+<h4 id="对值操作"><a href="#对值操作" class="headerlink" title="对值操作"></a>对值操作</h4><h5 id="map-mapReplace"><a href="#map-mapReplace" class="headerlink" title="map/mapReplace"></a>map/mapReplace</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_2.jpg" alt="image-20180418142054959"></p>
 <h5 id="reduceEach"><a href="#reduceEach" class="headerlink" title="reduceEach"></a>reduceEach</h5><p>只能用在tuple上。tuple个数少了会挂，多了只去和参数相同的个数。</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsesw2fij30pi08mq46.jpg" alt="image-20180418142116897"></p>
-<h5 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h5><p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgsn3atzgj30ms075t9v.jpg" alt="image-20180418142914659"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_3.jpg" alt="image-20180418142116897"></p>
+<h5 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_4.jpg" alt="image-20180418142914659"></p>
 <h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>not/and/or/reduceApply/materialize/dematerialize;</p>
-<h4 id="对数量操作"><a href="#对数量操作" class="headerlink" title="对数量操作"></a>对数量操作</h4><h5 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h5><p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgsg7fvrij30nh07hab4.jpg" alt="image-20180418142238131"></p>
+<h4 id="对数量操作"><a href="#对数量操作" class="headerlink" title="对数量操作"></a>对数量操作</h4><h5 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_5.jpg" alt="image-20180418142238131"></p>
 <h5 id="ignore-ignoreValues-distinctUntilChanged"><a href="#ignore-ignoreValues-distinctUntilChanged" class="headerlink" title="ignore/ignoreValues/distinctUntilChanged"></a>ignore/ignoreValues/distinctUntilChanged</h5><p>这几个根据英文很容易理解</p>
-<h5 id="take"><a href="#take" class="headerlink" title="take"></a>take</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgshjenxxj30lo080gmj.jpg" alt="image-20180418142354763"></p>
-<h5 id="skip"><a href="#skip" class="headerlink" title="skip"></a>skip</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgshpdhdsj30ll07ywfe.jpg" alt="image-20180418142404053"></p>
-<h5 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h5><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgsiid4djj30k803xjst.jpg" alt="image-20180418142450462"></p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgsiqtsioj30j603dgm7.jpg" alt="image-20180418142504248"></p>
-<h5 id="startWith"><a href="#startWith" class="headerlink" title="startWith"></a>startWith</h5><p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgsje8jtvj30lo07fab0.jpg" alt="image-20180418142541910"></p>
-<h5 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h5><p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgsjpyiysj30ml08t0tu.jpg" alt="image-20180418142600575"></p>
-<h5 id="retry"><a href="#retry" class="headerlink" title="retry"></a>retry</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsk15k0qj30m307kdgl.jpg" alt="image-20180418142618562"></p>
-<h5 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsm7tmmkj30lv07e750.jpg" alt="image-20180418142824458"></p>
-<h5 id="Aggregate"><a href="#Aggregate" class="headerlink" title="Aggregate"></a>Aggregate</h5><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgsmkwne6j30mx07oab4.jpg" alt="image-20180418142845070"></p>
+<h5 id="take"><a href="#take" class="headerlink" title="take"></a>take</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_6.jpg" alt="image-20180418142354763"></p>
+<h5 id="skip"><a href="#skip" class="headerlink" title="skip"></a>skip</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_7.jpg" alt="image-20180418142404053"></p>
+<h5 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_8.jpg" alt="image-20180418142450462"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_9.jpg" alt="image-20180418142504248"></p>
+<h5 id="startWith"><a href="#startWith" class="headerlink" title="startWith"></a>startWith</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_10.jpg" alt="image-20180418142541910"></p>
+<h5 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_11.jpg" alt="image-20180418142600575"></p>
+<h5 id="retry"><a href="#retry" class="headerlink" title="retry"></a>retry</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_12.jpg" alt="image-20180418142618562"></p>
+<h5 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_13.jpg" alt="image-20180418142824458"></p>
+<h5 id="Aggregate"><a href="#Aggregate" class="headerlink" title="Aggregate"></a>Aggregate</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_14.jpg" alt="image-20180418142845070"></p>
 <h4 id="副作用操作"><a href="#副作用操作" class="headerlink" title="副作用操作"></a>副作用操作</h4><p>doNext</p>
-<h4 id="时间操作"><a href="#时间操作" class="headerlink" title="时间操作"></a>时间操作</h4><h5 id="Delay"><a href="#Delay" class="headerlink" title="Delay"></a>Delay</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsns20wcj30m009pmyg.jpg" alt="image-20180418142954495"></p>
-<h5 id="Throttle"><a href="#Throttle" class="headerlink" title="Throttle"></a>Throttle</h5><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgso26y53j30m407vaat.jpg" alt="image-20180418143010615"></p>
-<h4 id="组合操作"><a href="#组合操作" class="headerlink" title="组合操作"></a>组合操作</h4><h5 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h5><p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgsomdr49j30kn088t9t.jpg" alt="image-20180418143043116"></p>
-<h5 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsp90zc4j30mt08sdhe.jpg" alt="image-20180418143118995"></p>
+<h4 id="时间操作"><a href="#时间操作" class="headerlink" title="时间操作"></a>时间操作</h4><h5 id="Delay"><a href="#Delay" class="headerlink" title="Delay"></a>Delay</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_15.jpg" alt="image-20180418142954495"></p>
+<h5 id="Throttle"><a href="#Throttle" class="headerlink" title="Throttle"></a>Throttle</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_16.jpg" alt="image-20180418143010615"></p>
+<h4 id="组合操作"><a href="#组合操作" class="headerlink" title="组合操作"></a>组合操作</h4><h5 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_17.jpg" alt="image-20180418143043116"></p>
+<h5 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_18.jpg" alt="image-20180418143118995"></p>
 <p>merge用处很多，如下：</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *appearSignal = [[<span class="hljs-keyword">self</span> rac_signalForSelector:<span class="hljs-keyword">@selector</span>(viewDidAppear:)]] mapReplace:@YES];</span><br><span class="line">RACSignal *disappearSignal = [[<span class="hljs-keyword">self</span> rac_signalForSelector:<span class="hljs-keyword">@selector</span>(viewWillDisAppear:)]] mapReplace:@NO];</span><br><span class="line">RACSignal *activeSignal = [RACSignal merge:@[appearSignal,disappearSignal]];</span><br></pre></td></tr></table></figure>
-<h5 id="Zip"><a href="#Zip" class="headerlink" title="Zip"></a>Zip</h5><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgsrhyhl2j30mq08rta3.jpg" alt="image-20180418143328779"></p>
-<h5 id="CombineLatest"><a href="#CombineLatest" class="headerlink" title="CombineLatest"></a>CombineLatest</h5><p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgsrsnndcj30nf08mjsm.jpg" alt="image-20180418143345994"></p>
-<h5 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h5><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgss75tvfj30l808cjsa.jpg" alt="image-20180418143409171"></p>
-<h5 id="TakeUntil"><a href="#TakeUntil" class="headerlink" title="TakeUntil"></a>TakeUntil</h5><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgssyvjr7j30ml07pt9p.jpg" alt="image-20180418143453317"></p>
-<h5 id="TakeUntilReplacement"><a href="#TakeUntilReplacement" class="headerlink" title="TakeUntilReplacement"></a>TakeUntilReplacement</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgst9nswuj30oi08bq45.jpg" alt="image-20180418143511093"></p>
+<h5 id="Zip"><a href="#Zip" class="headerlink" title="Zip"></a>Zip</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_19.jpg" alt="image-20180418143328779"></p>
+<h5 id="CombineLatest"><a href="#CombineLatest" class="headerlink" title="CombineLatest"></a>CombineLatest</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_20.jpg" alt="image-20180418143345994"></p>
+<h5 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_21.jpg" alt="image-20180418143409171"></p>
+<h5 id="TakeUntil"><a href="#TakeUntil" class="headerlink" title="TakeUntil"></a>TakeUntil</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_22.jpg" alt="image-20180418143453317"></p>
+<h5 id="TakeUntilReplacement"><a href="#TakeUntilReplacement" class="headerlink" title="TakeUntilReplacement"></a>TakeUntilReplacement</h5><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac3_23.jpg" alt="image-20180418143511093"></p>
 
         </div>
         
@@ -690,7 +695,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(四)信号高阶操作">
                 </p>
             </a>
             
@@ -709,7 +714,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
                 </p>
             </a>
             
@@ -809,7 +814,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(四)信号高阶操作">
                 </p>
             </a>
             
@@ -828,7 +833,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
                 </p>
             </a>
             

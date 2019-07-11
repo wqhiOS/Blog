@@ -15,12 +15,12 @@
 <meta property="og:site_name" content="吴启晗的技术博客">
 <meta property="og:description" content="高阶信号对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2018-08-18T03:09:24.797Z">
+<meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
+<meta property="og:updated_time" content="2019-07-11T13:36:31.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RAC(四)信号高阶操作">
 <meta name="twitter:description" content="高阶信号对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。">
-<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
 
 
 
@@ -155,6 +155,12 @@ var _hmt = _hmt || [];
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(四)信号高阶操作">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -172,7 +178,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 995 个字)
+                    7 分钟 读完 (大约 988 个字)
                 </span>
                 
                 
@@ -190,27 +196,26 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fqc24yeimhj31d404k75z.jpg" alt="image-20180414120959021"></p>
-<h3 id="高阶信号"><a href="#高阶信号" class="headerlink" title="高阶信号"></a>高阶信号</h3><p>对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。</p>
+            <h3 id="高阶信号"><a href="#高阶信号" class="headerlink" title="高阶信号"></a>高阶信号</h3><p>对数组的操作可以有二维数组，多维数组。同样，信号也是可以嵌套的，经常会遇到二维信号，也就是信号中发送的值也为信号。</p>
 <a id="more"></a>
 <h4 id="升阶和降阶"><a href="#升阶和降阶" class="headerlink" title="升阶和降阶"></a>升阶和降阶</h4><p><strong>(下图菱形图例代表信号，圆圈代表值)</strong></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqgsukkquuj30kz06lmxt.jpg" alt="image-20180418143626144"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_1.jpg" alt="image-20180418143626144"></p>
 <h4 id="创建高阶信号"><a href="#创建高阶信号" class="headerlink" title="创建高阶信号"></a>创建高阶信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RACSiganl *siganl = [RACSignal <span class="hljs-keyword">return</span>:@<span class="hljs-number">1</span>];</span><br><span class="line"></span><br><span class="line">RACSiganl *signalHighOrder = [RACSiganl <span class="hljs-keyword">return</span>:signal];</span><br><span class="line">RACSiganl *anotherSignal = [signal map:^<span class="hljs-keyword">id</span>(<span class="hljs-keyword">id</span> value) &#123;</span><br><span class="line">	<span class="hljs-keyword">return</span> [RACSignal <span class="hljs-keyword">return</span>:value];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <h4 id="订阅高级信号"><a href="#订阅高级信号" class="headerlink" title="订阅高级信号"></a>订阅高级信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RACSiganl *siganl = @[@<span class="hljs-number">1</span>,@<span class="hljs-number">2</span>,@<span class="hljs-number">3</span>].rac_sequence.signal;</span><br><span class="line">RACSignal *highOrderSignal = [signal map:^<span class="hljs-keyword">id</span>(RACSiganl *aSiganl) &#123;</span><br><span class="line">    [aSignal subscribeNext:^(<span class="hljs-keyword">id</span> x) &#123;</span><br><span class="line">        <span class="hljs-comment">//...</span></span><br><span class="line">    &#125;];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<h3 id="降阶操作"><a href="#降阶操作" class="headerlink" title="降阶操作"></a>降阶操作</h3><h4 id="SwitchToLatests"><a href="#SwitchToLatests" class="headerlink" title="SwitchToLatests"></a>SwitchToLatests</h4><p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgt45kmhqj30k009dmyo.jpg" alt="image-20180418144538812"></p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgt3zw110j30jh090gmt.jpg" alt="image-20180418144441907"></p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqgt4a6g9cj30ji08zt9q.jpg" alt="image-20180418144546449"></p>
+<h3 id="降阶操作"><a href="#降阶操作" class="headerlink" title="降阶操作"></a>降阶操作</h3><h4 id="SwitchToLatests"><a href="#SwitchToLatests" class="headerlink" title="SwitchToLatests"></a>SwitchToLatests</h4><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_2.jpg" alt="image-20180418144538812"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_3.jpg" alt="image-20180418144441907"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_4.jpg" alt="image-20180418144546449"></p>
 <p>使用switchToLatests方法降阶时，需要注意的是<strong>新的信号会把旧的信号截断</strong></p>
-<h4 id="if-then-else"><a href="#if-then-else" class="headerlink" title="if/then/else"></a>if/then/else</h4><p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt60x0arj30mh0a5q4t.jpg" alt="image-20180418144726566"></p>
+<h4 id="if-then-else"><a href="#if-then-else" class="headerlink" title="if/then/else"></a>if/then/else</h4><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_5.jpg" alt="image-20180418144726566"></p>
 <p>看一下ifThenElse方法的实现代码，可以很容易理解。它的本质还是使用了SwitchToLatests。</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)if:(RACSignal *)boolSignal then:(RACSignal *)trueSignal else:(RACSignal *)falseSignal &#123;</span><br><span class="line">	NSCParameterAssert(boolSignal != nil);</span><br><span class="line">	NSCParameterAssert(trueSignal != nil);</span><br><span class="line">	NSCParameterAssert(falseSignal != nil);</span><br><span class="line"></span><br><span class="line">	return [[[boolSignal</span><br><span class="line">		map:^(NSNumber *value) &#123;</span><br><span class="line">			NSCAssert([value isKindOfClass:NSNumber.class], @&quot;Expected %@ to send BOOLs, not %@&quot;, boolSignal, value);</span><br><span class="line"></span><br><span class="line">			return (value.boolValue ? trueSignal : falseSignal);</span><br><span class="line">		&#125;]</span><br><span class="line">		switchToLatest]</span><br><span class="line">		setNameWithFormat:@&quot;+if: %@ then: %@ else: %@&quot;, boolSignal, trueSignal, falseSignal];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>类似的方法还有SwitchCasesDefaultSignal:</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)<span class="hljs-keyword">switch</span>:(RACSignal *)signal cases:(<span class="hljs-built_in">NSDictionary</span> *)cases <span class="hljs-keyword">default</span>:(RACSignal *)defaultSignal &#123;</span><br><span class="line">	<span class="hljs-built_in">NSCParameterAssert</span>(signal != <span class="hljs-literal">nil</span>);</span><br><span class="line">	<span class="hljs-built_in">NSCParameterAssert</span>(cases != <span class="hljs-literal">nil</span>);</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">id</span> key <span class="hljs-keyword">in</span> cases) &#123;</span><br><span class="line">		<span class="hljs-keyword">id</span> value __attribute__((unused)) = cases[key];</span><br><span class="line">		<span class="hljs-built_in">NSCAssert</span>([value isKindOfClass:RACSignal.class], <span class="hljs-string">@"Expected all cases to be RACSignals, %@ isn't"</span>, value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-built_in">NSDictionary</span> *<span class="hljs-keyword">copy</span> = [cases <span class="hljs-keyword">copy</span>];</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">return</span> [[[signal</span><br><span class="line">		map:^(<span class="hljs-keyword">id</span> key) &#123;</span><br><span class="line">			<span class="hljs-keyword">if</span> (key == <span class="hljs-literal">nil</span>) key = RACTupleNil.tupleNil;</span><br><span class="line"></span><br><span class="line">			RACSignal *signal = <span class="hljs-keyword">copy</span>[key] ?: defaultSignal;</span><br><span class="line">			<span class="hljs-keyword">if</span> (signal == <span class="hljs-literal">nil</span>) &#123;</span><br><span class="line">				<span class="hljs-built_in">NSString</span> *description = [<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-built_in">NSLocalizedString</span>(<span class="hljs-string">@"No matching signal found for value %@"</span>, <span class="hljs-string">@""</span>), key];</span><br><span class="line">				<span class="hljs-keyword">return</span> [RACSignal error:[<span class="hljs-built_in">NSError</span> errorWithDomain:RACSignalErrorDomain code:RACSignalErrorNoMatchingCase userInfo:@&#123; <span class="hljs-built_in">NSLocalizedDescriptionKey</span>: description &#125;]];</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="hljs-keyword">return</span> signal;</span><br><span class="line">		&#125;]</span><br><span class="line">		switchToLatest]</span><br><span class="line">		setNameWithFormat:<span class="hljs-string">@"+switch: %@ cases: %@ default: %@"</span>, signal, cases, defaultSignal];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Flatten"><a href="#Flatten" class="headerlink" title="Flatten"></a>Flatten</h4><p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqgt6aqxf6j30jr08ygmo.jpg" alt="image-20180418144742256"></p>
+<h4 id="Flatten"><a href="#Flatten" class="headerlink" title="Flatten"></a>Flatten</h4><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_6.jpg" alt="image-20180418144742256"></p>
 <p>flatten与SwitchToLatests不同的是，新的信号不会截断旧的信号。它相当于是使用<strong>**merge:</strong>方法把信号中的所有信号都合并在了一起。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt6jnkalj30jd08vq3y.jpg" alt="image-20180418144755171"></p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_7.jpg" alt="image-20180418144755171"></p>
 <p>flatten：这个带参数的方法 的参数类型是NSUInteger。拿上图举例子就是说，当前这个参数为2，那这个值就代表的是当前最多展开的信号，signalA中有4个信号，最多同时展开两个信号。也就是说，首先能够一次订阅前两个信号，如果这里两个信号都没执行完， 就不能订阅第三个，当 前两个信号其中有一个信号结束之后，才会去订阅第三个信号，这样依次类推。 </p>
-<h4 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h4><p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fqgt6mylwlj30is08zt9k.jpg" alt="image-20180418144801999"></p>
+<h4 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h4><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac4_8.jpg" alt="image-20180418144801999"></p>
 <p>对于一个返回a信号、b信号的高阶信号调用flatten:1，等价于[a信号 concat:b信号]。</p>
 <p>对于高级信号，也有一个- (RACSIgnal *)concat;方法，就是相当于调用flatten:1</p>
 <h4 id="FlattenMap"><a href="#FlattenMap" class="headerlink" title="FlattenMap"></a>FlattenMap</h4><p>flattenMap就是 先map为高阶信号在调用flatten降阶</p>
@@ -661,7 +666,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(四)信号高阶操作">
                 </p>
             </a>
             
@@ -680,7 +685,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
                 </p>
             </a>
             
@@ -780,7 +785,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/03/10/RAC-四-信号高阶操作/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(四)信号高阶操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(四)信号高阶操作">
                 </p>
             </a>
             
@@ -799,7 +804,7 @@ var _hmt = _hmt || [];
             
             <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="RAC(三)RACSignal各类操作">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
                 </p>
             </a>
             
