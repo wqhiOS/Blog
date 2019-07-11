@@ -7,16 +7,19 @@
 
 
 
-    <meta name="keywords" content="多线程">
+    <meta name="description" content="简介 什么是GCD 全程：Grand Central Dispatch（强大的中枢调度器） 纯C语言，提供了非常强大的函数   GCD的优势 GCD会自动利用更多的CPU内核 GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程） 程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码">
+<meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Grand Central Dispatch">
 <meta property="og:url" content="http://www.wuqihan.cn/2016/07/18/Grand-Central-Dispatch/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
+<meta property="og:description" content="简介 什么是GCD 全程：Grand Central Dispatch（强大的中枢调度器） 纯C语言，提供了非常强大的函数   GCD的优势 GCD会自动利用更多的CPU内核 GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程） 程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd.jpeg">
-<meta property="og:updated_time" content="2019-07-11T13:24:00.677Z">
+<meta property="og:updated_time" content="2019-07-11T13:30:33.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Grand Central Dispatch">
+<meta name="twitter:description" content="简介 什么是GCD 全程：Grand Central Dispatch（强大的中枢调度器） 纯C语言，提供了非常强大的函数   GCD的优势 GCD会自动利用更多的CPU内核 GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程） 程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码">
 <meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd.jpeg">
 
 
@@ -175,7 +178,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    29 分钟 读完 (大约 4383 个字)
+                    29 分钟 读完 (大约 4369 个字)
                 </span>
                 
                 
@@ -193,8 +196,7 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd.jpeg" alt="GCD"><br><a id="more"></a></p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
 <li>什么是GCD<ul>
 <li>全程：Grand Central Dispatch（强大的中枢调度器）</li>
 <li>纯C语言，提供了非常强大的函数</li>
@@ -207,6 +209,7 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <h3 id="任务和队列"><a href="#任务和队列" class="headerlink" title="任务和队列"></a>任务和队列</h3><ul>
 <li>GCD中有两个核心概念<ul>
 <li>任务：执行什么操作</li>
