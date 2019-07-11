@@ -7,18 +7,18 @@
 
 
 
-    <meta name="description" content="什么是类对象？在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。 类对象起什么作用？Objective-C是一门很动态的语音，因此程序里的所有实例对象都是在运行时由Objective-Cd的运行时库生成的，而这个类">
+    <meta name="description" content="什么是类对象？在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C类对象">
 <meta property="og:url" content="http://www.wuqihan.cn/2016/05/08/Objective-C对象详解/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
-<meta property="og:description" content="什么是类对象？在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。 类对象起什么作用？Objective-C是一门很动态的语音，因此程序里的所有实例对象都是在运行时由Objective-Cd的运行时库生成的，而这个类">
+<meta property="og:description" content="什么是类对象？在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-11T13:27:28.831Z">
+<meta property="og:updated_time" content="2019-07-11T13:44:35.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objective-C类对象">
-<meta name="twitter:description" content="什么是类对象？在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。 类对象起什么作用？Objective-C是一门很动态的语音，因此程序里的所有实例对象都是在运行时由Objective-Cd的运行时库生成的，而这个类">
+<meta name="twitter:description" content="什么是类对象？在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。">
 <meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
 
 
@@ -171,7 +171,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    8 分钟 读完 (大约 1237 个字)
+                    8 分钟 读完 (大约 1238 个字)
                 </span>
                 
                 
@@ -189,17 +189,18 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <h3 id="什么是类对象？"><a href="#什么是类对象？" class="headerlink" title="什么是类对象？"></a>什么是类对象？</h3><p>在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。</p>
-<h3 id="类对象起什么作用？"><a href="#类对象起什么作用？" class="headerlink" title="类对象起什么作用？"></a>类对象起什么作用？</h3><p>Objective-C是一门很动态的语音，因此程序里的所有实例对象都是在运行时由Objective-Cd的运行时库生成的，而这个类对象就是运行时库用来创建实例对象的依据。</p>
-<h3 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h3><p>Objective-C类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针。它的定义如下：</p>
+            <h2 id="什么是类对象？"><a href="#什么是类对象？" class="headerlink" title="什么是类对象？"></a>什么是类对象？</h2><p>在Objective-C中任何的类定义都是对象。即在程序启动的时候任何类定义都对应于一块内存。在编译的时候，编译器会给每一个类生成一个且只生成一个“描述其定义的对象”，也就是苹果公司说的类对象（class object），它是一个单例。</p>
+<a id="more"></a>
+<h2 id="类对象起什么作用？"><a href="#类对象起什么作用？" class="headerlink" title="类对象起什么作用？"></a>类对象起什么作用？</h2><p>Objective-C是一门很动态的语音，因此程序里的所有实例对象都是在运行时由Objective-Cd的运行时库生成的，而这个类对象就是运行时库用来创建实例对象的依据。</p>
+<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>Objective-C类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针。它的定义如下：</p>
 <figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// An opaque type that represents an Objective-Cclass.</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">objc_class</span> *<span class="hljs-title">Class</span>;</span></span><br></pre></td></tr></table></figure>
 <p>查看objc/runtime.h中objc_class结构体的定义如下：</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">struct</span> objc_class &#123;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">#if !OBJC2</span></span><br><span class="line"></span><br><span class="line">    Class _Nullablesuper_class                             OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* _Nonnull name                             OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    longversion                                           OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    longinfo                                              OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    longinstance_size                                     OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    structobjc_ivar_list * _Nullable ivars                 OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    structobjc_method_list * _Nullable * _NullablemethodLists                   OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    structobjc_cache * _Nonnull cache                      OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    structobjc_protocol_list * _Nullable protocols         OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">#endif</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/* Use Class instead of struct objc_class * */</span></span><br></pre></td></tr></table></figure>
-<h3 id="id与objc-object"><a href="#id与objc-object" class="headerlink" title="id与objc_object"></a>id与objc_object</h3><p>“objc_object”是表示一个类的实例的结构体，它的定义如下</p>
+<h2 id="id与objc-object"><a href="#id与objc-object" class="headerlink" title="id与objc_object"></a>id与objc_object</h2><p>“objc_object”是表示一个类的实例的结构体，它的定义如下</p>
 <figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/// Represents an instance of a class.</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">objc_object</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    Class _Nonnullisa  OBJC_ISA_AVAILABILITY;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="hljs-comment">/// A pointer to an instance of a class.</span></span><br><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">objc_object</span> *<span class="hljs-title">id</span>;</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，这个结构体只有一个变量，即指向其类的isa指针。这样，当我们向一个Objective-C对象发送消息时，运行时库会根据实例对象的isa指针找到这个实例对象所属的类。Runtime库会在类的方法列表以及父类的方法列表里中寻找与消息对应的selector指向的方法。</p>
 <p>当创建一个特定类的实例对象时，分配的内存包含一个objc_object数据结构，然后是类的实例变量的数据。NSObject类的alloch和allocWithZone：方法使用函数class_creatInstance来创建objc_object数据结构。</p>
-<h3 id="元类（Meta-Class）"><a href="#元类（Meta-Class）" class="headerlink" title="元类（Meta Class）"></a>元类（Meta Class）</h3><p>上面提到，所有的类自身也是一个对象，我们可以向这个类型发送消息（即调用类方法）。</p>
+<h2 id="元类（Meta-Class）"><a href="#元类（Meta-Class）" class="headerlink" title="元类（Meta Class）"></a>元类（Meta Class）</h2><p>上面提到，所有的类自身也是一个对象，我们可以向这个类型发送消息（即调用类方法）。</p>
 <p>NSArray*array = [ NSArray array];</p>
 <p>这个例子中，+array消息发送给了NSArray类，而这个NSArray也是一个对象。既然是对象，那么它也是一个objc_object指针，它包含一个指向其类的一个isa指针。那么这些就又一个问题了。这个isa指针指向什么呢？为了调用+array方法，这个类的isa指针必须指向一个包含这些类方法的一个objc_class结构体。这就引出了meta-class的概念。</p>
 <p>meta-class 是一个类对象的类。</p>
