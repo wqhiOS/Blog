@@ -155,6 +155,67 @@ var _hmt = _hmt || [];
     <div class="card">
     
     <div class="card-image">
+        <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <time class="level-item has-text-grey" datetime="2017-01-08T05:20:24.000Z">2017-01-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 分钟 读完 (大约 1209 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2017/01/08/RAC-三-RACSignal基本使用/">RAC(三)RACSignal各类操作</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="获得一个信号的方式"><a href="#获得一个信号的方式" class="headerlink" title="获得一个信号的方式"></a>获得一个信号的方式</h3><h4 id="单元信号"><a href="#单元信号" class="headerlink" title="单元信号"></a>单元信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal1 = [RACSignal <span class="hljs-keyword">return</span>:<span class="hljs-string">@"Some value"</span>];</span><br><span class="line">RACSignal *signal2 = [RACSignal error:errorObject];</span><br><span class="line">RACSignal *signal3 = [RACSignal empty];</span><br><span class="line">RACSignal *signal4 = [RACSignal never];</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/01/08/RAC-三-RACSignal基本使用/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2017/01/01/RAC-二-基础知识/" class="image is-7by1">
             <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(二)基础知识">
         </a>
@@ -441,79 +502,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-
-                
-
-                <time class="level-item has-text-grey" datetime="2016-07-08T02:05:17.000Z">2016-07-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    19 分钟 读完 (大约 2810 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2016/07/08/多线程基础/">多线程基础篇</a>
-            
-        </h1>
-        <div class="content">
-            <h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p>学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：</p>
-<ul>
-<li>进程：<ul>
-<li>进程是指在系统中运行的一个应用程序。（比如打卡QQ,就是打开了一个进程）</li>
-<li>每个进程之间是相互独立的，每个进程均运行在受保护的内存空间内</li>
-</ul>
-</li>
-<li>线程：<ul>
-<li>一个进程想要执行任务，必须得有线程（每个进程至少有一条线程）</li>
-<li>进程中的所有任务都是在线程中执行的</li>
-</ul>
-</li>
-<li>总结：<ul>
-<li>进程有独立的空间地址，而线程只是一个进程中的不同执行路径。</li>
-<li>进程是资源分配的基本单位(进程是一块包含了某些资源的内存区域)。</li>
-<li>线程是CPU独立运行和独立调度的基本单位(可以理解为一个进程中执行的代码片段)。 </li>
-</ul>
-</li>
-</ul>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2016/07/08/多线程基础/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -578,7 +566,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </div>
             </div>
@@ -588,7 +576,7 @@ var _hmt = _hmt || [];
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        3
                     </p>
                 </div>
             </div>
@@ -598,7 +586,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        5
+                        6
                     </p>
                 </div>
             </div>
@@ -664,6 +652,14 @@ var _hmt = _hmt || [];
             <span class="level-end">
                 <span class="level-item tag">1</span>
             </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/工具/">
+            <span class="level-start">
+                <span class="level-item">工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
         </a></li>
             </ul>
         </div>
@@ -677,6 +673,17 @@ var _hmt = _hmt || [];
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2018/05/">
@@ -799,7 +806,7 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 15px;">多线程</a>
+        <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 15px;">多线程</a>
     </div>
 </div>
 
@@ -815,6 +822,25 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/08/14/在CentOS7上搭建Shadowsocks/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/ss.jpeg" alt="在CentOS7上搭建Shadowsocks">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T12:52:16.000Z">2019-08-14</time></div>
+                    <a href="/2019/08/14/在CentOS7上搭建Shadowsocks/" class="has-link-black-ter is-size-6">在CentOS7上搭建Shadowsocks</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/工具/">工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -885,25 +911,6 @@ var _hmt = _hmt || [];
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-03-10T06:42:50.000Z">2017-03-10</time></div>
                     <a href="/2017/03/10/RAC-四-信号高阶操作/" class="has-link-black-ter is-size-6">RAC(四)信号高阶操作</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-01-08T05:20:24.000Z">2017-01-08</time></div>
-                    <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="has-link-black-ter is-size-6">RAC(三)RACSignal各类操作</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
                     </p>
@@ -937,6 +944,25 @@ var _hmt = _hmt || [];
         
         <article class="media">
             
+            <a href="/2019/08/14/在CentOS7上搭建Shadowsocks/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/ss.jpeg" alt="在CentOS7上搭建Shadowsocks">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-14T12:52:16.000Z">2019-08-14</time></div>
+                    <a href="/2019/08/14/在CentOS7上搭建Shadowsocks/" class="has-link-black-ter is-size-6">在CentOS7上搭建Shadowsocks</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/工具/">工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2018/05/18/优雅的使用NSNotification-name/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="优雅的使用NSNotification.Name">
@@ -1004,25 +1030,6 @@ var _hmt = _hmt || [];
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-03-10T06:42:50.000Z">2017-03-10</time></div>
                     <a href="/2017/03/10/RAC-四-信号高阶操作/" class="has-link-black-ter is-size-6">RAC(四)信号高阶操作</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-01-08T05:20:24.000Z">2017-01-08</time></div>
-                    <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="has-link-black-ter is-size-6">RAC(三)RACSignal各类操作</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
                     </p>
