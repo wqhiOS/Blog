@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>Grand Central Dispatch - 吴启晗的技术博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="简介 什么是GCD 全程：Grand Central Dispatch（强大的中枢调度器） 纯C语言，提供了非常强大的函数   GCD的优势 GCD会自动利用更多的CPU内核 GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程） 程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Grand Central Dispatch">
+<meta property="og:url" content="http://www.wuqihan.cn/2016/07/18/Grand-Central-Dispatch/index.html">
+<meta property="og:site_name" content="吴启晗的技术博客">
+<meta property="og:description" content="简介 什么是GCD 全程：Grand Central Dispatch（强大的中枢调度器） 纯C语言，提供了非常强大的函数   GCD的优势 GCD会自动利用更多的CPU内核 GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程） 程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd.jpeg">
+<meta property="og:updated_time" content="2019-07-11T13:30:33.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grand Central Dispatch">
+<meta name="twitter:description" content="简介 什么是GCD 全程：Grand Central Dispatch（强大的中枢调度器） 纯C语言，提供了非常强大的函数   GCD的优势 GCD会自动利用更多的CPU内核 GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程） 程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码">
+<meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd.jpeg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/xcode.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<!-- <body class="is-2-column"> -->
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Grand Central Dispatch" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/wqhiOS">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd.jpeg" alt="Grand Central Dispatch">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <time class="level-item has-text-grey" datetime="2016-07-18T07:21:44.000Z">2016-07-18</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    29 分钟 读完 (大约 4369 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Grand Central Dispatch
+            
+        </h1>
+        <div class="content">
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>什么是GCD<ul>
+<li>全程：Grand Central Dispatch（强大的中枢调度器）</li>
+<li>纯C语言，提供了非常强大的函数</li>
+</ul>
+</li>
+<li>GCD的优势<ul>
+<li>GCD会自动利用更多的CPU内核</li>
+<li>GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程）</li>
+<li>程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="任务和队列"><a href="#任务和队列" class="headerlink" title="任务和队列"></a>任务和队列</h3><ul>
+<li>GCD中有两个核心概念<ul>
+<li>任务：执行什么操作</li>
+<li>队列：用来存放任务</li>
+</ul>
+</li>
+<li>GCD的使用有两个步骤<ul>
+<li>定制任务</li>
+<li>将任务添加到队列中<ul>
+<li>GCD会自动将队列中的任务取出来，放到对应的线程中执行</li>
+<li>任务的取出遵循队列的FIFO（现金先出）原则</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="执行任务"><a href="#执行任务" class="headerlink" title="执行任务"></a>执行任务</h3><ul>
+<li><p>GCD中有两个用来执行任务的常用函数</p>
+<ul>
+<li><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     用同步的方式执行任务</span></span><br><span class="line"><span class="hljs-comment"></span></span><br><span class="line"><span class="hljs-comment">     @param queue#&gt; 队列 description#&gt;</span></span><br><span class="line"><span class="hljs-comment">     @param void block任务</span></span><br><span class="line"><span class="hljs-comment">     @return</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_sync</span>(&lt;<span class="hljs-meta">#dispatch_queue_t  _Nonnull queue#&gt;, <span class="hljs-meta-string">&lt;#^(void)block#&gt;</span>);</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     用异步的方式执行任务</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(&lt;<span class="hljs-meta">#dispatch_queue_t  _Nonnull queue#&gt;, <span class="hljs-meta-string">&lt;#^(void)block#&gt;</span>);</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>还有个用来执行任务的函数：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;     <span class="hljs-comment">//第一个参数queue 不能是全局的并发队列</span></span><br><span class="line">&gt; 	<span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">&gt; 	dispatch_barrier_async函数的作用与barrier的意思相同,在进程管理中起到一个栅栏的作用,它等		待所有位于barrier函数之前的操作执行完毕后执行,并且在barrier函数执行之后,barrier函数之后的	操作才会得到执行,该函数需要同dispatch_queue_create函数生成的concurrent Dispatch Queue	  队列一起使用</span></span><br><span class="line"><span class="hljs-comment">&gt; 	*/</span></span><br><span class="line">&gt;     dispatch_barrier_async(&lt;<span class="hljs-meta">#dispatch_queue_t  _Nonnull queue#&gt;, <span class="hljs-meta-string">&lt;#^(void)block#&gt;</span>);</span></span><br><span class="line">&gt;     dispatch_barrier_sync(&lt;<span class="hljs-meta">#dispatch_queue_t  _Nonnull queue#&gt;, <span class="hljs-meta-string">&lt;#^(void)block#&gt;</span>);</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>同步和异步的区别</p>
+<ul>
+<li>同步：只能在当前线程中执行任务，不具备开启新线程的能力</li>
+<li>异步：只能在新的线程中执行任务，局别开启新线程的能力</li>
+</ul>
+<blockquote>
+<p>同步、异步、并发、串行 要分清楚</p>
+<ul>
+<li>同步和异步主要影响：能不能开启新的线程<ul>
+<li>同步：只是在当前线程中执行任务，不具备开启新线程的能力</li>
+<li>异步：可以在新的线程中执行任务，具备开启新线程的能力</li>
+</ul>
+</li>
+<li>并发和串行主要影响：任务的执行方式<ul>
+<li>并发：允许多个任务并发（同时）执行</li>
+<li>串行：一个任务执行完毕后，再执行下一个任务</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>dispatch_async 和 dispatch_sync 还要一个很重要的区别</p>
+<ul>
+<li><p>异步执行 会立刻返回</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//验证异步执行会立刻返回</span></span><br><span class="line">   <span class="hljs-built_in">dispatch_async</span>(dispatch_get_global_queue(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">       <span class="hljs-comment">//子线程</span></span><br><span class="line">       <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) &#123;</span><br><span class="line">           <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"22222"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"33333"</span>);</span><br><span class="line">   <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">   先打印33333</span></span><br><span class="line"><span class="hljs-comment">   最后才是2222。。。</span></span><br><span class="line"><span class="hljs-comment">   */</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>同步执行会等待执行结束后才返回</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//验证同步执行会等待执行结束后返回</span></span><br><span class="line">   <span class="hljs-built_in">dispatch_sync</span>(dispatch_get_global_queue(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">       <span class="hljs-comment">//因为是同步。不会开启线程，所以仍然是main线程</span></span><br><span class="line">       <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) &#123;</span><br><span class="line">           <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"22222"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"33333"</span>);</span><br><span class="line">   <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">   先打印完所有22222</span></span><br><span class="line"><span class="hljs-comment">   最后才会打印33333</span></span><br><span class="line"><span class="hljs-comment">   */</span></span><br></pre></td></tr></table></figure>
+<p>正是因为这个特性 在主线程同步调用任务在mainQueue里，就会造成死锁的情况。因为：<br>1）:dispatch_sync在等待block语句执行完成，而block语句需要在主线程里执行，所以dispatch_sync如果在主线程调用就会造成死锁<br>2）:dispatch_sync是同步的，本身就会阻塞当前线程，也即主线程。而又往主线程里塞进去一个block，所以就会发生死锁。</p>
+</li>
+</ul>
+<h3 id="创建队列"><a href="#创建队列" class="headerlink" title="创建队列"></a>创建队列</h3><h4 id="队列的类型"><a href="#队列的类型" class="headerlink" title="队列的类型"></a>队列的类型</h4><ul>
+<li>GCD的队列可以分为2大类型<ul>
+<li>并发队列<ul>
+<li>可以让多个任务并发（同时）执行（自动开启多个线程同时执行任务）</li>
+<li>并发功能只有在异步（dispatch_async）函数下才有效</li>
+</ul>
+</li>
+<li>串行队列<ul>
+<li>让任务一个接着一个地执行（一个任务执行完毕之后，再执行下一个任务）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="如何创建并发队列"><a href="#如何创建并发队列" class="headerlink" title="如何创建并发队列"></a>如何创建并发队列</h4><p>第一种方法：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_create(<span class="hljs-string">"com.a"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br></pre></td></tr></table></figure>
+<p>第二种方法：使用系统提供的 Global Dispatch Queue</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch_get_global_queue(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<span class="hljs-comment">//第一个设置优先级，仅仅是大致优先级。第二个暂时没用</span></span><br></pre></td></tr></table></figure>
+<h4 id="如何创建串行队列"><a href="#如何创建串行队列" class="headerlink" title="如何创建串行队列"></a>如何创建串行队列</h4><p>第一种方法：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_create(<span class="hljs-string">"com.b"</span>, <span class="hljs-literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：《iOS与OS X多线程和内存管理》中讲到 使用dispatch_queue_create()创建的DispatchQueue在ARC中也需要手动调用dispatch_release（）方法释放。经过验证，iOS6以后的ARC中就不需要了。</p>
+</blockquote>
+<p>这里需要注意使用Serial Disparch Queue时，其生成个数的问题，Concurrent Dispatch Queue能够并行执行多个追加处理（也就是会开启多条线程去处理追加到队列中的的多个任务），而Serial Dispatch Queue同时只能执行一个追加处理（也就是只能开启一条线程）。</p>
+<p>但是当通过dispatch_queue_create()生成多个Serial Dispatch Queue时，各个Serial Dispatch Queue将并行执行（<strong>前提是使用异步方式</strong>）。虽然在一个Serial Dispatch Queue中同时只能执行一个追加处理，但如果将处理分别追加到4个Serial Dispatch Queue中，各个Serial Dispatch Queue执行一个，即为并行执行4个处理。≈ 如下图：</p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd1.png" alt="多个Serial Dispatch Queue"></p>
+<p>如果生成2000个Serial Dispatch Queue，那么就生成2000个线程，如果过多使用，就会消耗大量内存，引起大量的上下文切换，大幅度降低系统的性能。</p>
+<p>第二种方法：直接使用主队列（主队列是串行队列）</p>
+<h3 id="GCD的其他函数"><a href="#GCD的其他函数" class="headerlink" title="GCD的其他函数"></a>GCD的其他函数</h3><h4 id="dispatch-set-target-queue"><a href="#dispatch-set-target-queue" class="headerlink" title="dispatch_set_target_queue"></a>dispatch_set_target_queue</h4><ol>
+<li><p>变更Dispatch Queue的执行优先级。<br>dispatch_queue_create函数生成的Dispatch Queue不管是Serial Dispatch Queue还是Concurrent Dispatch Queue，都使用与默认优先级Global Dispatch Queue相同执行优先级的线程。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> 	dispatch_queue_t serialQueue = dispatch_queue_create(&quot;com.oukavip.www&quot;,NULL);</span><br><span class="line">    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND,0);	</span><br><span class="line">   dispatch_set_target_queue(serialQueue, globalQueue);</span><br><span class="line">   // 第一个参数为要设置优先级的queue,第二个参数是参照物，既将第一个queue的优先级和第二个queue的优先级设置一样。</span><br><span class="line">//第一个参数如果指定系统提供的Main/Global Dispatch Queue则不知道会出现什么情况，因此这些均不可以指定。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将Dispatch Queue指定为dispatch_set_target_queue函数的参数还可以作成Dispatch Queue的执行阶层，那么原本应并行执行的多个Serial Dispatch Queue，在目标Serial Dispatch Queue上只能同时执行一个处理。（修改用户队列的目标队列，使多个Queue在目标Queue上一次只有一个执行）</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> targetQueue = dispatch_queue_create(<span class="hljs-string">"targetQueue"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-built_in">dispatch_queue_t</span> queue1 = dispatch_queue_create(<span class="hljs-string">"queue1"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    <span class="hljs-built_in">dispatch_queue_t</span> queue2 = dispatch_queue_create(<span class="hljs-string">"queue1"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//设置参考</span></span><br><span class="line">    dispatch_set_target_queue(queue1, targetQueue);</span><br><span class="line">    dispatch_set_target_queue(queue2, targetQueue);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue1, ^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"job3 in"</span>);</span><br><span class="line">        [<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">2.</span>f];</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"job3 out"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue1, ^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"job2 in"</span>);</span><br><span class="line">        [<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">1.</span>f];</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"job2 out"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue1, ^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"job1 in"</span>);</span><br><span class="line">        [<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">3.</span>f];</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"job1 out"</span>);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>打印输出为：</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">48.144492</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">3693</span>:<span class="hljs-number">336603</span>] job3 in</span><br><span class="line"><span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">50.148901</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">3693</span>:<span class="hljs-number">336603</span>] job3 out</span><br><span class="line"><span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">50.149213</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">3693</span>:<span class="hljs-number">336603</span>] job2 in</span><br><span class="line"><span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">51.153663</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">3693</span>:<span class="hljs-number">336603</span>] job2 out</span><br><span class="line"><span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">51.154019</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">3693</span>:<span class="hljs-number">336603</span>] job1 in</span><br><span class="line"><span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">54.157262</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">3693</span>:<span class="hljs-number">336603</span>] job1 out</span><br></pre></td></tr></table></figure>
+<p>通过打印的结果说明我们设置了queue1和queue2队列以targetQueue队列为参照对象，那么queue1和queue2中的任务将按照targetQueue的队列处理。</p>
+<p>在必须将不可并行执行的处理追加到多个Serial Dispatch Queue中时，如果使用dispatch_set_target_queue函数将目标制定为某一个Serial Dispatch Queue，即可防止处理并行执行。</p>
+<p>适用场景：一般都是把一个任务放到一个串行的queue中，如果这个任务被拆分了，被放置到多个串行的queue中，但实际还是需要这个任务同步执行，那么就会有问题，因为多个串行queue之间是并行的。这时候dispatch_set_target_queue将起到作用。</p>
+</li>
+</ol>
+<h4 id="dispatch-after"><a href="#dispatch-after" class="headerlink" title="dispatch_after"></a>dispatch_after</h4><p>想在指定时间后执行处理，可使用dispatch_after函数来实现。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//在3秒后将指定的block追加到Main Dispatch Queue中</span></span><br><span class="line">dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="hljs-number">3</span> * <span class="hljs-built_in">NSEC_PER_SEC</span>)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"waited at last three seconds."</span>);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>dispatch_after函数并不是在指定时间后执行处理，而只是在指定时间追加处理到Dispatch Queue。此源代码与在3秒后用dispatch_async函数追加block到Main Dispatch Queue相同。</p>
+<p>因为Main Dispatch Queue在主线程的RunLoop中执行，所以在比如每隔1/60秒执行的RunLoop中，block最快在3秒后执行，最慢在3+1/60秒后执行。并且Main Dispatch Queue有大量处理追加或主线程的处理本身有延迟时，这个时间会更长。如果想在大致延迟时间执行处理，该函数是非常有效的。</p>
+<h4 id="disparch-group-t"><a href="#disparch-group-t" class="headerlink" title="disparch_group_t"></a>disparch_group_t</h4><p>无论向什么样的Dispatch Queue中追加处理，使用Dispatch Group都可以监视这些处理执行的结束。一旦检测到所有处理执行结束，就可将结束的处理追加到Dispatch Queue中。这就是使用Dispatch Group的原因。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>);</span><br><span class="line">   dispatch_group_t group = dispatch_group_create();</span><br><span class="line">   </span><br><span class="line">   dispatch_group_async(group, queue, ^&#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk0"</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">   dispatch_group_async(group, queue, ^&#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk1"</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">   dispatch_group_async(group, dispatch_queue_create(<span class="hljs-string">"com.wuqh.queue"</span>, <span class="hljs-literal">NULL</span>), ^&#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk2"</span>);</span><br><span class="line">       [<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">5</span>];</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk2done"</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">   </span><br><span class="line">   dispatch_group_notify(group, dispatch_get_main_queue(), ^&#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"done"</span>);</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+<p>另外，在Dispatch Gourp中也可以使用dispatch_group_wait函数仅等待全部处理执行结束。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>);</span><br><span class="line">    dispatch_group_t group = dispatch_group_create();</span><br><span class="line">    </span><br><span class="line">    dispatch_group_async(group, queue, ^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk0"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    dispatch_group_async(group, queue, ^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk1"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    dispatch_group_async(group, dispatch_queue_create(<span class="hljs-string">"com.wuqh.queue"</span>, <span class="hljs-literal">NULL</span>), ^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk2"</span>);</span><br><span class="line">        [<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">5</span>];</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"blk2done"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="hljs-comment">//程序会一直停留在此处等待gourp中的任务，直到全部执行完毕才会继续向下执行。</span></span><br><span class="line">	<span class="hljs-comment">//也就是说，意味着一旦调用dispatch_group_wait函数，该函数就处于调用的状态而不返回。即执行dispatch</span></span><br><span class="line">	<span class="hljs-comment">//_group_wait函数的线程停止。在经过dispatch_group_wait函数中指定时间或任务全部执行结束之前</span></span><br><span class="line">	<span class="hljs-comment">//执行该函数的线程停止</span></span><br><span class="line">    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);</span><br></pre></td></tr></table></figure>
+<p>也可以指定等待时间。disparch_group_wait，有一个long类型的返回值，返回值为0，表示全部执行结束，返回值不为0，表示虽然经过了指定时间，但还有某些处理没有执行完。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">long</span> result = dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="hljs-number">3</span> * <span class="hljs-built_in">NSEC_PER_SEC</span>)));</span><br><span class="line">    <span class="hljs-keyword">if</span> (result &gt; <span class="hljs-number">0</span>) &#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"没有全部执行结束执行结束"</span>);</span><br><span class="line">    &#125;<span class="hljs-keyword">else</span> &#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"全部执行结束"</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>指定time为DISPATCH_TIME_NOW，则不用任何等待即可判定属于Dispatch Group的处理是否执行结束。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">long</span> result = dispatch_group_wait(group, DISPATCH_TIME_NOW);</span><br></pre></td></tr></table></figure>
+<h4 id="dispatch-a-sync"><a href="#dispatch-a-sync" class="headerlink" title="dispatch_(a)sync"></a>dispatch_(a)sync</h4><p>dispatch_async函数的”async“意味着“非同步”，就是将指定的block”非同步”地追加到指定的队列中。dispatch_async函数不作任何等待，如下图：</p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd2.jpg" alt="mage-20180315162245"></p>
+<p>dispatch_sync意味着“同步”。函数会一直等待执行结束，“等待”意味着当前线程停止。如下图：</p>
+<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd3.jpg" alt="mage-20180315162057"></p>
+<p>注意：dispatch_sync函数容易引起问题，即死锁。例如在主线程中执行以下源代码就会死锁：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_sync</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        <span class="hljs-comment">//。。。</span></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>使用async，或者Serail Dispatch Queue都会遇到死锁，如下：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"..."</span>);</span><br><span class="line">        &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="hljs-string">"com.gcd.error"</span>, <span class="hljs-literal">NULL</span>);</span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">        <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"..."</span>);</span><br><span class="line">        &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="dispatchbarrier-a-sync"><a href="#dispatchbarrier-a-sync" class="headerlink" title="dispatchbarrier(a)sync"></a>dispatch<em>barrier</em>(a)sync</h4><p>在进程管理中起到一个栅栏的作用，它等待所有位于barrier函数之前的操作执行完毕后执行，并且在barrier函数执行之后，barrier函数之后的操作才会得到执行，该函数需要同dispatch_queue_create函数生成的Concureent Dispatch Queue队列一起使用。<strong>注意：与使用dispatch_get_global_queue()获得的队列一起使用无效</strong>。</p>
+<p>作用：</p>
+<ul>
+<li>实现高效率的数据库访问和文件访问</li>
+<li>避免数据竞争</li>
+</ul>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="hljs-string">"com.gcd"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">20</span>; i++) &#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"----1----%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">20</span>; i++) &#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"----2----%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    dispatch_barrier_async(queue, ^&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">20</span>; i++) &#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"----barrier----%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">20</span>; i++) &#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"----3----%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">20</span>; i++) &#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"----4----%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="hljs-comment">//先执行1和2，之后是barrier，最后是3和4</span></span><br></pre></td></tr></table></figure>
+<p>同dispath_async一样，此函数也有一个这样的函数：dispatch_barrier_sync函数，此函数与dispatch_barrier_async的区别和 dispatch_async与dispatch_sync的区别相同：async不阻塞当前线程。</p>
+<h4 id="dispatch-apply"><a href="#dispatch-apply" class="headerlink" title="dispatch_apply"></a>dispatch_apply</h4><p> dispatch_apply函数时dispatch_sync函数和Dispatch Group的关联API。该函数按指定的次数将指定的block追加到指定的Dispatch Queue中，并等待全部处理执行结束。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">NSArray</span> *array = [<span class="hljs-built_in">NSArray</span> arrayWithObjects:@<span class="hljs-number">0</span>,@<span class="hljs-number">1</span>,@<span class="hljs-number">2</span>,@<span class="hljs-number">3</span>,@<span class="hljs-number">4</span>,@<span class="hljs-number">5</span>,@<span class="hljs-number">6</span>,@<span class="hljs-number">7</span>,@<span class="hljs-number">8</span>,@<span class="hljs-number">9</span>, <span class="hljs-literal">nil</span>];</span><br><span class="line">dispatch_apply([array count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^(size_t index) &#123;</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"async:%@-%@"</span>,array[index],[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"done"</span>);<span class="hljs-comment">//同sync一样。最后才会打印done。</span></span><br></pre></td></tr></table></figure>
+<p>由于dispatch_apply函数会等待执行结束，因此有时候也可以在dispatch_async函数中非同步地执行dispatch_apply函数。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">        dispatch_apply([array count],	  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^(size_t index) &#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"async:%@-%@"</span>,array[index],[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"success"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"done"</span>);<span class="hljs-comment">//因为async不需要等待，所以会立马执行，不会最后才打印。</span></span><br></pre></td></tr></table></figure>
+<h4 id="dispatch-suspend-dispatch-resume"><a href="#dispatch-suspend-dispatch-resume" class="headerlink" title="dispatch_suspend/dispatch_resume"></a>dispatch_suspend/dispatch_resume</h4><p>当追加大量处理到Dispatch Queue时，在追加处理的过程中，有时希望不执行已追加的处理。在这种情况下，只要挂起Dispatch Queue即可，当可以执行时再恢复。</p>
+<p>注意：dispatch_suspend/dispatch_resume对全局队列不起作用。</p>
+<p>必须确保dispatch_suspend/dispatch_resume成对调用。那么这里有个问题？<strong>gcd中如何中途结束线程？</strong></p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="hljs-string">"com.test.gcd"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line"><span class="hljs-comment">//提交第一个block，延时5秒打印。</span></span><br><span class="line"><span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">    sleep(<span class="hljs-number">5</span>);</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"After 5 seconds..."</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="hljs-comment">//提交第二个block，也是延时5秒打印</span></span><br><span class="line"><span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">    sleep(<span class="hljs-number">5</span>);</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"After 5 seconds again..."</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="hljs-comment">//延时一秒</span></span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"sleep 1 second..."</span>);</span><br><span class="line">sleep(<span class="hljs-number">1</span>);</span><br><span class="line"><span class="hljs-comment">//挂起队列</span></span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"suspend..."</span>);</span><br><span class="line">dispatch_suspend(queue);</span><br><span class="line"><span class="hljs-comment">//延时10秒</span></span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"sleep 10 second..."</span>);</span><br><span class="line">sleep(<span class="hljs-number">10</span>);</span><br><span class="line"><span class="hljs-comment">//恢复队列</span></span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"resume..."</span>);</span><br><span class="line">dispatch_resume(queue);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">2017</span><span class="hljs-number">-08</span><span class="hljs-number">-18</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">41.261398</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">5222</span>:<span class="hljs-number">795121</span>] sleep <span class="hljs-number">1</span> second...</span><br><span class="line"><span class="hljs-number">2017</span><span class="hljs-number">-08</span><span class="hljs-number">-18</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">42.262096</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">5222</span>:<span class="hljs-number">795121</span>] suspend...</span><br><span class="line"><span class="hljs-number">2017</span><span class="hljs-number">-08</span><span class="hljs-number">-18</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">42.262496</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">5222</span>:<span class="hljs-number">795121</span>] sleep <span class="hljs-number">10</span> second...</span><br><span class="line"><span class="hljs-number">2017</span><span class="hljs-number">-08</span><span class="hljs-number">-18</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">46.263456</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">5222</span>:<span class="hljs-number">795188</span>] After <span class="hljs-number">5</span> seconds...</span><br><span class="line"><span class="hljs-number">2017</span><span class="hljs-number">-08</span><span class="hljs-number">-18</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">52.263457</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">5222</span>:<span class="hljs-number">795121</span>] resume...</span><br><span class="line"><span class="hljs-number">2017</span><span class="hljs-number">-08</span><span class="hljs-number">-18</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">57.264210</span>+<span class="hljs-number">0800</span> GCD[<span class="hljs-number">5222</span>:<span class="hljs-number">795191</span>] After <span class="hljs-number">5</span> seconds again...</span><br></pre></td></tr></table></figure>
+<p>在dispatch_suspend挂起队列后，第一个block还是在运行，并且正常输出。</p>
+<p>dispatch_suspend并不会立即暂停正在运行的block，而是在当前block执行完成后，暂停后续的block执行。</p>
+<h4 id="Dispatch-Semaphore"><a href="#Dispatch-Semaphore" class="headerlink" title="Dispatch Semaphore"></a>Dispatch Semaphore</h4><p>dispatch_semaphore只有3个方法：</p>
+<ul>
+<li><p>dispatch_semaphore_create </p>
+<p>执行dispatch_semaphore_create会根据传入的long类型参数创建对应数目的信号量</p>
+</li>
+<li><p>dispatch_semaphore_signal </p>
+<p>执行dispatch_semaphore_singal会增加一个信号量</p>
+</li>
+<li><p>dispatch_semaphore_wait //等待信号量</p>
+<p>执行dispatch_semaphore_wait如果信号量是0，就会根据传入的等待时间来等待，如果大于0则不会等待，并且会减去一个信号量</p>
+</li>
+</ul>
+<p>作用：</p>
+<ul>
+<li><p>可以控制一个资源最多由多少个线程来访问。</p>
+<p>如下代码所示，由于设定的信号值为2，先执行两个线程，等执行完其中一个，第三个才会继续执行。保证同一时间执行的线程数不超过2。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//crate的value表示，最多几个资源可访问</span></span><br><span class="line">   dispatch_semaphore_t semaphore = dispatch_semaphore_create(<span class="hljs-number">2</span>);</span><br><span class="line">   <span class="hljs-built_in">dispatch_queue_t</span> quene = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>);</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//任务1</span></span><br><span class="line">   <span class="hljs-built_in">dispatch_async</span>(quene, ^&#123;</span><br><span class="line">       dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"run task 1"</span>);</span><br><span class="line">       sleep(<span class="hljs-number">1</span>);</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"complete task 1"</span>);</span><br><span class="line">       dispatch_semaphore_signal(semaphore);</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="hljs-comment">//任务2</span></span><br><span class="line">   <span class="hljs-built_in">dispatch_async</span>(quene, ^&#123;</span><br><span class="line">       dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"run task 2"</span>);</span><br><span class="line">       sleep(<span class="hljs-number">1</span>);</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"complete task 2"</span>);</span><br><span class="line">       dispatch_semaphore_signal(semaphore);</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="hljs-comment">//任务3</span></span><br><span class="line">   <span class="hljs-built_in">dispatch_async</span>(quene, ^&#123;</span><br><span class="line">       dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"run task 3"</span>);</span><br><span class="line">       sleep(<span class="hljs-number">1</span>);</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"complete task 3"</span>);</span><br><span class="line">       dispatch_semaphore_signal(semaphore);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>也可以起到类似栅栏函数的作用。线程A和线程B：线程A执行完之后线程B再继续执行。</p>
+<p>如下代码所示：先执行获取token方法，在执行request</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-comment">//这里使用dispatch_async，是为了不阻塞当前线程。</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">        dispatch_semaphore_t semaphore = dispatch_semaphore_create(<span class="hljs-number">0</span>);</span><br><span class="line">        [<span class="hljs-keyword">self</span> getToken:semaphore];</span><br><span class="line">        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">        [<span class="hljs-keyword">self</span> request];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"继续执行啊"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//异步请求，获取token</span></span><br><span class="line">- (<span class="hljs-keyword">void</span>)getToken:(dispatch_semaphore_t)semaphore &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++) &#123;</span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"getToken:%d"</span>,i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"getToken:Success"</span>);</span><br><span class="line">        dispatch_semaphore_signal(semaphore);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">//执行网络请求</span></span><br><span class="line">- (<span class="hljs-keyword">void</span>)request &#123;</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"request"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>题外话：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>);</span><br><span class="line">&gt;     </span><br><span class="line">&gt;     <span class="hljs-built_in">NSMutableArray</span> *array = [[<span class="hljs-built_in">NSMutableArray</span> alloc] init];</span><br><span class="line">&gt;     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100000</span>; ++i) &#123;</span><br><span class="line">&gt;         <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">&gt;             [array addObject:[<span class="hljs-built_in">NSNumber</span> numberWithInt:i]];</span><br><span class="line">&gt;         &#125;);</span><br><span class="line">&gt;     &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>上面这段代码会执行错误。报错如下：</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-built_in">malloc</span>: *** error <span class="hljs-keyword">for</span> object <span class="hljs-number">0x6040003805b0</span>: pointer being freed was <span class="hljs-keyword">not</span> allocated</span><br><span class="line">&gt; *** <span class="hljs-built_in">set</span> a breakpoint in malloc_error_break to debug</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>为什么、？</p>
+</blockquote>
+<h4 id="dispatch-once"><a href="#dispatch-once" class="headerlink" title="dispatch_once"></a>dispatch_once</h4><p>dispatch_once函数是保证在应用程序中只执行一次指定处理的API。单例模式经常用到此函数。</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="hljs-built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        <span class="hljs-comment">//code to be executed once</span></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="Dispatch-I-O"><a href="#Dispatch-I-O" class="headerlink" title="Dispatch I/O"></a>Dispatch I/O</h4>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/多线程/">多线程</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2016/08/20/iOS内存管理/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">iOS内存管理详解</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2016/07/08/多线程基础/">
+                <span class="level-item">多线程基础篇</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript> Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <figure class="image is-128x128 has-mb-6">
+                            <img class="is-rounded" src="/images/avatar.jpg" alt="吴启晗">
+                        </figure>
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>上海, 中国</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        14
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        3
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        6
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
+                联系我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Grand Central Dispatch" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 吴启晗&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
