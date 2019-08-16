@@ -1,5 +1,6 @@
 http://www.wuqihan.cn/2019/08/14/在CentOS7上搭建Shadowsocks/
 http://www.wuqihan.cn/2018/05/18/优雅的使用NSNotification-name/
+http://www.wuqihan.cn/2018/05/15/入门汇编语言/
 http://www.wuqihan.cn/2018/01/11/深入理解Block/
 http://www.wuqihan.cn/2017/05/15/如何继承类簇/
 http://www.wuqihan.cn/2017/03/10/RAC-四-信号高阶操作/

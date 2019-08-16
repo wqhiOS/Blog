@@ -2,25 +2,25 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>RAC(二)基础知识 - 吴启晗的技术博客</title>
+<title>入门汇编语言 - 吴启晗的技术博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
-<meta name="keywords" content="ReactiveCocoa">
+    <meta name="description" content="👨‍💻‍">
+<meta name="keywords" content="8086">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RAC(二)基础知识">
-<meta property="og:url" content="http://www.wuqihan.cn/2017/01/01/RAC-二-基础知识/index.html">
+<meta property="og:title" content="入门汇编语言">
+<meta property="og:url" content="http://www.wuqihan.cn/2018/05/15/入门汇编语言/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
-<meta property="og:description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
+<meta property="og:description" content="👨‍💻‍">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
-<meta property="og:updated_time" content="2019-07-11T13:41:31.691Z">
+<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta property="og:updated_time" content="2019-08-15T13:19:59.624Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RAC(二)基础知识">
-<meta name="twitter:description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
-<meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
+<meta name="twitter:title" content="入门汇编语言">
+<meta name="twitter:description" content="👨‍💻‍">
+<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
 
 
 
@@ -109,7 +109,7 @@ var _hmt = _hmt || [];
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="RAC(二)基础知识" height="28">
+                <img src="/images/logo.svg" alt="入门汇编语言" height="28">
             
             </a>
         </div>
@@ -141,6 +141,10 @@ var _hmt = _hmt || [];
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -156,12 +160,6 @@ var _hmt = _hmt || [];
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
     
-    <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(二)基础知识">
-        </span>
-    </div>
-    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -169,17 +167,17 @@ var _hmt = _hmt || [];
 
                 
 
-                <time class="level-item has-text-grey" datetime="2017-01-01T09:11:36.000Z">2017-01-01</time>
+                <time class="level-item has-text-grey" datetime="2018-05-15T13:07:50.000Z">2018-05-15</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/汇编/">汇编</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 867 个字)
+                    几秒 读完 (大约 0 个字)
                 </span>
                 
                 
@@ -193,55 +191,18 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                RAC(二)基础知识
+                入门汇编语言
             
         </h1>
         <div class="content">
-            <h3 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h3><ul>
-<li>RACStream RACSequence RACSignal</li>
-<li>RACSubscriber</li>
-<li>RACDisposable</li>
-<li>RACScheduler</li>
-<li>Cocoa框架适配工具</li>
-</ul>
-<a id="more"></a>
-<h3 id="RACStream的两个子类：Sequence-amp-Signal"><a href="#RACStream的两个子类：Sequence-amp-Signal" class="headerlink" title="RACStream的两个子类：Sequence &amp; Signal"></a>RACStream的两个子类：Sequence &amp; Signal</h3><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac2_1.jpg" alt="image-20180414122918648"></p>
-<p>RACStream表示一个数据流的类。这个流不一定是基于时间的，所以它有两个子类RACSequence和RACSignal。</p>
-<ul>
-<li>RACSequence是基于空间的数据流</li>
-<li>RACSignal是基于时间的数据流</li>
-</ul>
-<p>对比RACSequence和RACSignal，基于空间的数据流和基于时间的数据流到底有什么区别？</p>
-<ol>
-<li><p><strong>Sequence是Pull-Driven(拉驱动)，Signal是Push-driven(推驱动)</strong></p>
-<p>pull-driver表示数据的变化是由拉取者决定的。举个简单的例子，sequence就好比一本书，我们看书，想看到哪页就可以翻到哪页去看，看什么内容读取什么数据，是由我们决定，而不是由书（sequence）决定。</p>
-<p>push-driver表示数据的变化是由推送者决定的，与pull-driver刚好相反。可以把Signal比作电视体育直播。看什么内容读取什么数据，是由电视(Signal)决定的，如果我们去上个卫生间也无法暂停体育直播，中间的数据就会错过。</p>
-</li>
-<li><p>Sequence里面可以仅仅存放任何类型的数据。RACSignal里面不仅包含数据，也包含信号的状态（后面会了解到信号状态）。</p>
-</li>
-</ol>
-<h3 id="RACSequence的简单使用"><a href="#RACSequence的简单使用" class="headerlink" title="RACSequence的简单使用"></a>RACSequence的简单使用</h3><p>RACSequence使用的情况很少。这里就简单介绍一下常用方法</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//创建</span></span><br><span class="line">   RACSequence *sequence1 = [RACSequence <span class="hljs-keyword">return</span>:@<span class="hljs-number">1</span>];</span><br><span class="line">   RACSequence *sequence2 = [RACSequence sequenceWithHeadBlock:^<span class="hljs-keyword">id</span> _Nullable&#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> @<span class="hljs-number">2</span>;</span><br><span class="line">   &#125; tailBlock:^RACSequence * _Nonnull&#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> sequence1;</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSequence *sequence3 = @[@<span class="hljs-number">1</span>,@<span class="hljs-number">2</span>,@<span class="hljs-number">3</span>].rac_sequence;</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//变换</span></span><br><span class="line">   RACSequence *mappedSequence = [sequence1 map:^<span class="hljs-keyword">id</span> _Nullable(<span class="hljs-built_in">NSNumber</span>* value) &#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> @(value.integerValue*<span class="hljs-number">3</span>);</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSequence *concatedSequence = [sequence2 concat:mappedSequence];</span><br><span class="line">   RACSequence *mergerdSequence = [RACSequence zip:@[concatedSequence,sequence3]];</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//遍历</span></span><br><span class="line">   <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>,mergerdSequence.head);</span><br><span class="line">   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">id</span> value <span class="hljs-keyword">in</span> mergerdSequence) &#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>,value);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="RACSignal的简单使用"><a href="#RACSignal的简单使用" class="headerlink" title="RACSignal的简单使用"></a>RACSignal的简单使用</h3><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//创建</span></span><br><span class="line">   RACSignal *signal1 = [RACSignal <span class="hljs-keyword">return</span>:<span class="hljs-string">@"hello"</span>];</span><br><span class="line">   RACSignal *signal2 = [RACSignal createSignal:^RACDisposable * _Nullable(<span class="hljs-keyword">id</span>&lt;RACSubscriber&gt;  _Nonnull subscriber) &#123;</span><br><span class="line">       [subscriber sendNext:@<span class="hljs-number">1</span>];</span><br><span class="line">       [subscriber sendNext:@<span class="hljs-number">2</span>];</span><br><span class="line">       [subscriber sendCompleted];</span><br><span class="line">       <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>;</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSignal *signal3 = RACObserve(<span class="hljs-keyword">self</span>.view, backgroundColor);</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//变换</span></span><br><span class="line">   RACSignal *mappedSignal = [signal1 map:^<span class="hljs-keyword">id</span> _Nullable(<span class="hljs-built_in">NSString</span>* value) &#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> [value stringByAppendingString:<span class="hljs-string">@" word"</span>];</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSignal *concatedSignal = [mappedSignal concat:signal2];</span><br><span class="line">   RACSignal *mergeSignal = [mappedSignal merge:@[concatedSignal,signal3]];</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//遍历</span></span><br><span class="line">   [mergeSignal subscribeNext:^(<span class="hljs-keyword">id</span>  _Nullable x) &#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>,x);</span><br><span class="line">   &#125; completed:^&#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"completed"</span>);</span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure>
-<p>这里仅仅是对RACSignal做初步了解。具体方法到底怎么用。后面的文章会讲到。</p>
-<h3 id="RACSubscriber-amp-RACDisposable"><a href="#RACSubscriber-amp-RACDisposable" class="headerlink" title="RACSubscriber &amp; RACDisposable"></a>RACSubscriber &amp; RACDisposable</h3><p>Subscription(订阅者)表⽰等待或者能够等待信号发送事件的任意对象。在框架中使用RACSubscriber协议表示,也即任意实现了RACSubscriber协议的对象都可以是订阅者。可以通过调⽤ -subscribeNext:error:completed:⽅法来创建订阅。RACStream和RACSignal类的大多操作也会⾃己创建订阅。订阅会对Signals对象引⽤计数加1,当信号发送错误或者完成事件后,会⾃动被处理,不需要⽤户关⼼内存管理。当然,⽤户也可以⼿动处理。</p>
-<p>RACDisposable类⽤于取消订阅或者清理资源。</p>
-<p>下图展示了Subscriber、Disposable、Signal三者的关系</p>
-<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac2_2.jpg" alt="image-20180414154509246"></p>
-<h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><ul>
-<li>用来做调度</li>
-<li>代替GCD</li>
-<li>异步与并发</li>
-</ul>
-<p>scheduler由RACScheduler类表示,它是信号执行任务时所在的队列(queue)或者信号执⾏完后将结果放到队列⾥执行,可以认为就是gcd⾥的queues。scheduler⽀持取消操作,⽽且它总是串行地执⾏任务。这有利于避免死锁。RACScheduler有时候也类似NSOperationQueue,但它不允许任务间相互依赖。</p>
-
+            
         </div>
         
         <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a>
+                    <a class="has-link-grey -link" href="/tags/8086/">8086</a>
                 </div>
             </div>
         </div>
@@ -292,16 +253,16 @@ var _hmt = _hmt || [];
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2017/01/08/RAC-三-RACSignal基本使用/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/05/18/优雅的使用NSNotification-name/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">RAC(三)RACSignal各类操作</span>
+                <span class="level-item">优雅的使用NSNotification.Name</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2016/12/14/RAC-一-函数式编程概述/">
-                <span class="level-item">RAC(一)函数响应式编程概述</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/01/11/深入理解Block/">
+                <span class="level-item">深入理解Block</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -442,6 +403,17 @@ var _hmt = _hmt || [];
 </div>
     
         
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            
+        </div>
+    </div>
+</div>
+
     
     
         <div class="column-right-shadow is-hidden-widescreen ">
@@ -460,7 +432,7 @@ var _hmt = _hmt || [];
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="RAC(二)基础知识" height="28">
+                    <img src="/images/logo.svg" alt="入门汇编语言" height="28">
                 
                 </a>
                 <p class="is-size-7">

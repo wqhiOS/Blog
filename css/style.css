@@ -205,7 +205,13 @@ img.thumbnail {
 .article .article-meta {
   margin-bottom: 0.5rem !important;
 }
+.article .title {
+  border-left: rgba(0,133,226,0.631) 6px solid;
+  margin-left: -1.5rem;
+  padding-left: 1rem;
+}
 .article .content {
+  letter-spacing: 0.04rem;
   font-size: 1.1rem;
 }
 .article .content blockquote.pullquote {
