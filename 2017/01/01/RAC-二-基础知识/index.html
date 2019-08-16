@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
 <title>RAC(二)基础知识 - 吴启晗的技术博客</title>
@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://www.wuqihan.cn/2017/01/01/RAC-二-基础知识/index.html">
 <meta property="og:site_name" content="吴启晗的技术博客">
 <meta property="og:description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="en">
 <meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
 <meta property="og:updated_time" content="2019-07-11T13:41:31.691Z">
 <meta name="twitter:card" content="summary">
@@ -117,15 +117,15 @@ var _hmt = _hmt || [];
             
             <div class="navbar-start">
                 
-                <a class="navbar-item" href="/">首页</a>
+                <a class="navbar-item" href="/">Home</a>
                 
-                <a class="navbar-item" href="/archives">归档</a>
+                <a class="navbar-item" href="/archives">Archives</a>
                 
-                <a class="navbar-item" href="/categories">分类</a>
+                <a class="navbar-item" href="/categories">Categories</a>
                 
-                <a class="navbar-item" href="/tags">标签</a>
+                <a class="navbar-item" href="/tags">Tags</a>
                 
-                <a class="navbar-item" href="/about">关于</a>
+                <a class="navbar-item" href="/about">About</a>
                 
             </div>
             
@@ -142,7 +142,7 @@ var _hmt = _hmt || [];
                 
                 
                 
-                <a class="navbar-item search" title="搜索" href="javascript:;">
+                <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
                 </a>
                 
@@ -179,13 +179,13 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 867 个字)
+                    6 minutes read (About 867 words)
                 </span>
                 
                 
                 <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
                     <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span>次访问
+                    <span id="busuanzi_value_page_pv">0</span> visits
                 </span>
                 
             </div>
@@ -237,10 +237,11 @@ var _hmt = _hmt || [];
 
         </div>
         
+        <hr style="height:1px;margin:1rem 0">
         <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
                     <a class="has-link-grey -link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a>
                 </div>
             </div>
@@ -259,7 +260,7 @@ var _hmt = _hmt || [];
 
 <div class="card">
     <div class="card-content">
-        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
         <div class="buttons is-centered">
             
                 
@@ -267,8 +268,8 @@ var _hmt = _hmt || [];
     <span class="icon is-small">
         <i class="fab fa-alipay"></i>
     </span>
-    <span>支付宝</span>
-    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="支付宝"></div>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="Alipay"></div>
 </a>
 
                 
@@ -277,8 +278,8 @@ var _hmt = _hmt || [];
     <span class="icon is-small">
         <i class="fab fa-weixin"></i>
     </span>
-    <span>微信</span>
-    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="微信"></div>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="Wechat"></div>
 </a>
 
                 
@@ -313,7 +314,7 @@ var _hmt = _hmt || [];
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
     <script type="text/javascript">
@@ -350,7 +351,7 @@ var _hmt = _hmt || [];
                 <div>
                     
                         <figure class="image is-128x128 has-mb-6">
-                            <img class="is-rounded" src="https://www.gravatar.com/avatar/0b031653d49e8d1c651e2ce46e64c3e5?s=128" alt="吴启晗">
+                            <img class="is-rounded" src="/images/avatar.jpg" alt="吴启晗">
                         </figure>
                     
                     
@@ -376,7 +377,7 @@ var _hmt = _hmt || [];
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        文章
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
                         15
@@ -386,7 +387,7 @@ var _hmt = _hmt || [];
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        分类
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         7
@@ -396,7 +397,7 @@ var _hmt = _hmt || [];
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        标签
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
                         7
@@ -406,7 +407,7 @@ var _hmt = _hmt || [];
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
-                联系我</a>
+                Follow</a>
         </div>
         
         
@@ -469,7 +470,7 @@ var _hmt = _hmt || [];
                 
                 <br>
                 <span id="busuanzi_container_site_uv">
-                共<span id="busuanzi_value_site_uv">0</span>个访客
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
                 </span>
                 
                 </p>
@@ -511,7 +512,7 @@ var _hmt = _hmt || [];
 </footer>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("zh-CN");</script>
+<script>moment.locale("en");</script>
 
 
     
@@ -577,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 
-<a id="back-to-top" title="回到顶端" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -613,7 +614,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="searchbox ins-search">
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
@@ -625,11 +626,11 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
         };
