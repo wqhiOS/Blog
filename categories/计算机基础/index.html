@@ -169,6 +169,9 @@ var _hmt = _hmt || [];
             <div class="level-left">
 
                 
+                <i class="fas fa-arrow-alt-circle-up" style="color:#ff9300"></i>
+                <span class="level-item" style="color:#ff9300">&nbsp;TOP</span>
+                
 
                 <span class="level-item has-text-grey">
                 <i class="far fa-calendar-alt"></i>&nbsp;
@@ -186,14 +189,14 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    4 minutes read (About 546 words)
+                    4 minutes read (About 552 words)
                 </span>
                 
                 
             </div>
         </div>
         
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#3273dc">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
             
                 <a class="has-link-black-ter" href="/2018/05/15/入门汇编语言/">入门汇编语言</a>
             
@@ -213,66 +216,26 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
-<p>分别用上面三种语言实现： 将寄存器BX的内容送人寄存器AX</p>
-<p>机器语言： 10010100010101 </p>
-<p>汇编语言：mov ax,bx</p>
-<p>高级语言：ax = bx</p>
-<p>由此可以看出，越低级的语言，越是难以理解。。。</p>
-<p><img src="https://i.loli.net/2019/08/17/67PdqwxGugaCYmE.png" alt="huibian.png"></p>
-<ul>
-<li><p><font color="#FF6347">汇编语言</font> 与 <font color="#FF6347"><strong>机器语言</strong></font> 一一对应，每一条机器指令都有与之对应的汇编指令</p>
-</li>
-<li><font color="#FF6347"><strong>汇编语言</strong></font> 可以通过编译得到<font color="#FF6347"><strong>机器语言</strong></font>，<font color="#FF6347"><strong>机器语言</strong></font>可以通过反汇编得到<font color="#FF6347"><strong>汇编语言</strong></font> 
-</li>
-<li><font color="#FF6347"><strong>高级语言</strong></font>可以通过编译得到<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>，但<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>几乎不可能还原成<font color="#FF6347"><strong>高级语言</strong></font>
-
-
-
-</li>
-</ul>
-<h2 id="汇编语言的特点"><a href="#汇编语言的特点" class="headerlink" title="汇编语言的特点"></a>汇编语言的特点</h2><ul>
-<li>可以直接访问、控制各种硬件设备，比如存储器、CPU等，能最大限度的发挥硬件的功能</li>
-<li>汇编指令是机器指令的助记符，同机器指令一一对应。每一种CPU都有自己的机器指令集\汇编指令集，所以汇编语言不具备可移植性</li>
-<li>知识点过多，开发者需要对CPU等硬件结构有所了解，不易于编写、调试、维护</li>
-<li>不区分大小写、比如 mov 和MOV是一样的</li>
-<li>汇编语言种类很多<ul>
-<li>8086汇编</li>
-<li>Win32汇编</li>
-<li>Win64汇编</li>
-<li>AT&amp;T汇编（Mac、iOS模拟器）</li>
-<li>ARM汇编（嵌入式设备，也就是手机电视车载系统之类） </li>
-</ul>
-</li>
-</ul>
-<h2 id="汇编语言VS高级语言"><a href="#汇编语言VS高级语言" class="headerlink" title="汇编语言VS高级语言"></a>汇编语言VS高级语言</h2><p>采用高级语言C++和汇编语言编写同一个功能 ： 将a+b的结果赋值给c，然后在屏幕上打印c的结果</p>
-<table>
-<thead>
-<tr>
-<th>语言</th>
-<th>源文件大小</th>
-<th>目标文件大小</th>
-<th>可执行文件大小</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><font color="#FF6347">汇编语言</font></td>
-<td><font color="#FF6347">近400字节</font></td>
-<td><font color="#FF6347">近200字节</font></td>
-<td><font color="#FF6347">近600字节</font></td>
-</tr>
-<tr>
-<td>C++</td>
-<td>近150字节</td>
-<td>近550字节</td>
-<td>近9000字节</td>
-</tr>
-</tbody>
-</table>
-
         </div>
         
         
+        
+            <hr style="height:1px;margin:1rem 0">
+            <div class="level is-mobile is-flex">
+                <div class="level-start">
+                    
+                    <div class="level-item is-size-7 is-uppercase">
+                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                        <a class="has-link-grey -link" href="/tags/8086汇编/">8086汇编</a>
+                    </div>
+                    
+                </div>
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2018/05/15/入门汇编语言/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -300,7 +263,7 @@ var _hmt = _hmt || [];
             <div class="level-item has-text-centered" style="flex-shrink: 1">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
+                        <img style="border-radius:8px" class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
                     
                     
                     <p class="is-size-4 is-block">
@@ -570,7 +533,7 @@ var _hmt = _hmt || [];
             
             <a href="/2018/05/18/优雅的使用NSNotification-name/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="优雅的使用NSNotification.Name">
+                    <img class="thumbnail" src="https://i.loli.net/2019/08/17/4PSRfjecaE5z89o.jpg" alt="优雅的使用NSNotification.Name">
                 </p>
             </a>
             
@@ -819,7 +782,7 @@ var _hmt = _hmt || [];
             
             <a href="/2018/05/18/优雅的使用NSNotification-name/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="优雅的使用NSNotification.Name">
+                    <img class="thumbnail" src="https://i.loli.net/2019/08/17/4PSRfjecaE5z89o.jpg" alt="优雅的使用NSNotification.Name">
                 </p>
             </a>
             
