@@ -7,20 +7,20 @@
 
 
 
-    <meta name="description" content="👨‍💻‍">
-<meta name="keywords" content="8086">
+    <meta name="description" content="编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言    分别用上面三种语言实现： 将寄存器BX的内容送人寄存器AX 机器语言： 10010100010101  汇编语言：mov ax,bx 高级语言：ax = bx 由此可以看出，越低级的语">
+<meta name="keywords" content="8086汇编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="入门汇编语言">
 <meta property="og:url" content="http://www.wuqihan.cn/2018/05/15/入门汇编语言/index.html">
 <meta property="og:site_name" content="wuqihan&#39;s blog">
-<meta property="og:description" content="👨‍💻‍">
+<meta property="og:description" content="编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言    分别用上面三种语言实现： 将寄存器BX的内容送人寄存器AX 机器语言： 10010100010101  汇编语言：mov ax,bx 高级语言：ax = bx 由此可以看出，越低级的语">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-15T13:19:59.624Z">
+<meta property="og:image" content="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png">
+<meta property="og:updated_time" content="2019-08-17T09:31:27.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="入门汇编语言">
-<meta name="twitter:description" content="👨‍💻‍">
-<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta name="twitter:description" content="编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言    分别用上面三种语言实现： 将寄存器BX的内容送人寄存器AX 机器语言： 10010100010101  汇编语言：mov ax,bx 高级语言：ax = bx 由此可以看出，越低级的语">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png">
 
 
 
@@ -151,6 +151,12 @@ var _hmt = _hmt || [];
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png" alt="入门汇编语言">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -174,7 +180,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    a few seconds read (About 0 words)
+                    4 minutes read (About 546 words)
                 </span>
                 
                 
@@ -192,7 +198,77 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            
+            <h2 id="编程语言的发展"><a href="#编程语言的发展" class="headerlink" title="编程语言的发展"></a>编程语言的发展</h2><ul>
+<li>机器语言<ul>
+<li>由0和1组成</li>
+</ul>
+</li>
+<li>汇编语言 （<strong>Assembly Language</strong>）<ul>
+<li>用符号代替了0和1，比机器语言便于阅读和机翼</li>
+</ul>
+</li>
+<li>高级语言<ul>
+<li>C\C++\Java\Swift等，更接近人类自然语言</li>
+</ul>
+</li>
+</ul>
+<p>分别用上面三种语言实现： 将寄存器BX的内容送人寄存器AX</p>
+<p>机器语言： 10010100010101 </p>
+<p>汇编语言：mov ax,bx</p>
+<p>高级语言：ax = bx</p>
+<p>由此可以看出，越低级的语言，越是难以理解。。。</p>
+<p><img src="https://i.loli.net/2019/08/17/67PdqwxGugaCYmE.png" alt="huibian.png"></p>
+<ul>
+<li><p><font color="#FF6347">汇编语言</font> 与 <font color="#FF6347"><strong>机器语言</strong></font> 一一对应，每一条机器指令都有与之对应的汇编指令</p>
+</li>
+<li><font color="#FF6347"><strong>汇编语言</strong></font> 可以通过编译得到<font color="#FF6347"><strong>机器语言</strong></font>，<font color="#FF6347"><strong>机器语言</strong></font>可以通过反汇编得到<font color="#FF6347"><strong>汇编语言</strong></font> 
+</li>
+<li><font color="#FF6347"><strong>高级语言</strong></font>可以通过编译得到<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>，但<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>几乎不可能还原成<font color="#FF6347"><strong>高级语言</strong></font>
+
+
+
+</li>
+</ul>
+<h2 id="汇编语言的特点"><a href="#汇编语言的特点" class="headerlink" title="汇编语言的特点"></a>汇编语言的特点</h2><ul>
+<li>可以直接访问、控制各种硬件设备，比如存储器、CPU等，能最大限度的发挥硬件的功能</li>
+<li>汇编指令是机器指令的助记符，同机器指令一一对应。每一种CPU都有自己的机器指令集\汇编指令集，所以汇编语言不具备可移植性</li>
+<li>知识点过多，开发者需要对CPU等硬件结构有所了解，不易于编写、调试、维护</li>
+<li>不区分大小写、比如 mov 和MOV是一样的</li>
+<li>汇编语言种类很多<ul>
+<li>8086汇编</li>
+<li>Win32汇编</li>
+<li>Win64汇编</li>
+<li>AT&amp;T汇编（Mac、iOS模拟器）</li>
+<li>ARM汇编（嵌入式设备，也就是手机电视车载系统之类） </li>
+</ul>
+</li>
+</ul>
+<h2 id="汇编语言VS高级语言"><a href="#汇编语言VS高级语言" class="headerlink" title="汇编语言VS高级语言"></a>汇编语言VS高级语言</h2><p>采用高级语言C++和汇编语言编写同一个功能 ： 将a+b的结果赋值给c，然后在屏幕上打印c的结果</p>
+<table>
+<thead>
+<tr>
+<th>语言</th>
+<th>源文件大小</th>
+<th>目标文件大小</th>
+<th>可执行文件大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><font color="#FF6347">汇编语言</font></td>
+<td><font color="#FF6347">近400字节</font></td>
+<td><font color="#FF6347">近200字节</font></td>
+<td><font color="#FF6347">近600字节</font></td>
+</tr>
+<tr>
+<td>C++</td>
+<td>近150字节</td>
+<td>近550字节</td>
+<td>近9000字节</td>
+</tr>
+</tbody>
+</table>
+
         </div>
         
             <ul class="post-copyright">
@@ -210,7 +286,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <i class="fas fa-tags has-text-grey"></i>&nbsp;
-                    <a class="has-link-grey -link" href="/tags/8086/">8086</a>
+                    <a class="has-link-grey -link" href="/tags/8086汇编/">8086汇编</a>
                 </div>
             </div>
         </div>
@@ -415,7 +491,19 @@ var _hmt = _hmt || [];
             <h3 class="menu-label">
                 Catalogue
             </h3>
-            
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#编程语言的发展">
+        <span class="has-mr-6">1</span>
+        <span>编程语言的发展</span>
+        </a></li><li>
+        <a class="is-flex" href="#汇编语言的特点">
+        <span class="has-mr-6">2</span>
+        <span>汇编语言的特点</span>
+        </a></li><li>
+        <a class="is-flex" href="#汇编语言VS高级语言">
+        <span class="has-mr-6">3</span>
+        <span>汇编语言VS高级语言</span>
+        </a></li></ul>
         </div>
     </div>
 </div>
