@@ -16,7 +16,7 @@
 <meta property="og:description" content="了解汇编语言编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png">
-<meta property="og:updated_time" content="2019-08-18T13:23:36.774Z">
+<meta property="og:updated_time" content="2019-08-18T15:13:29.466Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="入门汇编语言">
 <meta name="twitter:description" content="了解汇编语言编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言">
@@ -183,7 +183,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    8 minutes read (About 1136 words)
+                    8 minutes read (About 1157 words)
                 </span>
                 
                 
@@ -287,13 +287,15 @@ var _hmt = _hmt || [];
 <p>什么是<code>寻址能力</code>？<code>寻址能力</code>为什么如上面这样计算？</p>
 <p>由于解释起来篇幅不短，所以新开一篇文章专门研究 <a href="http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/">《CPU寻址能力到底怎么理解？》</a></p>
 </blockquote>
-<h4 id="数据总线"><a href="#数据总线" class="headerlink" title="数据总线"></a>数据总线</h4><p>它的宽度决定了CPU的单次数据传送量，也就是数据传送速度</p>
+<h3 id="数据总线"><a href="#数据总线" class="headerlink" title="数据总线"></a>数据总线</h3><p>它的宽度决定了CPU的单次数据传送量，也就是数据传送速度</p>
 <p>8086的数据总线宽度是16，所以单次最大传递2个字节的数据。因为16根线，代表16位，8位等于1字节，所以是2字节。</p>
 <font color="green">注意！！这里的数据总线千万不要和上面的地址总线搞混，完全是两码事儿</font>
 
 <h3 id="控制总线"><a href="#控制总线" class="headerlink" title="控制总线"></a>控制总线</h3><p>它的宽度决定了CPU对其他器件的控制能力、能有多少种控制</p>
 <p>控制总线  知道大概就行，不需要深究</p>
-<h2 id="8086的寻址方式"><a href="#8086的寻址方式" class="headerlink" title="8086的寻址方式"></a>8086的寻址方式</h2><h2 id="汇编语言学习资料整理"><a href="#汇编语言学习资料整理" class="headerlink" title="汇编语言学习资料整理"></a>汇编语言学习资料整理</h2><p><a href="https://book.douban.com/subject/25726019/" target="_blank" rel="noopener">《汇编语言(第三版)》-王爽</a>  </p>
+<h2 id="8086的寻址方式"><a href="#8086的寻址方式" class="headerlink" title="8086的寻址方式"></a>8086的寻址方式</h2><h2 id="CPU结构"><a href="#CPU结构" class="headerlink" title="CPU结构"></a>CPU结构</h2><p>控制单元 、 存储单元、运算单元</p>
+<p>未完待续~~</p>
+<h2 id="汇编语言学习资料整理"><a href="#汇编语言学习资料整理" class="headerlink" title="汇编语言学习资料整理"></a>汇编语言学习资料整理</h2><p><a href="https://book.douban.com/subject/25726019/" target="_blank" rel="noopener">《汇编语言(第三版)》-王爽</a>  </p>
 <p><img src="https://i.loli.net/2019/08/18/Jga6Iu49SPHy5n3.jpg"> </p>
 <p>豆瓣9.2分 必看！！这本书买了，正在学习。很好！！</p>
 <p><a href="http://www.asmedu.net/bbs/forum.jsp" target="_blank" rel="noopener">《汇编语言论坛》</a></p>
@@ -547,21 +549,25 @@ var _hmt = _hmt || [];
         <a class="is-flex" href="#地址总线">
         <span class="has-mr-6">2.1</span>
         <span>地址总线</span>
-        </a><ul class="menu-list"><li>
+        </a></li><li>
         <a class="is-flex" href="#数据总线">
-        <span class="has-mr-6">2.1.1</span>
-        <span>数据总线</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#控制总线">
         <span class="has-mr-6">2.2</span>
+        <span>数据总线</span>
+        </a></li><li>
+        <a class="is-flex" href="#控制总线">
+        <span class="has-mr-6">2.3</span>
         <span>控制总线</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#8086的寻址方式">
         <span class="has-mr-6">3</span>
         <span>8086的寻址方式</span>
         </a></li><li>
-        <a class="is-flex" href="#汇编语言学习资料整理">
+        <a class="is-flex" href="#CPU结构">
         <span class="has-mr-6">4</span>
+        <span>CPU结构</span>
+        </a></li><li>
+        <a class="is-flex" href="#汇编语言学习资料整理">
+        <span class="has-mr-6">5</span>
         <span>汇编语言学习资料整理</span>
         </a></li></ul>
         </div>
