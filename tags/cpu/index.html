@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>Archives: 2018/1 - wuqihan&#39;s blog</title>
+<title>Tag: cpu - wuqihan&#39;s blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -10,7 +10,7 @@
     <meta name="description" content="👨‍💻‍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="wuqihan&#39;s blog">
-<meta property="og:url" content="http://www.wuqihan.cn/archives/2018/01/index.html">
+<meta property="og:url" content="http://www.wuqihan.cn/tags/cpu/index.html">
 <meta property="og:site_name" content="wuqihan&#39;s blog">
 <meta property="og:description" content="👨‍💻‍">
 <meta property="og:locale" content="en">
@@ -143,43 +143,98 @@ var _hmt = _hmt || [];
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-
-<div class="card widget">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     <div class="card-content">
-        <h3 class="tag is-link">
-        January 2018
-        </h3>
-        <div class="timeline">
-        
-            <article class="media">
-                
-                <a href="/2018/01/11/深入理解Block/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="深入理解Block">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2018-01-11T08:52:33.000Z">2018-01-11</time>
-                        <a href="/2018/01/11/深入理解Block/" class="has-link-black-ter is-size-6">深入理解Block</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Objective-C底层原理/">Objective-C底层原理</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-        </div>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">Tags</a></li>
+            <li class="is-active"><a href="#" aria-current="page">cpu</a></li>
+        </ul>
+        </nav>
     </div>
 </div>
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+                <i class="fas fa-arrow-alt-circle-up" style="color:#ff9300"></i>
+                <span class="level-item" style="color:#ff9300">&nbsp;TOP</span>
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2018-05-18T17:04:33.000Z">&nbsp;2018-05-19</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    10 minutes read (About 1459 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                <a class="has-link-black-ter" href="/2018/05/19/CPU寻址能力到底怎么理解？/">CPU寻址能力到底怎么理解？</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="寻址空间"><a href="#寻址空间" class="headerlink" title="寻址空间"></a>寻址空间</h2><p>解释寻址能力之前，先来看下 <code>寻址空间</code> （<code>Addressing space</code>）的概念。</p>
+<blockquote>
+<p><code>寻址空间</code>一般指的是CPU对于<a href="https://baike.baidu.com/item/内存寻址/1012006" target="_blank" rel="noopener">内存寻址</a>的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在<a href="https://baike.baidu.com/item/存储器/1583185" target="_blank" rel="noopener">存储器</a>(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最大能查找多大范围的地址叫做寻址能力 ，CPU的寻址能力以<a href="https://baike.baidu.com/item/字节/1096318" target="_blank" rel="noopener">字节</a>为单位 ，如32位寻址的CPU可以寻址2的32次方大小的地址也就是4G，这也是为什么32位的CPU最大能搭配4G内存的原因 ，再多的话CPU就找不到了。</p>
+</blockquote>
+        </div>
+        
+        
+        
+            <hr style="height:1px;margin:1rem 0">
+            <div class="level is-mobile is-flex">
+                <div class="level-start">
+                    
+                    <div class="level-item is-size-7 is-uppercase">
+                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                        <a class="has-link-grey -link" href="/tags/8086汇编/">8086汇编</a>,&nbsp;<a class="has-link-grey -link" href="/tags/cpu/">cpu</a>,&nbsp;<a class="has-link-grey -link" href="/tags/内存/">内存</a>,&nbsp;<a class="has-link-grey -link" href="/tags/寻址能力/">寻址能力</a>
+                    </div>
+                    
+                </div>
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2018/05/19/CPU寻址能力到底怎么理解？/#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
 
 
 </div>

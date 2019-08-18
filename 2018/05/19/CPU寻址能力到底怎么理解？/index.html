@@ -2,25 +2,25 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>入门汇编语言 - wuqihan&#39;s blog</title>
+<title>CPU寻址能力到底怎么理解？ - wuqihan&#39;s blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="了解汇编语言编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言">
-<meta name="keywords" content="8086汇编">
+    <meta name="description" content="寻址空间解释寻址能力之前，先来看下 寻址空间 （Addressing space）的概念。  寻址空间一般指的是CPU对于内存寻址的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在存储器(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最">
+<meta name="keywords" content="8086汇编,寻址能力,cpu,内存">
 <meta property="og:type" content="article">
-<meta property="og:title" content="入门汇编语言">
-<meta property="og:url" content="http://www.wuqihan.cn/2018/05/15/入门汇编语言/index.html">
+<meta property="og:title" content="CPU寻址能力到底怎么理解？">
+<meta property="og:url" content="http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/index.html">
 <meta property="og:site_name" content="wuqihan&#39;s blog">
-<meta property="og:description" content="了解汇编语言编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言">
+<meta property="og:description" content="寻址空间解释寻址能力之前，先来看下 寻址空间 （Addressing space）的概念。  寻址空间一般指的是CPU对于内存寻址的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在存储器(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png">
-<meta property="og:updated_time" content="2019-08-18T06:41:38.424Z">
+<meta property="og:image" content="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png">
+<meta property="og:updated_time" content="2019-08-18T06:32:24.376Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="入门汇编语言">
-<meta name="twitter:description" content="了解汇编语言编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言">
-<meta name="twitter:image" content="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png">
+<meta name="twitter:title" content="CPU寻址能力到底怎么理解？">
+<meta name="twitter:description" content="寻址空间解释寻址能力之前，先来看下 寻址空间 （Addressing space）的概念。  寻址空间一般指的是CPU对于内存寻址的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在存储器(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png">
 
 
 
@@ -109,7 +109,7 @@ var _hmt = _hmt || [];
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="入门汇编语言" height="28">
+                <img src="/images/logo.svg" alt="CPU寻址能力到底怎么理解？" height="28">
             
             </a>
         </div>
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png" alt="入门汇编语言">
+            <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
         </span>
     </div>
     
@@ -169,13 +169,13 @@ var _hmt = _hmt || [];
 
                 <span class="level-item has-text-grey">
                 <i class="far fa-calendar-alt"></i>&nbsp;
-                <time class="level-item has-text-grey" datetime="2018-05-15T13:07:50.000Z">&nbsp;2018-05-15</time>
+                <time class="level-item has-text-grey" datetime="2018-05-18T17:04:33.000Z">&nbsp;2018-05-19</time>
                 </span>
 
                 
                 <div class="level-item">
                 <i class="far fa-folder-open has-text-grey"></i>&nbsp;
-                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/汇编/">汇编</a>
+                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
                 </div>
                 
                 
@@ -183,7 +183,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    6 minutes read (About 856 words)
+                    10 minutes read (About 1459 words)
                 </span>
                 
                 
@@ -197,104 +197,52 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
             
-                入门汇编语言
+                CPU寻址能力到底怎么理解？
             
         </h1>
         <div class="content">
-            <h2 id="了解汇编语言"><a href="#了解汇编语言" class="headerlink" title="了解汇编语言"></a>了解汇编语言</h2><h3 id="编程语言的发展"><a href="#编程语言的发展" class="headerlink" title="编程语言的发展"></a>编程语言的发展</h3><ul>
-<li>机器语言<ul>
-<li>由0和1组成</li>
-</ul>
-</li>
-<li>汇编语言 （<strong>Assembly Language</strong>）<ul>
-<li>用符号代替了0和1，比机器语言便于阅读和机翼</li>
-</ul>
-</li>
-<li>高级语言<ul>
-<li>C\C++\Java\Swift等，更接近人类自然语言</li>
-</ul>
-</li>
-</ul>
+            <h2 id="寻址空间"><a href="#寻址空间" class="headerlink" title="寻址空间"></a>寻址空间</h2><p>解释寻址能力之前，先来看下 <code>寻址空间</code> （<code>Addressing space</code>）的概念。</p>
+<blockquote>
+<p><code>寻址空间</code>一般指的是CPU对于<a href="https://baike.baidu.com/item/内存寻址/1012006" target="_blank" rel="noopener">内存寻址</a>的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在<a href="https://baike.baidu.com/item/存储器/1583185" target="_blank" rel="noopener">存储器</a>(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最大能查找多大范围的地址叫做寻址能力 ，CPU的寻址能力以<a href="https://baike.baidu.com/item/字节/1096318" target="_blank" rel="noopener">字节</a>为单位 ，如32位寻址的CPU可以寻址2的32次方大小的地址也就是4G，这也是为什么32位的CPU最大能搭配4G内存的原因 ，再多的话CPU就找不到了。</p>
+</blockquote>
 <a id="more"></a>
-<p>分别用上面三种语言实现： 将寄存器BX的内容送人寄存器AX</p>
-<p>机器语言： 10010100010101 </p>
-<p>汇编语言：mov ax,bx</p>
-<p>高级语言：ax = bx</p>
-<p>由此可以看出，越低级的语言，越是难以理解。。。</p>
-<p><img src="https://i.loli.net/2019/08/17/67PdqwxGugaCYmE.png" alt="汇编语言的发展"></p>
-<ul>
-<li><p><font color="#FF6347">汇编语言</font> 与 <font color="#FF6347"><strong>机器语言</strong></font> 一一对应，每一条机器指令都有与之对应的汇编指令</p>
-</li>
-<li><font color="#FF6347"><strong>汇编语言</strong></font> 可以通过编译得到<font color="#FF6347"><strong>机器语言</strong></font>，<font color="#FF6347"><strong>机器语言</strong></font>可以通过反汇编得到<font color="#FF6347"><strong>汇编语言</strong></font> 
-</li>
-<li><font color="#FF6347"><strong>高级语言</strong></font>可以通过编译得到<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>，但<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>几乎不可能还原成<font color="#FF6347"><strong>高级语言</strong></font>
-
-
-
-</li>
-</ul>
-<h3 id="汇编语言的特点"><a href="#汇编语言的特点" class="headerlink" title="汇编语言的特点"></a>汇编语言的特点</h3><ul>
-<li>可以直接访问、控制各种硬件设备，比如存储器、CPU等，能最大限度的发挥硬件的功能</li>
-<li>汇编指令是机器指令的助记符，同机器指令一一对应。每一种CPU都有自己的机器指令集\汇编指令集，所以汇编语言不具备可移植性</li>
-<li>知识点过多，开发者需要对CPU等硬件结构有所了解，不易于编写、调试、维护</li>
-<li>不区分大小写、比如 mov 和MOV是一样的</li>
-<li>汇编语言种类很多<ul>
-<li>8086汇编</li>
-<li>Win32汇编</li>
-<li>Win64汇编</li>
-<li>AT&amp;T汇编（Mac、iOS模拟器）</li>
-<li>ARM汇编（嵌入式设备，也就是手机电视车载系统之类） </li>
-</ul>
-</li>
-</ul>
-<h3 id="汇编语言VS高级语言"><a href="#汇编语言VS高级语言" class="headerlink" title="汇编语言VS高级语言"></a>汇编语言VS高级语言</h3><p>采用高级语言C++和汇编语言编写同一个功能 ： 将a+b的结果赋值给c，然后在屏幕上打印c的结果</p>
-<table>
-<thead>
-<tr>
-<th>语言</th>
-<th>源文件大小</th>
-<th>目标文件大小</th>
-<th>可执行文件大小</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><font color="#FF6347">汇编语言</font></td>
-<td><font color="#FF6347">近400字节</font></td>
-<td><font color="#FF6347">近200字节</font></td>
-<td><font color="#FF6347">近600字节</font></td>
-</tr>
-<tr>
-<td>C++</td>
-<td>近150字节</td>
-<td>近550字节</td>
-<td>近9000字节</td>
-</tr>
-</tbody>
-</table>
-<h2 id="CPU总线"><a href="#CPU总线" class="headerlink" title="CPU总线"></a>CPU总线</h2><p><img src="https://i.loli.net/2019/08/17/NYDB6UtSolcFLr2.jpg" width="400" height="260" align="center"><br>每一个CPU芯片都有许多<code>管脚</code>（上图右边银色的触角），这些<code>管脚</code>和<code>总线</code>相连，CPU通过<code>总线</code>跟外部进行交互；</p>
-<p>总线：一根根导线的集合</p>
-<p>总线的分类：</p>
-<ul>
-<li>地址总线</li>
-<li>数据总线</li>
-<li>控制总线</li>
-</ul>
-<h3 id="地址总线"><a href="#地址总线" class="headerlink" title="地址总线"></a>地址总线</h3><p>它的宽度决定了CPU的 <strong>寻址能力</strong> （什么是寻址能力，指它能找到多大的地址）</p>
-<h2 id="汇编语言学习资料整理"><a href="#汇编语言学习资料整理" class="headerlink" title="汇编语言学习资料整理"></a>汇编语言学习资料整理</h2><p><a href>《汇编语言》-王爽</a>  </p>
-<p>必看！！这本书买了，正在学习。很好！！</p>
-<p><a href="http://www.asmedu.net/bbs/forum.jsp" target="_blank" rel="noopener">《汇编语言论坛》</a></p>
-<p>已经很少有人讨论了。但是里面有很多以前讨论的问题和解答，很有参考价值</p>
-<p><a href="https://www.bilibili.com/video/av22872043/" target="_blank" rel="noopener">《零基础入门学习汇编语言》- 小甲鱼</a></p>
-<p>这是一套视频，没有看过，但是在网上查找汇编相关的资料的时候，发现很多网友都是看过这套视频，对于入门应该不错。 上大学的时候记得有看过他的入门C语言视频</p>
+<p>上面提到了何为<code>寻址能力</code>？就是<code>CPU最大能查找多大范围的地址</code>。<strong>千万不要理解为CPU最大能查找多大的地址</strong> 虽然跟上一句比仅仅少了一个’范围’，但是完全是两个意思。 我最开始就理解成了 最大能查找到多大的地址。。。</p>
+<p>或者也可以理解为：<strong>CPU最多能查找多少个地址</strong> （这里多少个地址，值得是多少个存储单元，存储单位最小单位是Byte，不是b） 。或者可以理解为 <strong>CPU可以对多少个存储单元进行寻址</strong></p>
+<p>到了这里 应该就明白了<code>寻址能力</code>的概念，但是还不够。。</p>
+<h2 id="寻址能力-Byte-or-Bite"><a href="#寻址能力-Byte-or-Bite" class="headerlink" title="寻址能力 Byte or Bite?"></a>寻址能力 Byte or Bite?</h2><p>思考一个问题：</p>
+<blockquote>
+<p>8086CPU的地址总线宽度是<code>20</code>，那么他的寻址能力是大呢</p>
+</blockquote>
+<p>看到这里如果不明白什么是地址总线，请看我的这篇文章 : <a href="http://www.wuqihan.cn/2018/05/15/入门汇编语言/">入门汇编语言</a></p>
+<p>地址总线的宽度决定了CPU的寻址能力，宽度是20，也就代表有20根导线， 每根导线发射的是高、低电信号两种情况，所以寻址能力为 2<sup>20</sup>B = <code>1M</code> </p>
+<p>但是这里可能会出现很多人都纳闷的问题，20根导线，不就是20位吗，所以应该是2<sup>20</sup>b。那为什么是 2<sup>20</sup>B ，而不是2<sup>20</sup>b 呢？ （B为Byte/字节，b为bite/位）</p>
+<p>因为地址总线的宽度决定了CPU的 寻址能力，那何为寻址能力呢，说面提到了，寻址能力可以理解为CPU可以对多少个存储单元进行寻址，地址总线是20，那么就代表最多能找到2<sup>20</sup>个存储单元，又因为8086中一个存储单元是1B所以，这里是2<sup>20</sup>B</p>
+<p>看到这里可能又会继续糊涂，<code>存储单元</code>是what?为什么一个存储单元是1B，所以往下看……</p>
+<h2 id="内存地址和内存空间"><a href="#内存地址和内存空间" class="headerlink" title="内存地址和内存空间"></a>内存地址和内存空间</h2><p>在平时开发中，可能有时候你看到的内存地址是4位16进制（0x0001），有时候你看到的内存地址是8位16进制(0x00000001)。这两个内存地址都是表示编号为1的内存地址，为什么一个用4位16进制？另外一个又用8位16进制？(注意，0x0001 和 0x00000001 仅仅是表示方式不一样，数值大小可是相等的，可别搞迷糊了！）</p>
+<p><img src="https://i.loli.net/2019/08/18/aW98uSNHC54Jl6i.png" alt="8位16进制"></p>
+<p><img src="https://i.loli.net/2019/08/18/eWXBPmOLKAdtYnD.png" alt="4位16进制"></p>
+<p>这就是因为寻址能力的问题。你寻址能力达不到8位16进制，所以用4位16进制表示就可以，理论上你硬要用8位16进制表示也可以。只不过你寻址能力低，不可能超过4位。所以 寻址能力低，不会超过4位的就用4位16进制，能够超过4的cpu就用8位16进制。</p>
+<p>搞明白了内存地址，接下来就解释一下<code>内存地址</code>和 <code>内存空间</code></p>
+<p><code>内存地址</code> 仅仅是一个标号，代表的是一个 <code>内存空间</code>。在计算机中存储器的容量是以字节B为基本单位的，所以一个内存地址代表一个字节 1B = 8b 的存储空间。</p>
+<p>我们平时经常说32位操作 系统，最多支持4G内存空间。就是因为2<sup>32</sup>B = 4G</p>
+<p>所以这里的结论就是：<code>用4位16进制表示的内存地址和用8位16进制表示的内存地址，其实都是代表一个8b的存储空间</code></p>
+<p>比如一个汉字“中”在计算机中是如何存储呢，一个汉字，需要两个存储空间，也就是2B大小，这2B存储空间是连续的，所以不需要全部找到，只需要找到最开始的一部分，就能找到这个“中”</p>
+<p>所以，内存地址是内寸中存储数据的一个标识，并不是数据本身，通过内存地址可以知道内存当中存储的数据。 </p>
+<blockquote>
+<p>参考：</p>
+<p><a href="[https://baike.baidu.com/item/%E5%AF%BB%E5%9D%80%E7%A9%BA%E9%97%B4](https://baike.baidu.com/item/寻址空间">《百度百科-寻址空间》</a>)</p>
+<p><a href="http://www.asmedu.net/bbs/pasteinfo.jsp?part=1&amp;level=book&amp;kind=1002&amp;qkSg=2&amp;qID=27391&amp;readSg=1" target="_blank" rel="noopener">《汇编语言论坛》</a></p>
+<p><a href="https://www.kancloud.cn/chandler/programming_road/695585" target="_blank" rel="noopener">《内存概念》</a></p>
+<p><a href="https://www.cnblogs.com/VIPler/p/4282584.html" target="_blank" rel="noopener">《关于内存地址和内存空间的概念》</a></p>
+</blockquote>
 
         </div>
         
             <ul class="post-copyright">
-            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2018/05/15/入门汇编语言/">入门汇编语言</a></li>
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/">CPU寻址能力到底怎么理解？</a></li>
             <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
-            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2018/05/15/入门汇编语言/">http://www.wuqihan.cn/2018/05/15/入门汇编语言/</a></li>
-            <li><strong>发布时间：</strong>2018-05-15</li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/">http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/</a></li>
+            <li><strong>发布时间：</strong>2018-05-19</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
             </li>
             </ul>
@@ -305,7 +253,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <i class="fas fa-tags has-text-grey"></i>&nbsp;
-                    <a class="has-link-grey -link" href="/tags/8086汇编/">8086汇编</a>
+                    <a class="has-link-grey -link" href="/tags/8086汇编/">8086汇编</a>,&nbsp;<a class="has-link-grey -link" href="/tags/cpu/">cpu</a>,&nbsp;<a class="has-link-grey -link" href="/tags/内存/">内存</a>,&nbsp;<a class="has-link-grey -link" href="/tags/寻址能力/">寻址能力</a>
                 </div>
             </div>
         </div>
@@ -356,16 +304,16 @@ var _hmt = _hmt || [];
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/05/18/优雅的使用NSNotification-name/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/08/14/在CentOS7上搭建Shadowsocks/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">优雅的使用NSNotification.Name</span>
+                <span class="level-item">在CentOS7上搭建Shadowsocks</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/01/11/深入理解Block/">
-                <span class="level-item">深入理解Block</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/18/优雅的使用NSNotification-name/">
+                <span class="level-item">优雅的使用NSNotification.Name</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -511,33 +459,17 @@ var _hmt = _hmt || [];
                 Catalogue
             </h3>
             <ul class="menu-list"><li>
-        <a class="is-flex" href="#了解汇编语言">
+        <a class="is-flex" href="#寻址空间">
         <span class="has-mr-6">1</span>
-        <span>了解汇编语言</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#编程语言的发展">
-        <span class="has-mr-6">1.1</span>
-        <span>编程语言的发展</span>
+        <span>寻址空间</span>
         </a></li><li>
-        <a class="is-flex" href="#汇编语言的特点">
-        <span class="has-mr-6">1.2</span>
-        <span>汇编语言的特点</span>
-        </a></li><li>
-        <a class="is-flex" href="#汇编语言VS高级语言">
-        <span class="has-mr-6">1.3</span>
-        <span>汇编语言VS高级语言</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#CPU总线">
+        <a class="is-flex" href="#寻址能力-Byte-or-Bite">
         <span class="has-mr-6">2</span>
-        <span>CPU总线</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#地址总线">
-        <span class="has-mr-6">2.1</span>
-        <span>地址总线</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#汇编语言学习资料整理">
+        <span>寻址能力 Byte or Bite?</span>
+        </a></li><li>
+        <a class="is-flex" href="#内存地址和内存空间">
         <span class="has-mr-6">3</span>
-        <span>汇编语言学习资料整理</span>
+        <span>内存地址和内存空间</span>
         </a></li></ul>
         </div>
     </div>
@@ -561,7 +493,7 @@ var _hmt = _hmt || [];
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="入门汇编语言" height="28">
+                    <img src="/images/logo.svg" alt="CPU寻址能力到底怎么理解？" height="28">
                 
                 </a>
                 <p class="is-size-7">
