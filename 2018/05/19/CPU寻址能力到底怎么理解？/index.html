@@ -16,7 +16,7 @@
 <meta property="og:description" content="寻址空间解释寻址能力之前，先来看下 寻址空间 （Addressing space）的概念。  寻址空间一般指的是CPU对于内存寻址的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在存储器(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png">
-<meta property="og:updated_time" content="2019-08-18T06:32:24.376Z">
+<meta property="og:updated_time" content="2019-08-18T13:15:30.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPU寻址能力到底怎么理解？">
 <meta name="twitter:description" content="寻址空间解释寻址能力之前，先来看下 寻址空间 （Addressing space）的概念。  寻址空间一般指的是CPU对于内存寻址的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在存储器(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最">
@@ -183,7 +183,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    10 minutes read (About 1459 words)
+                    11 minutes read (About 1683 words)
                 </span>
                 
                 
@@ -216,6 +216,10 @@ var _hmt = _hmt || [];
 <p>看到这里如果不明白什么是地址总线，请看我的这篇文章 : <a href="http://www.wuqihan.cn/2018/05/15/入门汇编语言/">入门汇编语言</a></p>
 <p>地址总线的宽度决定了CPU的寻址能力，宽度是20，也就代表有20根导线， 每根导线发射的是高、低电信号两种情况，所以寻址能力为 2<sup>20</sup>B = <code>1M</code> </p>
 <p>但是这里可能会出现很多人都纳闷的问题，20根导线，不就是20位吗，所以应该是2<sup>20</sup>b。那为什么是 2<sup>20</sup>B ，而不是2<sup>20</sup>b 呢？ （B为Byte/字节，b为bite/位）</p>
+<blockquote>
+<p><code>位</code> ，表示的是二进制位，一般称为比特，即0或1，<strong>是计算机存储的最小单位</strong></p>
+<p>字节是计算机中数据处理的基本单位；计算机以字节为单位存储和解释信息，规定一个字节由8个二进制位构成，即1B = 8b</p>
+</blockquote>
 <p>因为地址总线的宽度决定了CPU的 寻址能力，那何为寻址能力呢，说面提到了，寻址能力可以理解为CPU可以对多少个存储单元进行寻址，地址总线是20，那么就代表最多能找到2<sup>20</sup>个存储单元，又因为8086中一个存储单元是1B所以，这里是2<sup>20</sup>B</p>
 <p>看到这里可能又会继续糊涂，<code>存储单元</code>是what?为什么一个存储单元是1B，所以往下看……</p>
 <h2 id="内存地址和内存空间"><a href="#内存地址和内存空间" class="headerlink" title="内存地址和内存空间"></a>内存地址和内存空间</h2><p>在平时开发中，可能有时候你看到的内存地址是4位16进制（0x0001），有时候你看到的内存地址是8位16进制(0x00000001)。这两个内存地址都是表示编号为1的内存地址，为什么一个用4位16进制？另外一个又用8位16进制？(注意，0x0001 和 0x00000001 仅仅是表示方式不一样，数值大小可是相等的，可别搞迷糊了！）</p>
@@ -228,12 +232,14 @@ var _hmt = _hmt || [];
 <p>所以这里的结论就是：<code>用4位16进制表示的内存地址和用8位16进制表示的内存地址，其实都是代表一个8b的存储空间</code></p>
 <p>比如一个汉字“中”在计算机中是如何存储呢，一个汉字，需要两个存储空间，也就是2B大小，这2B存储空间是连续的，所以不需要全部找到，只需要找到最开始的一部分，就能找到这个“中”</p>
 <p>所以，内存地址是内寸中存储数据的一个标识，并不是数据本身，通过内存地址可以知道内存当中存储的数据。 </p>
+<p>可以抽象的把内存空间比作房子🏡，如果想要找到房子，就需要通过🚪门牌号来找，所以内存地址就可以比作门牌号，那这个房子里可能还包括有厨房、卧室、卫生间，这些统统不用继续找了，因为有了门牌号，就能找到房子，找到房子自然就能找打屋里的厨房、卧室……</p>
 <blockquote>
 <p>参考：</p>
 <p><a href="[https://baike.baidu.com/item/%E5%AF%BB%E5%9D%80%E7%A9%BA%E9%97%B4](https://baike.baidu.com/item/寻址空间">《百度百科-寻址空间》</a>)</p>
 <p><a href="http://www.asmedu.net/bbs/pasteinfo.jsp?part=1&amp;level=book&amp;kind=1002&amp;qkSg=2&amp;qID=27391&amp;readSg=1" target="_blank" rel="noopener">《汇编语言论坛》</a></p>
 <p><a href="https://www.kancloud.cn/chandler/programming_road/695585" target="_blank" rel="noopener">《内存概念》</a></p>
 <p><a href="https://www.cnblogs.com/VIPler/p/4282584.html" target="_blank" rel="noopener">《关于内存地址和内存空间的概念》</a></p>
+<p><a href="https://www.cnblogs.com/Lanht/p/10780364.html" target="_blank" rel="noopener">《内存地址与内存空间》</a></p>
 </blockquote>
 
         </div>
