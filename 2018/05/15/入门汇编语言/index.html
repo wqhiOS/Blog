@@ -16,7 +16,7 @@
 <meta property="og:description" content="了解汇编语言编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png">
-<meta property="og:updated_time" content="2019-08-28T12:57:05.690Z">
+<meta property="og:updated_time" content="2019-08-28T13:14:38.456Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="入门汇编语言">
 <meta name="twitter:description" content="了解汇编语言编程语言的发展 机器语言 由0和1组成   汇编语言 （Assembly Language） 用符号代替了0和1，比机器语言便于阅读和机翼   高级语言 C\C++\Java\Swift等，更接近人类自然语言">
@@ -163,9 +163,6 @@ var _hmt = _hmt || [];
             <div class="level-left">
 
                 
-                <i class="fas fa-arrow-alt-circle-up" style="color:#ff9300"></i>
-                <span class="level-item" style="color:#ff9300">&nbsp;TOP</span>
-                
 
                 <span class="level-item has-text-grey">
                 <i class="far fa-calendar-alt"></i>&nbsp;
@@ -183,7 +180,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    13 minutes read (About 1897 words)
+                    13 minutes read (About 1931 words)
                 </span>
                 
                 
@@ -228,8 +225,6 @@ var _hmt = _hmt || [];
 <li><font color="#FF6347"><strong>汇编语言</strong></font> 可以通过编译得到<font color="#FF6347"><strong>机器语言</strong></font>，<font color="#FF6347"><strong>机器语言</strong></font>可以通过反汇编得到<font color="#FF6347"><strong>汇编语言</strong></font> 
 </li>
 <li><font color="#FF6347"><strong>高级语言</strong></font>可以通过编译得到<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>，但<font color="#FF6347"><strong>汇编语言</strong></font> \ <font color="#FF6347"><strong>机器语言</strong></font>几乎不可能还原成<font color="#FF6347"><strong>高级语言</strong></font>
-
-
 
 </li>
 </ul>
@@ -299,7 +294,7 @@ var _hmt = _hmt || [];
 <p>内部地址16位，但是却能传送出20位的地址，原因是： <code>8086采用一种在内部用2个16位地址合成的方法来生成1个20位的物理地址</code></p>
 <p><img src="https://i.loli.net/2019/08/28/HVx6WCMfve8I5lr.png" alt></p>
 <p>地址加法器采用 <code>物理地址=段地址*16+偏移地址</code>的方法用段地址和偏移地址合成物理地址。例如，8086CPU要访问123C8H的内存单元是，可以通过1230H*10H+00C8H</p>
-<h2 id="主要寄存器"><a href="#主要寄存器" class="headerlink" title="主要寄存器"></a>主要寄存器</h2><p><img src="https://i.loli.net/2019/08/28/tCGUrPq9BoKMpa5.jpg" alt="page25image48476560.jpg"> </p>
+<h2 id="主要寄存器"><a href="#主要寄存器" class="headerlink" title="主要寄存器"></a>主要寄存器</h2><p><img src="https://i.loli.net/2019/08/28/tCGUrPq9BoKMpa5.jpg" alt="寄存器"> </p>
 <p>8086有14个寄存器，都是16位。可以存放2个字节（2个字节是一个字word）</p>
 <h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>AX、BX、CX、DX这4个寄存器通常用来存放一般性的数据，称为通用寄存器(有时也有特定用途)；通常，CPU会先将内存中的数据存储到通用寄存器中，然后再对通用寄存器中的数据进行运算。</p>
 <h3 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h3><p>8086有4个段寄存器:CS、DS、SS、ES，当CPU需要访问内存时由这4个段寄存器提供内存单元的段地址。</p>
@@ -315,12 +310,12 @@ var _hmt = _hmt || [];
 <li>从地址为20000H的内存单元开始，存放的机器指令B8 23 01通过数据总线被送入CPU</li>
 <li><code>输入输出控制电路</code>将机器指令B8 23 01送入 <code>指令缓冲器</code></li>
 <li>读取一条指令后，IP中的值自动增加，以使CPU可以读取下一条指令。因为B82301是3个字节，所以IP中的值加3 ，此时CS:IP指向内存单元2000H:0003H</li>
-<li>执行指令 B8 23 01即 mov ax,0123h</li>
+<li><code>执行控制器</code>执行指令 B8 23 01即 mov ax,0123h</li>
 <li>回到第1步，重复以上的步骤，只不过第一条中的CS仍然为2000H，但是iP已经在第6步中改为了0003H</li>
 </ol>
 <h2 id="汇编语言学习资料整理"><a href="#汇编语言学习资料整理" class="headerlink" title="汇编语言学习资料整理"></a>汇编语言学习资料整理</h2><p><a href="https://book.douban.com/subject/25726019/" target="_blank" rel="noopener">《汇编语言(第三版)》-王爽</a>  </p>
 <p><img src="https://i.loli.net/2019/08/18/Jga6Iu49SPHy5n3.jpg"> </p>
-<p>豆瓣9.2分 必看！！这本书买了，正在学习。很好！！</p>
+<p>豆瓣9.2分 必看！！正在读这本书，真的是特别值得推荐！是我所有读过的国内计算机类书籍中我觉得写得最好的一本。</p>
 <p><a href="http://www.asmedu.net/bbs/forum.jsp" target="_blank" rel="noopener">《汇编语言论坛》</a></p>
 <p>已经很少有人讨论了。但是里面有很多以前讨论的问题和解答，很有参考价值</p>
 <p><a href="https://www.bilibili.com/video/av22872043/" target="_blank" rel="noopener">《零基础入门学习汇编语言》- 小甲鱼</a></p>
