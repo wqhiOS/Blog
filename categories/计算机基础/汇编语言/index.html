@@ -160,6 +160,105 @@ var _hmt = _hmt || [];
     <div class="card">
     
     <div class="card-image">
+        <a href="/2018/08/28/汇编学习踩坑记录/" class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/08/28/9fQLxV7yCKcwmEZ.jpg" alt="汇编学习踩坑记录">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2018-08-28T11:15:03.000Z">&nbsp;2018-08-28</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    3 minutes read (About 504 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                <a class="has-link-black-ter" href="/2018/08/28/汇编学习踩坑记录/">汇编学习踩坑记录</a>
+            
+        </h1>
+        <div class="content">
+            <p>对于汇编学习，网上的资源相比高级语言算是挺少的了。这里，记录下在学习汇编过程踩过的坑和遇过的问题。</p>
+<h2 id="mov-ax-ffffh"><a href="#mov-ax-ffffh" class="headerlink" title="mov ax ffffh"></a>mov ax ffffh</h2><p><strong>mov ax ffffh</strong>这段指令，编译器会报错。</p>
+<p>原因：大于9ffffh的十六进制数据，如果a000h、a001h……ffffh等，在书写的时候都是以字母开头。而<strong>在汇编源程序中，数据不能以字母开头</strong>，所以要在前面加0。</p>
+<p>应该改为：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov ax 0ffffh</span><br></pre></td></tr></table></figure>
+<h2 id="mov-ax-0h"><a href="#mov-ax-0h" class="headerlink" title="mov ax [0h]"></a>mov ax [0h]</h2><p>把地址为 1000h:[0h]的内存单元的内容赋值给ax时，我们可能会这样写</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov ax,1000h</span><br><span class="line">mov ds,ax</span><br><span class="line">mov ax,[0h]</span><br></pre></td></tr></table></figure>
+<p>这段汇编代码没有任何问题，但是其中<strong>mov ax,[0h]</strong>在<code>masm</code>编译器中是亲测是无法达到预期的效果，会被解释为 <strong>mov ax,0h</strong></p>
+<p>为了达到预期效果，可以把指令改为</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov ax,ds:[0h]</span><br></pre></td></tr></table></figure>
+<p>或者使用<code>emu8086</code>编写汇编代码，就不会出现上面的问题。</p>
+<p>自从出现这个问题。我就再也不适用<code>masm</code>编译了，以免踩到跟多的坑。</p>
+<h2 id="Debug-exe常用命令"><a href="#Debug-exe常用命令" class="headerlink" title="Debug.exe常用命令"></a>Debug.exe常用命令</h2><ul>
+<li><p>r</p>
+<p>查看各个寄存器</p>
+</li>
+<li><p>d</p>
+<p>查看内存单元/寄存器中的内容</p>
+</li>
+<li><p>u</p>
+<p>查看内存单元对应的指令</p>
+</li>
+<li><p>e</p>
+<p>写入指令</p>
+</li>
+<li><p>t</p>
+<p>执行下一条指令</p>
+</li>
+<li><p>g</p>
+<p>g xxxx (xxxx为内存物理地址)。表示程序直接执行到 xxxx对应的指令。</p>
+</li>
+<li><p>p</p>
+<p>如果下一条指令是int，要想正确执行下一条指令，是用p</p>
+<p>如果遇到loop想自动执行完loop，可以使用p</p>
+</li>
+</ul>
+<h2 id="寄存器中最大存储的十进制数为65535"><a href="#寄存器中最大存储的十进制数为65535" class="headerlink" title="寄存器中最大存储的十进制数为65535"></a>寄存器中最大存储的十进制数为65535</h2><p>x86 CPU为16位，也就是说寄存器为16位，最大存储两个字节，一个字。</p>
+<p>寄存器存储的最大16进制数为ffffh = 16^4-1=65535</p>
+<p>所以在使用十进制赋值的时候，注意不要超过65535</p>
+
+        </div>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="image is-7by1">
             <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
         </a>
@@ -191,7 +290,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    15 minutes read (About 2312 words)
+                    17 minutes read (About 2540 words)
                 </span>
                 
                 
@@ -283,7 +382,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    8 minutes read (About 1212 words)
+                    13 minutes read (About 1897 words)
                 </span>
                 
                 
@@ -385,7 +484,7 @@ var _hmt = _hmt || [];
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        16
+                        17
                     </p>
                 </a>
             </div>
@@ -453,7 +552,7 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/8086汇编/" style="font-size: 15px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 15px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a>
+        <a href="/tags/8086汇编/" style="font-size: 16.67px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 13.33px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a>
     </div>
 </div>
 
@@ -470,6 +569,17 @@ var _hmt = _hmt || [];
             <a class="level is-marginless" href="/archives/2019/08/">
                 <span class="level-start">
                     <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -625,6 +735,25 @@ var _hmt = _hmt || [];
         
         <article class="media">
             
+            <a href="/2018/08/28/汇编学习踩坑记录/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://i.loli.net/2019/08/28/9fQLxV7yCKcwmEZ.jpg" alt="汇编学习踩坑记录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-08-28T11:15:03.000Z">2018-08-28</time></div>
+                    <a href="/2018/08/28/汇编学习踩坑记录/" class="has-link-black-ter is-size-6">汇编学习踩坑记录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
@@ -675,25 +804,6 @@ var _hmt = _hmt || [];
                     <a href="/2018/05/15/入门汇编语言/" class="has-link-black-ter is-size-6">入门汇编语言</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/01/11/深入理解Block/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="深入理解Block">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-01-11T08:52:33.000Z">2018-01-11</time></div>
-                    <a href="/2018/01/11/深入理解Block/" class="has-link-black-ter is-size-6">深入理解Block</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Objective-C底层原理/">Objective-C底层原理</a>
                     </p>
                 </div>
             </div>
@@ -757,7 +867,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">计算机基础</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/计算机基础/汇编语言/">
@@ -765,7 +875,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">汇编语言</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li>
             </ul>
@@ -784,7 +894,7 @@ var _hmt = _hmt || [];
                 <div class="control">
                     <a class="tags has-addons" href="/tags/8086汇编/">
                         <span class="tag">8086汇编</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -895,6 +1005,25 @@ var _hmt = _hmt || [];
         
         <article class="media">
             
+            <a href="/2018/08/28/汇编学习踩坑记录/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://i.loli.net/2019/08/28/9fQLxV7yCKcwmEZ.jpg" alt="汇编学习踩坑记录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-08-28T11:15:03.000Z">2018-08-28</time></div>
+                    <a href="/2018/08/28/汇编学习踩坑记录/" class="has-link-black-ter is-size-6">汇编学习踩坑记录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
@@ -945,25 +1074,6 @@ var _hmt = _hmt || [];
                     <a href="/2018/05/15/入门汇编语言/" class="has-link-black-ter is-size-6">入门汇编语言</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/01/11/深入理解Block/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/block.jpg" alt="深入理解Block">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-01-11T08:52:33.000Z">2018-01-11</time></div>
-                    <a href="/2018/01/11/深入理解Block/" class="has-link-black-ter is-size-6">深入理解Block</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/Objective-C底层原理/">Objective-C底层原理</a>
                     </p>
                 </div>
             </div>
@@ -1027,7 +1137,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">计算机基础</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/计算机基础/汇编语言/">
@@ -1035,7 +1145,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">汇编语言</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li>
             </ul>
@@ -1054,7 +1164,7 @@ var _hmt = _hmt || [];
                 <div class="control">
                     <a class="tags has-addons" href="/tags/8086汇编/">
                         <span class="tag">8086汇编</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
