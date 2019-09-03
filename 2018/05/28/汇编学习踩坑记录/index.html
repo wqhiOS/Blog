@@ -16,7 +16,7 @@
 <meta property="og:description" content="对于汇编学习，网上的资源相比高级语言算是挺少的了。这里，记录下在学习汇编过程踩过的坑和遇过的问题。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2019/08/28/9fQLxV7yCKcwmEZ.jpg">
-<meta property="og:updated_time" content="2019-08-28T13:46:51.288Z">
+<meta property="og:updated_time" content="2019-09-03T11:32:09.921Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="汇编学习踩坑记录">
 <meta name="twitter:description" content="对于汇编学习，网上的资源相比高级语言算是挺少的了。这里，记录下在学习汇编过程踩过的坑和遇过的问题。">
@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    3 minutes read (About 505 words)
+                    7 minutes read (About 978 words)
                 </span>
                 
                 
@@ -238,6 +238,27 @@ var _hmt = _hmt || [];
 <h2 id="寄存器中最大存储的十进制数为65535"><a href="#寄存器中最大存储的十进制数为65535" class="headerlink" title="寄存器中最大存储的十进制数为65535"></a>寄存器中最大存储的十进制数为65535</h2><p>x86 CPU为16位，也就是说寄存器为16位，最大存储两个字节，一个字。</p>
 <p>寄存器存储的最大16进制数为ffffh = 16^4-1=65535</p>
 <p>所以在使用十进制赋值的时候，注意不要超过65535</p>
+<h2 id="如果段中的数据占N个字节，则程序加载后，该段实际占有空间为多少？"><a href="#如果段中的数据占N个字节，则程序加载后，该段实际占有空间为多少？" class="headerlink" title="如果段中的数据占N个字节，则程序加载后，该段实际占有空间为多少？"></a>如果段中的数据占N个字节，则程序加载后，该段实际占有空间为多少？</h2><p>《汇编语言》第三版这本书 给的答案是：（N/16+1)*16</p>
+<p>这个答案是 <code>错误</code></p>
+<p>如果当N = 16时，如果按照答案，得到的是32，其实还是16。如果不确定，可以自己动手测试一下(经过我自己的测试、确实不是32，而是16)</p>
+<p>准确答案是：</p>
+<ul>
+<li><p><strong>当N可以被16整除时</strong></p>
+<p>占有的空间为<code>(N/16)*16</code></p>
+</li>
+<li><p><strong>当N不可以被16整除时</strong></p>
+<p>占有的空间为<code>(N/16+1)*16</code></p>
+</li>
+</ul>
+<p>上面两种情况总结成一个通用的公式：<code>((N+15)/16)*16</code></p>
+<blockquote>
+<p>8086汇编中 每个段都是以16字节来对齐的</p>
+</blockquote>
+<p>至于为什么这样子设计，我觉得应该是根据8086CPU特殊的寻址方式(段地址*16+偏移地址 )有关。比如一个段中的数据占了17个内存单元，那下一个段，肯定不是从第18个内存单元开始，因为段地址起始地址，必须是16的整数倍。所以如果一个段中的数据占17个内存单元，那紧挨着它的下一个段肯定是从第33个内存单元(也就是编号32开始)开始。</p>
+<p>如果理解了上面的问题，可以动手做一下下面的题目，巩固对上面的理解</p>
+<p><img src="../../../../../Library/Application Support/typora-user-images/image-20190902174915149.png" alt="image-20190902174915149"></p>
+<p>答案：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">a segment </span><br><span class="line">	db 1,2,3,4,5,6,7,8</span><br><span class="line">a ends</span><br><span class="line"></span><br><span class="line">b segment</span><br><span class="line">	db 1,2,3,4,5,6,7,8</span><br><span class="line">b ends</span><br><span class="line"></span><br><span class="line">c segment</span><br><span class="line">	db 0,0,0,0,0,0,0,0</span><br><span class="line">c ends</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">start:</span><br><span class="line">	</span><br><span class="line">	mov ax,a</span><br><span class="line">	mov ds,ax</span><br><span class="line"></span><br><span class="line">	mov bx,0  </span><br><span class="line">	mov cx,8</span><br><span class="line">s:mov al,ds:[bx]</span><br><span class="line">	add al,ds:[bx+16] ; 注意！！！这里是16 不是8 我第一次写的时候写成了8 结果在调试的时候发现了这个错误</span><br><span class="line">	mov ds:[bx+32],al ; 注意！！！这里是32 不是16</span><br><span class="line">	add bx,1</span><br><span class="line">	loop s</span><br><span class="line">	</span><br><span class="line">	mov ax,4c00h</span><br><span class="line">	int 21h</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
 
         </div>
         
@@ -477,6 +498,10 @@ var _hmt = _hmt || [];
         <a class="is-flex" href="#寄存器中最大存储的十进制数为65535">
         <span class="has-mr-6">4</span>
         <span>寄存器中最大存储的十进制数为65535</span>
+        </a></li><li>
+        <a class="is-flex" href="#如果段中的数据占N个字节，则程序加载后，该段实际占有空间为多少？">
+        <span class="has-mr-6">5</span>
+        <span>如果段中的数据占N个字节，则程序加载后，该段实际占有空间为多少？</span>
         </a></li></ul>
         </div>
     </div>
