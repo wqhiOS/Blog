@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="基本概念学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：  进程： 进程是指在系统中运行的一个应用程序。（比如打卡QQ,就是打开了一个进程） 每个进程之间是相互独立的，每个进程均运行在受保护的内存空间内   线程： 一个进程想要执行任务，必须得有线程（每个进程至少有一条线程） 进程中的所有任务都是在线程中执行的   总结： 进程有独立的空间地址，而线程只是一个进程中的不同执行路径">
+    <meta name="description" content="进程与线程学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系： 《OS X and iOS Kernel Programming》这本书中对进程和线程分别做了如下定义：  When the user launches an application, the operating system loads the program’s code and data into memory f">
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程基础篇">
 <meta property="og:url" content="http://www.wuqihan.cn/2016/07/08/多线程基础/index.html">
 <meta property="og:site_name" content="wuqihan&#39;s blog">
-<meta property="og:description" content="基本概念学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：  进程： 进程是指在系统中运行的一个应用程序。（比如打卡QQ,就是打开了一个进程） 每个进程之间是相互独立的，每个进程均运行在受保护的内存空间内   线程： 一个进程想要执行任务，必须得有线程（每个进程至少有一条线程） 进程中的所有任务都是在线程中执行的   总结： 进程有独立的空间地址，而线程只是一个进程中的不同执行路径">
+<meta property="og:description" content="进程与线程学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系： 《OS X and iOS Kernel Programming》这本书中对进程和线程分别做了如下定义：  When the user launches an application, the operating system loads the program’s code and data into memory f">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-14T13:06:08.768Z">
+<meta property="og:updated_time" content="2019-11-04T12:50:00.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程基础篇">
-<meta name="twitter:description" content="基本概念学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：  进程： 进程是指在系统中运行的一个应用程序。（比如打卡QQ,就是打开了一个进程） 每个进程之间是相互独立的，每个进程均运行在受保护的内存空间内   线程： 一个进程想要执行任务，必须得有线程（每个进程至少有一条线程） 进程中的所有任务都是在线程中执行的   总结： 进程有独立的空间地址，而线程只是一个进程中的不同执行路径">
+<meta name="twitter:description" content="进程与线程学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系： 《OS X and iOS Kernel Programming》这本书中对进程和线程分别做了如下定义：  When the user launches an application, the operating system loads the program’s code and data into memory f">
 <meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
 
 
@@ -132,6 +132,10 @@ var _hmt = _hmt || [];
             <div class="navbar-end">
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -162,7 +166,7 @@ var _hmt = _hmt || [];
                 
                 <div class="level-item">
                 <i class="far fa-folder-open has-text-grey"></i>&nbsp;
-                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
                 </div>
                 
                 
@@ -170,7 +174,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    19 minutes read (About 2810 words)
+                    22 minutes read (About 3318 words)
                 </span>
                 
                 
@@ -188,10 +192,17 @@ var _hmt = _hmt || [];
             
         </h1>
         <div class="content">
-            <h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p>学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：</p>
+            <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：</p>
+<p><a href="https://book.douban.com/subject/7916129/" target="_blank" rel="noopener">《OS X and iOS Kernel Programming</a>》这本书中对进程和线程分别做了如下定义：</p>
+<blockquote>
+<p>When the user launches an application, the operating system loads the program’s code and data into memory from disk and begins executing its code. A program being executed is known as a “process.” Unlike a program, a process is an active entity, and consists of a snapshot of the state of the program at a single instance during execution.</p>
+<p>Modern operating systems no longer treat processes as the basic units of operation, instead work with threads. A thread is merely a distinct register state, and more than one can exist in a given process. All threads share the virtual memory space, descriptors and handles.</p>
+</blockquote>
+<p><code>上面有这样一句话：A thread is merely a distinct register state(线程仅仅是一个不同的寄存器状态)。我对于这句话的理解就是线程相对于真实存在的进程来说，是一个相对虚拟的概念，仅仅是用不同的寄存器状态来区分不同的线程。由于我本身对操作系统了解还不够深入，所以我也不确定我的理解完全正确。</code></p>
+<a id="more"></a>
 <ul>
 <li>进程：<ul>
-<li>进程是指在系统中运行的一个应用程序。（比如打卡QQ,就是打开了一个进程）</li>
+<li>进程是指在系统中运行的一个应用程序。（比如打开QQ,就是打开了一个进程）</li>
 <li>每个进程之间是相互独立的，每个进程均运行在受保护的内存空间内</li>
 </ul>
 </li>
@@ -207,12 +218,14 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
-<a id="more"></a>
-<h4 id="关于多线程"><a href="#关于多线程" class="headerlink" title="关于多线程"></a>关于多线程</h4><p>了解了进程和线程之后，那什么是多线程呢？</p>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p><strong>了解了进程和线程之后，那什么是多线程呢？</strong></p>
 <p>1个进程中可以开启多条线程，每条线程中可以并行（同时）执行不同的任务。</p>
-<p>多线程并发执行的原理？</p>
+<p><strong>并发(concurrency)和并行(parallel)的区别</strong></p>
+<p>并发(concurrency)：在操作系统中，是指一个时间段中有几个程序都处于已启动运行到运行完毕之间，且这几个程序都是在同一个处理机上运行，但任一个时刻点上只有一个程序在处理机上运行。</p>
+<p>并行(parallel)：当系统有一个以上CPU时,则线程的操作有可能非并发。当一个CPU执行一个线程时，另一个CPU可以执行另一个线程，两个线程互不抢占CPU资源，可以同时进行，这种方式我们称之为并行。</p>
+<p><strong>多线程并发执行的原理？</strong></p>
 <p>在同一时间内。CPU只能处理1条线程，只有1条线程在工作（执行）。多线程并发（同时）执行，其实是CPU快速地在多线程之间调度（切换），如果CPU调度线程的时间足够快。那就造成了多线程并发执行的假象。</p>
-<p>多线程的优缺点</p>
+<p><strong>合理利用线程：</strong></p>
 <ul>
 <li>优点<ul>
 <li>能适当提高程序的执行效率</li>
@@ -226,22 +239,31 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
-<h4 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h4><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/thread1.jpg" alt="mage-20180315171902"></p>
+<h2 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h2><p><img src="https://i.loli.net/2019/11/04/OEh7HvtCBMQz2xV.png" alt="thread-state.png"></p>
 <p>下面分别阐述线程周期中的每一步：</p>
 <ul>
-<li>新建：实例化线程对象</li>
-<li>就绪：向线程对象发送start消息，线程对象被加入可调度线程池等待CPU调度。</li>
-<li>运行：CPU负责调度可调度线程池中线程的执行。线程执行完毕之前，状态可能会在就绪和运行之间来回切换。就绪和运行之间的状态变化有CPU负责，程序员不能干预。</li>
-<li>阻塞：当满足某个预定条件时，可以使用休眠或锁，阻塞线程执行。sleepForTimeInterval（休眠指定时长），sleepUntilDate(休眠到指定日期),@synchronized(self)：(互斥锁)。</li>
-<li>死亡：正常死亡，线程执行完毕。非正常死亡，当满足某个条件后，在线程内部中执行/在主线程中止线程对象</li>
-<li>还有线程的exit和cancel</li>
-<li>【NSThread exit】:一旦强行终止线程，后续的所有代码都不会被执行。</li>
-<li>【thread cancel】取消，并不会直接取消线程，只是给线程对象添加isCancelled标记。</li>
+<li><strong>创建</strong>：实例化线程对象</li>
+<li><strong>就绪</strong>/开启：向线程对象发送start消息，线程对象被加入可调度线程池等待CPU调度。</li>
+<li><strong>运行</strong>：CPU负责调度可调度线程池中线程的执行。线程执行完毕之前，状态可能会在就绪和运行之间来回切换。就绪和运行之间的状态变化由CPU负责，程序员不能干预。</li>
+<li><strong>阻塞</strong>：当满足某个预定条件时，可以使用休眠或锁，阻塞线程执行。sleepForTimeInterval（休眠指定时长），sleepUntilDate(休眠到指定日期),@synchronized(self)：(互斥锁)、metux锁、OSSpinLock锁等等。<strong>被阻塞的线程不在可调度线程池中，一旦阻塞就会从可调度线程池中移除</strong>。等到就绪转态时，又会重新加入可调度线程池。</li>
+<li><strong>死亡</strong>：正常死亡，线程执行完毕。非正常死亡，当满足某个条件后，在线程内部中执行/在主线程中止线程对象。（注意，网上看到有很多资料说，线程死亡后，线程对象从内存中移除。这种说法肯定是错误的。线程死亡并不代表线程对象一定就从内存中移除了，还是要遵循引用计数，如果有其他对象对线程引用，那内存就不会释放。）</li>
 </ul>
-<h4 id="iOS中多线程的实现方案"><a href="#iOS中多线程的实现方案" class="headerlink" title="iOS中多线程的实现方案"></a>iOS中多线程的实现方案</h4><table>
+<p>NSThread - exit 和cancel</p>
+<ul>
+<li><p><code>+exit()</code>     </p>
+<ul>
+<li>一旦强行终止线程，后续的所有代码都不会被执行</li>
+<li>exit线程死后，线程不能起死回生，不能再调用线程的start，否则会崩溃</li>
+</ul>
+</li>
+<li><p><code>-cancel()</code>：取消，并不会直接取消线程，只是给线程对象添加isCancelled标记。</p>
+</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">    </span><br><span class="line">    self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(test) object:nil];</span><br><span class="line">    [self.thread start];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)test &#123;</span><br><span class="line">    for (int i = 0; i &lt; 50; i++) &#123;</span><br><span class="line">        NSLog(@&quot;%d&quot;,i);</span><br><span class="line">        if (i == 20) &#123;</span><br><span class="line">            [self.thread cancel];//不会立马结束</span><br><span class="line">            //[NSThread exit];//会立马结束</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="iOS中多线程的实现方案"><a href="#iOS中多线程的实现方案" class="headerlink" title="iOS中多线程的实现方案"></a>iOS中多线程的实现方案</h2><table>
 <thead>
 <tr>
-<th></th>
+<th>实现方案</th>
 <th style="text-align:left">特点</th>
 <th style="text-align:left">使用语言</th>
 <th>使用频率</th>
@@ -251,59 +273,68 @@ var _hmt = _hmt || [];
 <tbody>
 <tr>
 <td>pthread</td>
-<td style="text-align:left">1）跨平台，可移植； 2）使用起来挺难吧</td>
+<td style="text-align:left">1）跨平台，可移植；<br> 2）使用起来有点麻烦</td>
 <td style="text-align:left">C</td>
 <td>几乎不用</td>
 <td>由程序员进行管理</td>
 </tr>
 <tr>
 <td>NSThread</td>
-<td style="text-align:left">1）面向对象；2）简单，可以直接操作线程对象</td>
+<td style="text-align:left">1）面向对象；<br>2）简单，可以直接操作线程对象</td>
 <td style="text-align:left">OC</td>
 <td>偶尔</td>
 <td>由程序员进行管理</td>
 </tr>
 <tr>
 <td>GCD</td>
-<td style="text-align:left">1）旨在替代NSThread等线程技术 2）充分利用设备的多核</td>
+<td style="text-align:left">1）旨在替代NSThread等线程技术 <br>2）充分利用设备的多核</td>
 <td style="text-align:left">C</td>
 <td>经常</td>
 <td>自动管理</td>
 </tr>
 <tr>
 <td>NSOperation</td>
-<td style="text-align:left">1）底层是GCD；2）比GCD多了一些更简单实用的功能；3）实用更加面向对象</td>
+<td style="text-align:left">1）底层是GCD；<br>2）比GCD多了一些更简单实用的功能；<br>3）实用更加面向对象</td>
 <td style="text-align:left">OC</td>
 <td>经常</td>
 <td>自动管理</td>
 </tr>
 </tbody>
 </table>
-<h5 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h5><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// import &lt;phtread.h&gt;</span></span><br><span class="line"><span class="hljs-comment">//1.创建线程对象</span></span><br><span class="line">    pthread_t thread;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//2.创建线程</span></span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">     第一个参数:线程对象 传递地址</span></span><br><span class="line"><span class="hljs-comment">     第二个参数:线程的属性 NULL</span></span><br><span class="line"><span class="hljs-comment">     第三个参数:指向函数的指针</span></span><br><span class="line"><span class="hljs-comment">     第四个参数:函数需要接受的参数</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    pthread_create(&amp;thread, <span class="hljs-literal">NULL</span>, task, <span class="hljs-literal">NULL</span>);</span><br></pre></td></tr></table></figure>
-<h5 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h5><p>(1) 基本使用</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//第一种创建线程的方式：alloc init.</span></span><br><span class="line"><span class="hljs-comment">//特点：需要手动开启线程，可以拿到线程对象进行详细设置</span></span><br><span class="line"><span class="hljs-comment">//创建线程</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">第一个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">第二个参数：选择器，线程启动要调用哪个方法</span></span><br><span class="line"><span class="hljs-comment">第三个参数：前面方法要接收的参数（最多只能接收一个参数，没有则传nil）</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"><span class="hljs-built_in">NSThread</span> *thread = [[<span class="hljs-built_in">NSThread</span> alloc]initWithTarget:<span class="hljs-keyword">self</span> selector:<span class="hljs-keyword">@selector</span>(run:) object:<span class="hljs-string">@"wendingding"</span>];</span><br><span class="line"><span class="hljs-comment">//启动线程</span></span><br><span class="line">[thread start];    </span><br><span class="line"><span class="hljs-comment">//第二种创建线程的方式：分离出一条子线程</span></span><br><span class="line"><span class="hljs-comment">//特点：自动启动线程，无法对线程进行更详细的设置</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">第一个参数：线程启动调用的方法</span></span><br><span class="line"><span class="hljs-comment">第二个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">第三个参数：传递给调用方法的参数</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(run:) toTarget:<span class="hljs-keyword">self</span> withObject:<span class="hljs-string">@"我是分离出来的子线程"</span>];</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//第三种创建线程的方式：后台线程</span></span><br><span class="line"><span class="hljs-comment">//特点：自动启动县城，无法进行更详细设置</span></span><br><span class="line">[<span class="hljs-keyword">self</span> performSelectorInBackground:<span class="hljs-keyword">@selector</span>(run:) withObject:<span class="hljs-string">@"我是后台线程"</span>];</span><br></pre></td></tr></table></figure>
-<p>（2）设置线程的属性</p>
-<figure class="highlight obj-c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//设置线程的属性</span></span><br><span class="line"><span class="hljs-comment">//设置线程的名称</span></span><br><span class="line">thread.name = <span class="hljs-string">@"线程A"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//设置线程的优先级,注意线程优先级的取值范围为0.0~1.0之间，1.0表示线程的优先级最高,如果不设置该值，那么理想状态下默认为0.5</span></span><br><span class="line">thread.threadPriority = <span class="hljs-number">1.0</span>;</span><br></pre></td></tr></table></figure>
-<p>（3）线程的状态</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//线程的各种状态：新建-就绪-运行-阻塞-死亡</span></span><br><span class="line"><span class="hljs-comment">//常用的控制线程状态的方法</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> exit];<span class="hljs-comment">//退出当前线程</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">2.0</span>];<span class="hljs-comment">//阻塞线程</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> sleepUntilDate:[<span class="hljs-built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="hljs-number">2.0</span>]];<span class="hljs-comment">//阻塞线程</span></span><br><span class="line"><span class="hljs-comment">//注意：线程死了不能复生</span></span><br></pre></td></tr></table></figure>
-<p>（4）线程安全</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//线程的各种状态：新建-就绪-运行-阻塞-死亡</span></span><br><span class="line"><span class="hljs-comment">//常用的控制线程状态的方法</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> exit];<span class="hljs-comment">//退出当前线程</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">2.0</span>];<span class="hljs-comment">//阻塞线程</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> sleepUntilDate:[<span class="hljs-built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="hljs-number">2.0</span>]];<span class="hljs-comment">//阻塞线程</span></span><br><span class="line"><span class="hljs-comment">//注意：线程死了不能复生</span></span><br></pre></td></tr></table></figure>
-<p>（5）线程间通信</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="hljs-keyword">void</span>)touchesBegan:(<span class="hljs-keyword">nonnull</span> <span class="hljs-built_in">NSSet</span>&lt;<span class="hljs-built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="hljs-keyword">nullable</span> <span class="hljs-built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line"><span class="hljs-comment">//    [self download2];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//开启一条子线程来下载图片</span></span><br><span class="line">    [<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(downloadImage) toTarget:<span class="hljs-keyword">self</span> withObject:<span class="hljs-literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="hljs-keyword">void</span>)downloadImage</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-comment">//1.确定要下载网络图片的url地址，一个url唯一对应着网络上的一个资源</span></span><br><span class="line">    <span class="hljs-built_in">NSURL</span> *url = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@"http://p6.qhimg.com/t01d2954e2799c461ab.jpg"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//2.根据url地址下载图片数据到本地（二进制数据</span></span><br><span class="line">    <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//3.把下载到本地的二进制数据转换成图片</span></span><br><span class="line">    <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.回到主线程刷新UI</span></span><br><span class="line">    <span class="hljs-comment">//4.1 第一种方式</span></span><br><span class="line"><span class="hljs-comment">//    [self performSelectorOnMainThread:@selector(showImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.2 第二种方式</span></span><br><span class="line"><span class="hljs-comment">//    [self.imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.3 第三种方式</span></span><br><span class="line">    [<span class="hljs-keyword">self</span>.imageView performSelector:<span class="hljs-keyword">@selector</span>(setImage:) onThread:[<span class="hljs-built_in">NSThread</span> mainThread] withObject:image waitUntilDone:<span class="hljs-literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>（6）如何计算代码段的执行时间</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//第一种方法</span></span><br><span class="line">    <span class="hljs-built_in">NSDate</span> *start = [<span class="hljs-built_in">NSDate</span> date];</span><br><span class="line">    <span class="hljs-comment">//2.根据url地址下载图片数据到本地（二进制数据）</span></span><br><span class="line">    <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-built_in">NSDate</span> *end = [<span class="hljs-built_in">NSDate</span> date];</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"第二步操作花费的时间为%f"</span>,[end timeIntervalSinceDate:start]);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//第二种方法</span></span><br><span class="line">    <span class="hljs-built_in">CFTimeInterval</span> start = <span class="hljs-built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-built_in">CFTimeInterval</span> end = <span class="hljs-built_in">CFAbsoluteTimeGetCurrent</span>();</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"第二步操作花费的时间为%f"</span>,end - start);</span><br></pre></td></tr></table></figure>
-<h5 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h5><p>（1）基本概念</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">01</span> 两个核心概念-队列和任务</span><br><span class="line"><span class="hljs-number">02</span> 同步函数和异步函数</span><br></pre></td></tr></table></figure>
-<p>（2）GCD基本使用</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">01</span> 异步函数+并发队列：开启多条线程，并发执行任务</span><br><span class="line"><span class="hljs-number">02</span> 异步函数+串行队列：开启一条线程，串行执行任务</span><br><span class="line"><span class="hljs-number">03</span> 同步函数+并发队列：不开线程，串行执行任务</span><br><span class="line"><span class="hljs-number">04</span> 同步函数+串行队列：不开线程，串行执行任务</span><br><span class="line"><span class="hljs-number">05</span> 异步函数+主队列：不开线程，在主线程中串行执行任务</span><br><span class="line"><span class="hljs-number">06</span> 同步函数+主队列：不开线程，串行执行任务（注意死锁发生）</span><br><span class="line"><span class="hljs-number">07</span> 注意同步函数和异步函数在执行顺序上面的差异</span><br></pre></td></tr></table></figure>
-<p>（3）GCD间线程通信</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//0.获取一个全局的队列</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//1.先开启一个线程，把下载图片的操作放在子线程中处理</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line"></span><br><span class="line">       <span class="hljs-comment">//2.下载图片</span></span><br><span class="line">        <span class="hljs-built_in">NSURL</span> *url = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@"http://h.hiphotos.baidu.com/zhidao/pic/item/6a63f6246b600c3320b14bb3184c510fd8f9a185.jpg"</span>];</span><br><span class="line">        <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line">        <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"下载操作所在的线程--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//3.回到主线程刷新UI</span></span><br><span class="line">        <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           <span class="hljs-keyword">self</span>.imageView.image = image;</span><br><span class="line">           <span class="hljs-comment">//打印查看当前线程</span></span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"刷新UI---%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-<p>（4）GCD其他常用函数</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"><span class="hljs-number">01</span> 栅栏函数（控制任务的执行顺序）</span><br><span class="line">dispatch_barrier_async(queue, ^&#123;</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"--dispatch_barrier_async-"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">02</span> 延迟执行（延迟·控制在哪个线程执行）</span><br><span class="line">  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="hljs-number">2.0</span> * <span class="hljs-built_in">NSEC_PER_SEC</span>)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">03</span> 一次性代码（注意不能放到懒加载）</span><br><span class="line">-(<span class="hljs-keyword">void</span>)once</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-comment">//整个程序运行过程中只会执行一次</span></span><br><span class="line">    <span class="hljs-comment">//onceToken用来记录该部分的代码是否被执行过</span></span><br><span class="line">    <span class="hljs-keyword">static</span> <span class="hljs-built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="hljs-built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"-----"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">04</span> 快速迭代（开多个线程并发完成迭代操作）</span><br><span class="line">   dispatch_apply(subpaths.count, queue, ^(size_t index) &#123;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">05</span> 队列组（同栅栏函数）</span><br><span class="line"><span class="hljs-comment">//创建队列组</span></span><br><span class="line">dispatch_group_t group = dispatch_group_create();</span><br><span class="line"><span class="hljs-comment">//队列组中的任务执行完毕之后，执行该函数</span></span><br><span class="line">dispatch_group_notify(dispatch_group_t group,<span class="hljs-built_in">dispatch_queue_t</span> queue,dispatch_block_t block);</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">06</span>进入群组和离开群组</span><br><span class="line">dispatch_group_enter(group);<span class="hljs-comment">//执行该函数后，后面异步执行的block会被gruop监听</span></span><br><span class="line">dispatch_group_leave(group);<span class="hljs-comment">//异步block中，所有的任务都执行完毕，最后离开群组</span></span><br><span class="line"><span class="hljs-comment">//注意：dispatch_group_enter|dispatch_group_leave必须成对使用</span></span><br></pre></td></tr></table></figure>
-<h5 id="NSOperation"><a href="#NSOperation" class="headerlink" title="NSOperation"></a>NSOperation</h5><p>（1）基本概念</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">01</span> <span class="hljs-built_in">NSOperation</span>是对GCD的包装</span><br><span class="line"><span class="hljs-number">02</span> 两个核心概念【队列+操作】</span><br></pre></td></tr></table></figure>
+<h3 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h3><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// import &lt;phtread.h&gt;</span></span><br><span class="line"><span class="hljs-comment">//1.创建线程对象</span></span><br><span class="line">    pthread_t thread;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//2.创建线程</span></span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">     第一个参数:线程对象 传递地址</span></span><br><span class="line"><span class="hljs-comment">     第二个参数:线程的属性 NULL</span></span><br><span class="line"><span class="hljs-comment">     第三个参数:指向函数的指针</span></span><br><span class="line"><span class="hljs-comment">     第四个参数:函数需要接受的参数</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    pthread_create(&amp;thread, <span class="hljs-literal">NULL</span>, task, <span class="hljs-literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h3><h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//第一种创建线程的方式：alloc init.</span></span><br><span class="line"><span class="hljs-comment">//特点：需要手动开启线程，可以拿到线程对象进行详细设置</span></span><br><span class="line"><span class="hljs-comment">//创建线程</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">第一个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">第二个参数：选择器，线程启动要调用哪个方法</span></span><br><span class="line"><span class="hljs-comment">第三个参数：前面方法要接收的参数（最多只能接收一个参数，没有则传nil）</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"><span class="hljs-built_in">NSThread</span> *thread = [[<span class="hljs-built_in">NSThread</span> alloc]initWithTarget:<span class="hljs-keyword">self</span> selector:<span class="hljs-keyword">@selector</span>(run:) object:<span class="hljs-string">@"wendingding"</span>];</span><br><span class="line"><span class="hljs-comment">//启动线程</span></span><br><span class="line">[thread start];    </span><br><span class="line"><span class="hljs-comment">//第二种创建线程的方式：分离出一条子线程</span></span><br><span class="line"><span class="hljs-comment">//特点：自动启动线程，无法对线程进行更详细的设置</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">第一个参数：线程启动调用的方法</span></span><br><span class="line"><span class="hljs-comment">第二个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">第三个参数：传递给调用方法的参数</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(run:) toTarget:<span class="hljs-keyword">self</span> withObject:<span class="hljs-string">@"我是分离出来的子线程"</span>];</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//第三种创建线程的方式：后台线程</span></span><br><span class="line"><span class="hljs-comment">//特点：自动启动线程，无法进行更详细设置</span></span><br><span class="line">[<span class="hljs-keyword">self</span> performSelectorInBackground:<span class="hljs-keyword">@selector</span>(run:) withObject:<span class="hljs-string">@"我是后台线程"</span>];</span><br></pre></td></tr></table></figure>
+<h4 id="设置线程的属性"><a href="#设置线程的属性" class="headerlink" title="设置线程的属性"></a>设置线程的属性</h4><figure class="highlight obj-c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//设置线程的属性</span></span><br><span class="line"><span class="hljs-comment">//设置线程的名称</span></span><br><span class="line">thread.name = <span class="hljs-string">@"线程A"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//设置线程的优先级,注意线程优先级的取值范围为0.0~1.0之间，1.0表示线程的优先级最高,如果不设置该值，那么理想状态下默认为0.5</span></span><br><span class="line">thread.threadPriority = <span class="hljs-number">1.0</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="线程的状态-1"><a href="#线程的状态-1" class="headerlink" title="线程的状态"></a>线程的状态</h4><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//线程的各种状态：新建-就绪-运行-阻塞-死亡</span><br><span class="line">//常用的控制线程状态的方法</span><br><span class="line">[NSThread exit];//退出当前线程</span><br><span class="line">[NSThread sleepForTimeInterval:2.0];//阻塞线程</span><br><span class="line">[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];//阻塞线程</span><br><span class="line">//注意：线程死了不能复生</span><br></pre></td></tr></table></figure>
+<h4 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="hljs-keyword">void</span>)touchesBegan:(<span class="hljs-keyword">nonnull</span> <span class="hljs-built_in">NSSet</span>&lt;<span class="hljs-built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="hljs-keyword">nullable</span> <span class="hljs-built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line"><span class="hljs-comment">//    [self download2];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//开启一条子线程来下载图片</span></span><br><span class="line">    [<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(downloadImage) toTarget:<span class="hljs-keyword">self</span> withObject:<span class="hljs-literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="hljs-keyword">void</span>)downloadImage</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-comment">//1.确定要下载网络图片的url地址，一个url唯一对应着网络上的一个资源</span></span><br><span class="line">    <span class="hljs-built_in">NSURL</span> *url = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@"http://p6.qhimg.com/t01d2954e2799c461ab.jpg"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//2.根据url地址下载图片数据到本地（二进制数据</span></span><br><span class="line">    <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//3.把下载到本地的二进制数据转换成图片</span></span><br><span class="line">    <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.回到主线程刷新UI</span></span><br><span class="line">    <span class="hljs-comment">//4.1 第一种方式</span></span><br><span class="line"><span class="hljs-comment">//    [self performSelectorOnMainThread:@selector(showImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.2 第二种方式</span></span><br><span class="line"><span class="hljs-comment">//    [self.imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.3 第三种方式</span></span><br><span class="line">    [<span class="hljs-keyword">self</span>.imageView performSelector:<span class="hljs-keyword">@selector</span>(setImage:) onThread:[<span class="hljs-built_in">NSThread</span> mainThread] withObject:image waitUntilDone:<span class="hljs-literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h3><blockquote>
+<p>CGD源码：<a href="https://github.com/apple/swift-corelibs-libdispatch" target="_blank" rel="noopener">https://github.com/apple/swift-corelibs-libdispatch</a></p>
+</blockquote>
+<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>两个核心概念:队列和任务</li>
+<li>同步函数和异步函数</li>
+</ul>
+<h4 id="GCD基本使用"><a href="#GCD基本使用" class="headerlink" title="GCD基本使用"></a>GCD基本使用</h4><ul>
+<li>异步函数+并发队列：开启多条线程，并发执行任务</li>
+<li>异步函数+串行队列：开启一条线程，串行执行任务</li>
+<li>同步函数+并发队列：不开线程，串行执行任务</li>
+<li>同步函数+串行队列：不开线程，串行执行任务</li>
+<li>异步函数+主队列：不开线程，在主线程中串行执行任务</li>
+<li>同步函数+主队列：不开线程，串行执行任务（注意死锁发生）</li>
+</ul>
+<p><strong>注意同步函数和异步函数在执行顺序上面的差异</strong></p>
+<h4 id="GCD间线程通信"><a href="#GCD间线程通信" class="headerlink" title="GCD间线程通信"></a>GCD间线程通信</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//0.获取一个全局的队列</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//1.先开启一个线程，把下载图片的操作放在子线程中处理</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line"></span><br><span class="line">       <span class="hljs-comment">//2.下载图片</span></span><br><span class="line">        <span class="hljs-built_in">NSURL</span> *url = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@"http://h.hiphotos.baidu.com/zhidao/pic/item/6a63f6246b600c3320b14bb3184c510fd8f9a185.jpg"</span>];</span><br><span class="line">        <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line">        <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"下载操作所在的线程--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//3.回到主线程刷新UI</span></span><br><span class="line">        <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           <span class="hljs-keyword">self</span>.imageView.image = image;</span><br><span class="line">           <span class="hljs-comment">//打印查看当前线程</span></span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"刷新UI---%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="GCD其他常用函数"><a href="#GCD其他常用函数" class="headerlink" title="GCD其他常用函数"></a>GCD其他常用函数</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"> <span class="hljs-comment">//栅栏函数（控制任务的执行顺序）</span></span><br><span class="line"> dispatch_barrier_async(queue, ^&#123;</span><br><span class="line">     <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"--dispatch_barrier_async-"</span>);</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">//延迟执行（延迟·控制在哪个线程执行）</span></span><br><span class="line">   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="hljs-number">2.0</span> * <span class="hljs-built_in">NSEC_PER_SEC</span>)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">     <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 一次性代码（注意不能放到懒加载）</span></span><br><span class="line"> -(<span class="hljs-keyword">void</span>)once</span><br><span class="line"> &#123;</span><br><span class="line">     <span class="hljs-comment">//整个程序运行过程中只会执行一次</span></span><br><span class="line">     <span class="hljs-comment">//onceToken用来记录该部分的代码是否被执行过</span></span><br><span class="line">     <span class="hljs-keyword">static</span> <span class="hljs-built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">     <span class="hljs-built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line"></span><br><span class="line">         <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"-----"</span>);</span><br><span class="line">     &#125;);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">// 快速迭代（开多个线程并发完成迭代操作）</span></span><br><span class="line">    dispatch_apply(subpaths.count, queue, ^(size_t index) &#123;</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">// 队列组（同栅栏函数）</span></span><br><span class="line"> <span class="hljs-comment">//创建队列组</span></span><br><span class="line"> dispatch_group_t group = dispatch_group_create();</span><br><span class="line"> <span class="hljs-comment">//队列组中的任务执行完毕之后，执行该函数</span></span><br><span class="line"> dispatch_group_notify(dispatch_group_t group,<span class="hljs-built_in">dispatch_queue_t</span> queue,dispatch_block_t block);</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">// 进入群组和离开群组</span></span><br><span class="line"> dispatch_group_enter(group);<span class="hljs-comment">//执行该函数后，后面异步执行的block会被gruop监听</span></span><br><span class="line"> dispatch_group_leave(group);<span class="hljs-comment">//异步block中，所有的任务都执行完毕，最后离开群组</span></span><br><span class="line"> <span class="hljs-comment">//注意：dispatch_group_enter|dispatch_group_leave必须成对使用</span></span><br></pre></td></tr></table></figure>
+<h3 id="NSOperation"><a href="#NSOperation" class="headerlink" title="NSOperation"></a>NSOperation</h3><p>（1）基本概念</p>
+<ul>
+<li>NSOperation是对GCD的包装</li>
+<li>两个核心概念【队列+操作】</li>
+</ul>
 <p>（2）基本使用</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">01</span> <span class="hljs-built_in">NSOperation</span>本身是抽象类，只能使用它的子类</span><br><span class="line"><span class="hljs-number">02</span> 三个子类分别是：<span class="hljs-built_in">NSBlockOperation</span>、<span class="hljs-built_in">NSInvocationOperation</span>以及自定义继承自<span class="hljs-built_in">NSOperation</span>的类</span><br><span class="line"><span class="hljs-number">03</span> <span class="hljs-built_in">NSOperation</span>和<span class="hljs-built_in">NSOperationQueue</span>结合使用实现多线程并发</span><br></pre></td></tr></table></figure>
+<ul>
+<li>NSOperation本身是抽象类，只能使用它的子类</li>
+<li>三个子类分别是：NSBlockOperation、NSInvocationOperation以及自定义继承自NSOperation的类</li>
+<li>NSOperation和NSOperationQueue结合使用实现多线程并发</li>
+</ul>
 <p>（3）相关代码</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//  01 NSInvocationOperation</span></span><br><span class="line">    <span class="hljs-comment">//1.封装操作</span></span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">     第一个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">     第二个参数：该操作要调用的方法，最多接受一个参数</span></span><br><span class="line"><span class="hljs-comment">     第三个参数：调用方法传递的参数，如果方法不接受参数，那么该值传nil</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-built_in">NSInvocationOperation</span> *operation = [[<span class="hljs-built_in">NSInvocationOperation</span> alloc]</span><br><span class="line">                                        initWithTarget:<span class="hljs-keyword">self</span> selector:<span class="hljs-keyword">@selector</span>(run) object:<span class="hljs-literal">nil</span>];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//2.启动操作</span></span><br><span class="line">    [operation start];</span><br><span class="line">-------------------------------------------------</span><br><span class="line">    <span class="hljs-comment">//  02 NSBlockOperation</span></span><br><span class="line">    <span class="hljs-comment">//1.封装操作</span></span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">     NSBlockOperation提供了一个类方法，在该类方法中封装操作</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-built_in">NSBlockOperation</span> *operation = [<span class="hljs-built_in">NSBlockOperation</span> blockOperationWithBlock:^&#123;</span><br><span class="line">        <span class="hljs-comment">//在主线程中执行</span></span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---download1--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//2.追加操作，追加的操作在子线程中执行</span></span><br><span class="line">    [operation addExecutionBlock:^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---download2--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    [operation addExecutionBlock:^&#123;</span><br><span class="line">         <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---download3--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//3.启动执行操作</span></span><br><span class="line">    [operation start];</span><br><span class="line"></span><br><span class="line">----------------------------------------------</span><br><span class="line"><span class="hljs-comment">// 03 自定义NSOperation</span></span><br><span class="line">    <span class="hljs-comment">//如何封装操作？</span></span><br><span class="line">    <span class="hljs-comment">//自定义的NSOperation,通过重写内部的main方法实现封装操作</span></span><br><span class="line">    -(<span class="hljs-keyword">void</span>)main</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"--main--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
@@ -470,7 +501,7 @@ var _hmt = _hmt || [];
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        7
+                        8
                     </p>
                 </a>
             </div>
@@ -523,6 +554,81 @@ var _hmt = _hmt || [];
 </div>
     
         
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#进程与线程">
+        <span class="has-mr-6">1</span>
+        <span>进程与线程</span>
+        </a></li><li>
+        <a class="is-flex" href="#多线程">
+        <span class="has-mr-6">2</span>
+        <span>多线程</span>
+        </a></li><li>
+        <a class="is-flex" href="#线程的状态">
+        <span class="has-mr-6">3</span>
+        <span>线程的状态</span>
+        </a></li><li>
+        <a class="is-flex" href="#iOS中多线程的实现方案">
+        <span class="has-mr-6">4</span>
+        <span>iOS中多线程的实现方案</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#pthread">
+        <span class="has-mr-6">4.1</span>
+        <span>pthread</span>
+        </a></li><li>
+        <a class="is-flex" href="#NSThread">
+        <span class="has-mr-6">4.2</span>
+        <span>NSThread</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#基本使用">
+        <span class="has-mr-6">4.2.1</span>
+        <span>基本使用</span>
+        </a></li><li>
+        <a class="is-flex" href="#设置线程的属性">
+        <span class="has-mr-6">4.2.2</span>
+        <span>设置线程的属性</span>
+        </a></li><li>
+        <a class="is-flex" href="#线程的状态-1">
+        <span class="has-mr-6">4.2.3</span>
+        <span>线程的状态</span>
+        </a></li><li>
+        <a class="is-flex" href="#线程间通信">
+        <span class="has-mr-6">4.2.4</span>
+        <span>线程间通信</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#GCD">
+        <span class="has-mr-6">4.3</span>
+        <span>GCD</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#基本概念">
+        <span class="has-mr-6">4.3.1</span>
+        <span>基本概念</span>
+        </a></li><li>
+        <a class="is-flex" href="#GCD基本使用">
+        <span class="has-mr-6">4.3.2</span>
+        <span>GCD基本使用</span>
+        </a></li><li>
+        <a class="is-flex" href="#GCD间线程通信">
+        <span class="has-mr-6">4.3.3</span>
+        <span>GCD间线程通信</span>
+        </a></li><li>
+        <a class="is-flex" href="#GCD其他常用函数">
+        <span class="has-mr-6">4.3.4</span>
+        <span>GCD其他常用函数</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#NSOperation">
+        <span class="has-mr-6">4.4</span>
+        <span>NSOperation</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
     
     
         <div class="column-right-shadow is-hidden-widescreen ">
