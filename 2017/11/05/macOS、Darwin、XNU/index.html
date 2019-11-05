@@ -2,25 +2,25 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>RAC(二)基础知识 - wuqihan&#39;s blog</title>
+<title>macOS、Darwin、XNU - wuqihan&#39;s blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
-<meta name="keywords" content="ReactiveCocoa">
+    <meta name="description" content="OS X is the platform, Darwin is the operating system, and XNU is the kernel. Namely, the XNU kernel is the core piece of software that provides resource management, hardware abstraction, and schedulin">
+<meta name="keywords" content="Darwin,macOS,XNU">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RAC(二)基础知识">
-<meta property="og:url" content="http://www.wuqihan.cn/2017/01/01/RAC-二-基础知识/index.html">
+<meta property="og:title" content="macOS、Darwin、XNU">
+<meta property="og:url" content="http://www.wuqihan.cn/2017/11/05/macOS、Darwin、XNU/index.html">
 <meta property="og:site_name" content="wuqihan&#39;s blog">
-<meta property="og:description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
+<meta property="og:description" content="OS X is the platform, Darwin is the operating system, and XNU is the kernel. Namely, the XNU kernel is the core piece of software that provides resource management, hardware abstraction, and schedulin">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
-<meta property="og:updated_time" content="2019-07-11T13:41:31.691Z">
+<meta property="og:image" content="https://i.loli.net/2019/11/05/X8vHfs5kt9VeJEF.jpg">
+<meta property="og:updated_time" content="2019-11-05T14:31:59.263Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RAC(二)基础知识">
-<meta name="twitter:description" content="核心组件 RACStream RACSequence RACSignal RACSubscriber RACDisposable RACScheduler Cocoa框架适配工具">
-<meta name="twitter:image" content="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg">
+<meta name="twitter:title" content="macOS、Darwin、XNU">
+<meta name="twitter:description" content="OS X is the platform, Darwin is the operating system, and XNU is the kernel. Namely, the XNU kernel is the core piece of software that provides resource management, hardware abstraction, and schedulin">
+<meta name="twitter:image" content="https://i.loli.net/2019/11/05/X8vHfs5kt9VeJEF.jpg">
 
 
 
@@ -109,7 +109,7 @@ var _hmt = _hmt || [];
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="RAC(二)基础知识" height="28">
+                <img src="/images/logo.svg" alt="macOS、Darwin、XNU" height="28">
             
             </a>
         </div>
@@ -149,7 +149,7 @@ var _hmt = _hmt || [];
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(二)基础知识">
+            <img class="thumbnail" src="https://i.loli.net/2019/11/05/X8vHfs5kt9VeJEF.jpg" alt="macOS、Darwin、XNU">
         </span>
     </div>
     
@@ -162,13 +162,13 @@ var _hmt = _hmt || [];
 
                 <span class="level-item has-text-grey">
                 <i class="far fa-calendar-alt"></i>&nbsp;
-                <time class="level-item has-text-grey" datetime="2017-01-01T09:11:36.000Z">&nbsp;2017-01-01</time>
+                <time class="level-item has-text-grey" datetime="2017-11-05T14:19:09.000Z">&nbsp;2017-11-05</time>
                 </span>
 
                 
                 <div class="level-item">
                 <i class="far fa-folder-open has-text-grey"></i>&nbsp;
-                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/操作系统/">操作系统</a>
                 </div>
                 
                 
@@ -176,7 +176,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    6 minutes read (About 867 words)
+                    2 minutes read (About 329 words)
                 </span>
                 
                 
@@ -190,55 +190,30 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
             
-                RAC(二)基础知识
+                macOS、Darwin、XNU
             
         </h1>
         <div class="content">
-            <h3 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h3><ul>
-<li>RACStream RACSequence RACSignal</li>
-<li>RACSubscriber</li>
-<li>RACDisposable</li>
-<li>RACScheduler</li>
-<li>Cocoa框架适配工具</li>
-</ul>
+            <p>OS X is the platform, Darwin is the operating system, and XNU is the kernel. Namely, the XNU kernel is the core piece of software that provides resource management, hardware abstraction, and scheduling. Darwin consists of the XNU kernel and basic software run by there kernel to provide a UNIX environment. OS X is built atop Darwin and provides a collection of frameworks and services that implement the user interface and main application libraries. Darwin and XNU are open source software, but the frameworks that make up the OS X platform on top of Darwin, are not.</p>
 <a id="more"></a>
-<h3 id="RACStream的两个子类：Sequence-amp-Signal"><a href="#RACStream的两个子类：Sequence-amp-Signal" class="headerlink" title="RACStream的两个子类：Sequence &amp; Signal"></a>RACStream的两个子类：Sequence &amp; Signal</h3><p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac2_1.jpg" alt="image-20180414122918648"></p>
-<p>RACStream表示一个数据流的类。这个流不一定是基于时间的，所以它有两个子类RACSequence和RACSignal。</p>
-<ul>
-<li>RACSequence是基于空间的数据流</li>
-<li>RACSignal是基于时间的数据流</li>
-</ul>
-<p>对比RACSequence和RACSignal，基于空间的数据流和基于时间的数据流到底有什么区别？</p>
-<ol>
-<li><p><strong>Sequence是Pull-Driven(拉驱动)，Signal是Push-driven(推驱动)</strong></p>
-<p>pull-driver表示数据的变化是由拉取者决定的。举个简单的例子，sequence就好比一本书，我们看书，想看到哪页就可以翻到哪页去看，看什么内容读取什么数据，是由我们决定，而不是由书（sequence）决定。</p>
-<p>push-driver表示数据的变化是由推送者决定的，与pull-driver刚好相反。可以把Signal比作电视体育直播。看什么内容读取什么数据，是由电视(Signal)决定的，如果我们去上个卫生间也无法暂停体育直播，中间的数据就会错过。</p>
-</li>
-<li><p>Sequence里面可以仅仅存放任何类型的数据。RACSignal里面不仅包含数据，也包含信号的状态（后面会了解到信号状态）。</p>
-</li>
-</ol>
-<h3 id="RACSequence的简单使用"><a href="#RACSequence的简单使用" class="headerlink" title="RACSequence的简单使用"></a>RACSequence的简单使用</h3><p>RACSequence使用的情况很少。这里就简单介绍一下常用方法</p>
-<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//创建</span></span><br><span class="line">   RACSequence *sequence1 = [RACSequence <span class="hljs-keyword">return</span>:@<span class="hljs-number">1</span>];</span><br><span class="line">   RACSequence *sequence2 = [RACSequence sequenceWithHeadBlock:^<span class="hljs-keyword">id</span> _Nullable&#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> @<span class="hljs-number">2</span>;</span><br><span class="line">   &#125; tailBlock:^RACSequence * _Nonnull&#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> sequence1;</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSequence *sequence3 = @[@<span class="hljs-number">1</span>,@<span class="hljs-number">2</span>,@<span class="hljs-number">3</span>].rac_sequence;</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//变换</span></span><br><span class="line">   RACSequence *mappedSequence = [sequence1 map:^<span class="hljs-keyword">id</span> _Nullable(<span class="hljs-built_in">NSNumber</span>* value) &#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> @(value.integerValue*<span class="hljs-number">3</span>);</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSequence *concatedSequence = [sequence2 concat:mappedSequence];</span><br><span class="line">   RACSequence *mergerdSequence = [RACSequence zip:@[concatedSequence,sequence3]];</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//遍历</span></span><br><span class="line">   <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>,mergerdSequence.head);</span><br><span class="line">   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">id</span> value <span class="hljs-keyword">in</span> mergerdSequence) &#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>,value);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="RACSignal的简单使用"><a href="#RACSignal的简单使用" class="headerlink" title="RACSignal的简单使用"></a>RACSignal的简单使用</h3><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//创建</span></span><br><span class="line">   RACSignal *signal1 = [RACSignal <span class="hljs-keyword">return</span>:<span class="hljs-string">@"hello"</span>];</span><br><span class="line">   RACSignal *signal2 = [RACSignal createSignal:^RACDisposable * _Nullable(<span class="hljs-keyword">id</span>&lt;RACSubscriber&gt;  _Nonnull subscriber) &#123;</span><br><span class="line">       [subscriber sendNext:@<span class="hljs-number">1</span>];</span><br><span class="line">       [subscriber sendNext:@<span class="hljs-number">2</span>];</span><br><span class="line">       [subscriber sendCompleted];</span><br><span class="line">       <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>;</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSignal *signal3 = RACObserve(<span class="hljs-keyword">self</span>.view, backgroundColor);</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//变换</span></span><br><span class="line">   RACSignal *mappedSignal = [signal1 map:^<span class="hljs-keyword">id</span> _Nullable(<span class="hljs-built_in">NSString</span>* value) &#123;</span><br><span class="line">       <span class="hljs-keyword">return</span> [value stringByAppendingString:<span class="hljs-string">@" word"</span>];</span><br><span class="line">   &#125;];</span><br><span class="line">   RACSignal *concatedSignal = [mappedSignal concat:signal2];</span><br><span class="line">   RACSignal *mergeSignal = [mappedSignal merge:@[concatedSignal,signal3]];</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-comment">//遍历</span></span><br><span class="line">   [mergeSignal subscribeNext:^(<span class="hljs-keyword">id</span>  _Nullable x) &#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>,x);</span><br><span class="line">   &#125; completed:^&#123;</span><br><span class="line">       <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"completed"</span>);</span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure>
-<p>这里仅仅是对RACSignal做初步了解。具体方法到底怎么用。后面的文章会讲到。</p>
-<h3 id="RACSubscriber-amp-RACDisposable"><a href="#RACSubscriber-amp-RACDisposable" class="headerlink" title="RACSubscriber &amp; RACDisposable"></a>RACSubscriber &amp; RACDisposable</h3><p>Subscription(订阅者)表⽰等待或者能够等待信号发送事件的任意对象。在框架中使用RACSubscriber协议表示,也即任意实现了RACSubscriber协议的对象都可以是订阅者。可以通过调⽤ -subscribeNext:error:completed:⽅法来创建订阅。RACStream和RACSignal类的大多操作也会⾃己创建订阅。订阅会对Signals对象引⽤计数加1,当信号发送错误或者完成事件后,会⾃动被处理,不需要⽤户关⼼内存管理。当然,⽤户也可以⼿动处理。</p>
-<p>RACDisposable类⽤于取消订阅或者清理资源。</p>
-<p>下图展示了Subscriber、Disposable、Signal三者的关系</p>
-<p><img src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac2_2.jpg" alt="image-20180414154509246"></p>
-<h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><ul>
-<li>用来做调度</li>
-<li>代替GCD</li>
-<li>异步与并发</li>
-</ul>
-<p>scheduler由RACScheduler类表示,它是信号执行任务时所在的队列(queue)或者信号执⾏完后将结果放到队列⾥执行,可以认为就是gcd⾥的queues。scheduler⽀持取消操作,⽽且它总是串行地执⾏任务。这有利于避免死锁。RACScheduler有时候也类似NSOperationQueue,但它不允许任务间相互依赖。</p>
+<blockquote>
+<p>引用自：<a href="https://www.quora.com/Whats-the-difference-between-Mac-OS-X-Darwin-OS-and-a-popular-Linux-distribution-like-Ubuntu-What-can-be-done-on-Darwin" target="_blank" rel="noopener">https://www.quora.com/Whats-the-difference-between-Mac-OS-X-Darwin-OS-and-a-popular-Linux-distribution-like-Ubuntu-What-can-be-done-on-Darwin</a></p>
+<p>这里说的OS X，就是macOS，在10.12版本开始(2016年)，苹果OS X正式改名为macOS。</p>
+</blockquote>
+<p>maxOS/iOS是平台，Darwin是操作系统，XNU是内核。即，XNU内核是提供资源管理，硬件抽象和调度的核心软件。Darwin由XNU内核和由该内核运行的基本软件组成，以提供UNIX环境。macOS和iOS都是构建在Darwin之上，并提供了实现用户界面和主要应用程序库的框架和服务的集合。Darwin和XNU是开源软件，但基于Darwin之上的macOS/iOS平台的框架是闭源的。</p>
+<p><img src="https://i.loli.net/2019/11/05/atdEfhUTZMD2JXw.png" alt="Mac_OS_X_architecture.png"></p>
+<blockquote>
+<p>推荐阅读：</p>
+<p><a href="https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/Architecture/Architecture.html" target="_blank" rel="noopener">Apple Kernel Programming</a></p>
+</blockquote>
 
         </div>
         
             <ul class="post-copyright">
-            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2017/01/01/RAC-二-基础知识/">RAC(二)基础知识</a></li>
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2017/11/05/macOS、Darwin、XNU/">macOS、Darwin、XNU</a></li>
             <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
-            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2017/01/01/RAC-二-基础知识/">http://www.wuqihan.cn/2017/01/01/RAC-二-基础知识/</a></li>
-            <li><strong>发布时间：</strong>2017-01-01</li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2017/11/05/macOS、Darwin、XNU/">http://www.wuqihan.cn/2017/11/05/macOS、Darwin、XNU/</a></li>
+            <li><strong>发布时间：</strong>2017-11-05</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
             </li>
             </ul>
@@ -249,7 +224,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <i class="fas fa-tags has-text-grey"></i>&nbsp;
-                    <a class="has-link-grey -link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a>
+                    <a class="has-link-grey -link" href="/tags/Darwin/">Darwin</a>,&nbsp;<a class="has-link-grey -link" href="/tags/XNU/">XNU</a>,&nbsp;<a class="has-link-grey -link" href="/tags/macOS/">macOS</a>
                 </div>
             </div>
         </div>
@@ -300,16 +275,16 @@ var _hmt = _hmt || [];
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2017/01/08/RAC-三-RACSignal基本使用/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/01/11/深入理解Block/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">RAC(三)RACSignal各类操作</span>
+                <span class="level-item">深入理解Block</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2016/12/14/RAC-一-函数式编程概述/">
-                <span class="level-item">RAC(一)函数响应式编程概述</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2017/05/15/如何继承类簇/">
+                <span class="level-item">如何继承类簇（例如NSString）</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -466,7 +441,7 @@ var _hmt = _hmt || [];
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="RAC(二)基础知识" height="28">
+                    <img src="/images/logo.svg" alt="macOS、Darwin、XNU" height="28">
                 
                 </a>
                 <p class="is-size-7">
