@@ -147,6 +147,83 @@ var _hmt = _hmt || [];
     <div class="card">
     
     <div class="card-image">
+        <a href="/2017/01/08/RAC-三-RACSignal基本使用/" class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(三)RACSignal各类操作">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2017-01-08T05:20:24.000Z">&nbsp;2017-01-08</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/Objective-C/">Objective-C</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    8 minutes read (About 1209 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                <a class="has-link-black-ter" href="/2017/01/08/RAC-三-RACSignal基本使用/">RAC(三)RACSignal各类操作</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="获得一个信号的方式"><a href="#获得一个信号的方式" class="headerlink" title="获得一个信号的方式"></a>获得一个信号的方式</h3><h4 id="单元信号"><a href="#单元信号" class="headerlink" title="单元信号"></a>单元信号</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal1 = [RACSignal <span class="hljs-keyword">return</span>:<span class="hljs-string">@"Some value"</span>];</span><br><span class="line">RACSignal *signal2 = [RACSignal error:errorObject];</span><br><span class="line">RACSignal *signal3 = [RACSignal empty];</span><br><span class="line">RACSignal *signal4 = [RACSignal never];</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        
+            <hr style="height:1px;margin:1rem 0">
+            <div class="level is-mobile is-flex">
+                <div class="level-start">
+                    
+                    <div class="level-item is-size-7 is-uppercase">
+                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                        <a class="has-link-grey -link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a>
+                    </div>
+                    
+                </div>
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2017/01/08/RAC-三-RACSignal基本使用/#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2017/01/01/RAC-二-基础知识/" class="image is-7by1">
             <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/rac.jpg" alt="RAC(二)基础知识">
         </a>
@@ -497,89 +574,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2016/07/08/多线程基础/" class="image is-7by1">
-            <img class="thumbnail" src="https://i.loli.net/2019/11/04/Bz1Nn6qLbxCct9l.jpg" alt="多线程基础篇">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-
-                
-
-                <span class="level-item has-text-grey">
-                <i class="far fa-calendar-alt"></i>&nbsp;
-                <time class="level-item has-text-grey" datetime="2016-07-08T02:05:17.000Z">&nbsp;2016-07-08</time>
-                </span>
-
-                
-                <div class="level-item">
-                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
-                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    <i class="far fa-clock"></i>&nbsp;
-                    
-                    
-                    22 minutes read (About 3318 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
-            
-                <a class="has-link-black-ter" href="/2016/07/08/多线程基础/">多线程基础篇</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：</p>
-<p><a href="https://book.douban.com/subject/7916129/" target="_blank" rel="noopener">《OS X and iOS Kernel Programming</a>》这本书中对进程和线程分别做了如下定义：</p>
-<blockquote>
-<p>When the user launches an application, the operating system loads the program’s code and data into memory from disk and begins executing its code. A program being executed is known as a “process.” Unlike a program, a process is an active entity, and consists of a snapshot of the state of the program at a single instance during execution.</p>
-<p>Modern operating systems no longer treat processes as the basic units of operation, instead work with threads. A thread is merely a distinct register state, and more than one can exist in a given process. All threads share the virtual memory space, descriptors and handles.</p>
-</blockquote>
-<p><code>上面有这样一句话：A thread is merely a distinct register state(线程仅仅是一个不同的寄存器状态)。我对于这句话的理解就是线程相对于真实存在的进程来说，是一个相对虚拟的概念，仅仅是用不同的寄存器状态来区分不同的线程。由于我本身对操作系统了解还不够深入，所以我也不确定我的理解完全正确。</code></p>
-        </div>
-        
-        
-        
-            <hr style="height:1px;margin:1rem 0">
-            <div class="level is-mobile is-flex">
-                <div class="level-start">
-                    
-                    <div class="level-item is-size-7 is-uppercase">
-                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
-                        <a class="has-link-grey -link" href="/tags/多线程/">多线程</a>
-                    </div>
-                    
-                </div>
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2016/07/08/多线程基础/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -646,7 +640,7 @@ var _hmt = _hmt || [];
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        18
+                        19
                     </p>
                 </a>
             </div>
@@ -656,7 +650,7 @@ var _hmt = _hmt || [];
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        9
+                        10
                     </p>
                 </a>
             </div>
@@ -666,7 +660,7 @@ var _hmt = _hmt || [];
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </a>
             </div>
@@ -714,7 +708,7 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/8086汇编/" style="font-size: 16.67px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Darwin/" style="font-size: 10px;">Darwin</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/XNU/" style="font-size: 10px;">XNU</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/macOS/" style="font-size: 10px;">macOS</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 13.33px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a>
+        <a href="/tags/8086汇编/" style="font-size: 16.67px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Darwin/" style="font-size: 10px;">Darwin</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Tagged-Pointer/" style="font-size: 10px;">Tagged Pointer</a> <a href="/tags/XNU/" style="font-size: 10px;">XNU</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/macOS/" style="font-size: 10px;">macOS</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 13.33px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 13.33px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a>
     </div>
 </div>
 
@@ -731,6 +725,17 @@ var _hmt = _hmt || [];
             <a class="level is-marginless" href="/archives/2019/08/">
                 <span class="level-start">
                     <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -897,6 +902,25 @@ var _hmt = _hmt || [];
         
         <article class="media">
             
+            <a href="/2018/11/06/Tagged-Pointer/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://i.loli.net/2019/11/06/67BQ4hwipaIXT8o.jpg" alt="Tagged Pointer">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-06T11:18:48.000Z">2018-11-06</time></div>
+                    <a href="/2018/11/06/Tagged-Pointer/" class="has-link-black-ter is-size-6">Tagged Pointer</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/内存管理/">内存管理</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2018/05/28/汇编学习踩坑记录/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://i.loli.net/2019/08/28/9fQLxV7yCKcwmEZ.jpg" alt="汇编学习踩坑记录">
@@ -952,25 +976,6 @@ var _hmt = _hmt || [];
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2018/05/15/入门汇编语言/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png" alt="入门汇编语言">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-15T13:07:50.000Z">2018-05-15</time></div>
-                    <a href="/2018/05/15/入门汇编语言/" class="has-link-black-ter is-size-6">入门汇编语言</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1005,12 +1010,20 @@ var _hmt = _hmt || [];
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C底层原理/">
             <span class="level-start">
                 <span class="level-item">Objective-C底层原理</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/内存管理/">
+            <span class="level-start">
+                <span class="level-item">内存管理</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1105,6 +1118,13 @@ var _hmt = _hmt || [];
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Tagged-Pointer/">
+                        <span class="tag">Tagged Pointer</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/XNU/">
                         <span class="tag">XNU</span>
                         <span class="tag is-grey">1</span>
@@ -1142,7 +1162,7 @@ var _hmt = _hmt || [];
                 <div class="control">
                     <a class="tags has-addons" href="/tags/内存管理/">
                         <span class="tag">内存管理</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1197,6 +1217,25 @@ var _hmt = _hmt || [];
                     <a href="/2019/08/14/在CentOS7上搭建Shadowsocks/" class="has-link-black-ter is-size-6">在CentOS7上搭建Shadowsocks</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/工具/">工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/06/Tagged-Pointer/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://i.loli.net/2019/11/06/67BQ4hwipaIXT8o.jpg" alt="Tagged Pointer">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-06T11:18:48.000Z">2018-11-06</time></div>
+                    <a href="/2018/11/06/Tagged-Pointer/" class="has-link-black-ter is-size-6">Tagged Pointer</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/内存管理/">内存管理</a>
                     </p>
                 </div>
             </div>
@@ -1259,25 +1298,6 @@ var _hmt = _hmt || [];
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2018/05/15/入门汇编语言/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.loli.net/2019/08/17/MxsFRhPJdzBran7.png" alt="入门汇编语言">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-15T13:07:50.000Z">2018-05-15</time></div>
-                    <a href="/2018/05/15/入门汇编语言/" class="has-link-black-ter is-size-6">入门汇编语言</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1312,12 +1332,20 @@ var _hmt = _hmt || [];
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C底层原理/">
             <span class="level-start">
                 <span class="level-item">Objective-C底层原理</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/内存管理/">
+            <span class="level-start">
+                <span class="level-item">内存管理</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1412,6 +1440,13 @@ var _hmt = _hmt || [];
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Tagged-Pointer/">
+                        <span class="tag">Tagged Pointer</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/XNU/">
                         <span class="tag">XNU</span>
                         <span class="tag is-grey">1</span>
@@ -1449,7 +1484,7 @@ var _hmt = _hmt || [];
                 <div class="control">
                     <a class="tags has-addons" href="/tags/内存管理/">
                         <span class="tag">内存管理</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>Tagged Pointer - wuqihan&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="一道面试题12345678@property (nonatomic, strong) NSString *target;//.... dispatch_queue_t queue = dispatch_queue_create(&quot;parallel&quot;, DISPATCH_QUEUE_CONCURRENT);for (int i = 0; i &amp;lt; 1000000 ; i++) &amp;#123;">
+<meta name="keywords" content="内存管理,Tagged Pointer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tagged Pointer">
+<meta property="og:url" content="http://www.wuqihan.cn/2018/11/06/Tagged-Pointer/index.html">
+<meta property="og:site_name" content="wuqihan&#39;s blog">
+<meta property="og:description" content="一道面试题12345678@property (nonatomic, strong) NSString *target;//.... dispatch_queue_t queue = dispatch_queue_create(&quot;parallel&quot;, DISPATCH_QUEUE_CONCURRENT);for (int i = 0; i &amp;lt; 1000000 ; i++) &amp;#123;">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.loli.net/2019/11/06/67BQ4hwipaIXT8o.jpg">
+<meta property="og:updated_time" content="2019-11-06T11:35:40.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tagged Pointer">
+<meta name="twitter:description" content="一道面试题12345678@property (nonatomic, strong) NSString *target;//.... dispatch_queue_t queue = dispatch_queue_create(&quot;parallel&quot;, DISPATCH_QUEUE_CONCURRENT);for (int i = 0; i &amp;lt; 1000000 ; i++) &amp;#123;">
+<meta name="twitter:image" content="https://i.loli.net/2019/11/06/67BQ4hwipaIXT8o.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/xcode.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<!-- <body class="is-2-column"> -->
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Tagged Pointer" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/11/06/67BQ4hwipaIXT8o.jpg" alt="Tagged Pointer">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2018-11-06T11:18:48.000Z">&nbsp;2018-11-06</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/内存管理/">内存管理</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    11 minutes read (About 1708 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                Tagged Pointer
+            
+        </h1>
+        <div class="content">
+            <h2 id="一道面试题"><a href="#一道面试题" class="headerlink" title="一道面试题"></a>一道面试题</h2><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">NSString</span> *target;</span><br><span class="line"><span class="hljs-comment">//.... </span></span><br><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="hljs-string">"parallel"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000</span> ; i++) &#123;</span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.target = [<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-string">@"ksddkjalkjd%d"</span>,i];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>结果会崩溃。原因setTarget是线程不安全的，可能会出现已经释放的内存再次释放，造成崩溃。解决办法很多，在这里不过多讨论。</p>
+<p>如果把代码改成下面这样就不会发生崩溃了：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">NSString</span> *target;</span><br><span class="line"><span class="hljs-comment">//.... </span></span><br><span class="line"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="hljs-string">"parallel"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000</span> ; i++) &#123;</span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">    	<span class="hljs-keyword">self</span>.target = [<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-string">@"%d"</span>,i];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为苹果从64位程序开始，引入了<code>Tagged Pointer</code>概念，导致self.taget的值直接保存在了指针值中。</p>
+<h2 id="内存对齐"><a href="#内存对齐" class="headerlink" title="内存对齐"></a>内存对齐</h2><p>在苹果64位处理器上，堆内存对齐采用的是16字节对齐。所以任何指向堆内存的指针都是如下形式：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x---------------0/8</span><br></pre></td></tr></table></figure>
+<p>最后一个十六进制数字<em>始终是</em> <code>0或者8</code>。</p>
+<blockquote>
+<p>我用真机测试最低位都是8 用模拟器测试最低位都是0 （具体原因不清楚。总之指向堆内存的指针最低位都是一样的，要么全是8要么全是0）</p>
+</blockquote>
+<p>使用16字节内存对齐，也就意味着，如果堆上需要存储的数据实际大小只有1字节，可它还是会多占用15个字节来达到内存对齐，这是不是很浪费？</p>
+<p>那么比如NSNumber，如果数值仅仅为1，<code>NSNumber num = @1</code>。那如果不使用Tagged Pointer还是需要占用16个字节来保存1，以及一个8字节的指针指向16字节的堆内存。</p>
+<h2 id="Tagged-Pointer"><a href="#Tagged-Pointer" class="headerlink" title="Tagged Pointer"></a>Tagged Pointer</h2><p>从64位程序开始（iPhone5s是配备了首个采用 64 位架构的 A7 双核处理器），苹果引入了<code>Tagged Pointer</code>的概念，为了节省内存和提升效率。</p>
+<p>主要用于<strong>NSString</strong>、<strong>NSNumber</strong>、<strong>NSDate</strong>、<strong>NSIndexPath</strong>等存储小规模数据的对象。这些使用了<code>Tagged Pointer</code>优化的对象，他们的指针不再是指向堆内存的地址，而是直接将值保存在了指针中（<strong>苹果为了数据安全，对Tagged Pointer指针的值做了数据混淆</strong>）。</p>
+<p>使用<code>Tagged Pointer</code>仅仅是针对存储的值比较小的时候，如果存储的值过大，8个字节的指针无法保存，还是会在堆中分配内存。</p>
+<p>在objc源码中，用<code>_objc_isTaggedPointer</code>函数来判断是否为<code>Tagged Pointer</code>，源码如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> </span><br><span class="line">_objc_isTaggedPointer(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> * _Nullable ptr)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> ((<span class="hljs-keyword">uintptr_t</span>)ptr &amp; _OBJC_TAG_MASK) == _OBJC_TAG_MASK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意看 <code>_OBJC_TAG_MASK</code>的值</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> (TARGET_OS_OSX || TARGET_OS_IOSMAC) &amp;&amp; __x86_64__</span></span><br><span class="line">    <span class="hljs-comment">// 64-bit Mac - tag bit is LSB</span></span><br><span class="line"><span class="hljs-meta">#   <span class="hljs-meta-keyword">define</span> OBJC_MSB_TAGGED_POINTERS 0</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span></span><br><span class="line">    <span class="hljs-comment">// Everything else - tag bit is MSB</span></span><br><span class="line"><span class="hljs-meta">#   <span class="hljs-meta-keyword">define</span> OBJC_MSB_TAGGED_POINTERS 1</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> OBJC_MSB_TAGGED_POINTERS</span></span><br><span class="line"><span class="hljs-meta">#   <span class="hljs-meta-keyword">define</span> _OBJC_TAG_MASK (1UL&lt;&lt;63)</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span></span><br><span class="line"><span class="hljs-meta">#   <span class="hljs-meta-keyword">define</span> _OBJC_TAG_MASK 1UL</span></span><br><span class="line"><span class="hljs-comment">//在mac平台 _OBJC_TAG_MASK = 1UL</span></span><br><span class="line"><span class="hljs-comment">//其他平台 _OBJC_TAG_MASK = 1UL&lt;&lt;63 (1左移63位)</span></span><br></pre></td></tr></table></figure>
+<p>在<strong>iOS</strong>平台上，系统通过指针的最高有效位是否为1(也就是第64位)，来判断是否为<code>Tagged Pointer</code>，在<strong>macOS</strong>平台上则是根据最低有效位。</p>
+<p>这里我们来验证一下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSString *a = @&quot;a&quot;;</span><br><span class="line">NSObject *object = [[NSObject alloc] init];</span><br><span class="line">NSLog(@&quot;%@ %p\n%p&quot;,[a class],a,object);</span><br></pre></td></tr></table></figure>
+<p>console输出为：</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">__NSCFConstantString <span class="hljs-number">0x10dc68020</span></span><br><span class="line"><span class="hljs-number">0x600002c38940</span></span><br></pre></td></tr></table></figure>
+<p>通过上面的代码，发现这里的a不是TaggedPointer，a实际是指向了常量区。为什么这样说呢？因为我这里多添加了一个object变量，object指针肯定是指向堆中，但是a指针的值却比object指针值小了很多很多。所以，a不是在堆中，且栈的地址又是大于堆地址，所以排除堆和栈，那就是说这里的字符串”a”是保存在数据段常量区的。因为iOS内存分布结构，地址从小到大依次是：代码段、数据段、堆、栈。</p>
+<p>那为什么这里的a不是<code>Tagged Pointer</code>呢。因为常量字符串本来就是在常量区啊。。。<code>Tagged Pointer</code>优化的是指向堆内存的指针。所以修改下代码：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">NSString</span> *a = [[<span class="hljs-string">@"a"</span> mutableCopy] <span class="hljs-keyword">copy</span>];</span><br><span class="line"><span class="hljs-built_in">NSObject</span> *object = [[<span class="hljs-built_in">NSObject</span> alloc] init];</span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@ %p"</span>,[a <span class="hljs-keyword">class</span>],a);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>为什么不直接使用 <code>NSString *a = [@&quot;a&quot; copy];</code>?</p>
+<p>因为苹果在这里做了优化，对一个常量区字符串copy，没有意义啊，所以直接返回了@”a”;</p>
+<p>为什么要mutableCopy后再加copy？</p>
+<p>因为mutableCopy后，变成了可变对象，可变对象不可能为Tagged Pointer，所以需要在copy一下变为不可变对象。</p>
+<p>(我这里这样做，没有任何意义，仅仅是为了这次测试，开发中不会这样写代码)。</p>
+</blockquote>
+<p>console输出为：</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSTaggedPointerString <span class="hljs-number">0xae2f7c76826f6e01</span></span><br><span class="line"><span class="hljs-number">0x60000104c170</span></span><br></pre></td></tr></table></figure>
+<p>可以看大，a的类型变为了<code>NSTaggedPointerString</code>，a指针的值为<code>0xae2f7c76826f6e01</code>。</p>
+<p>最高位是0xa 转换为2进制为 1010，二进制最高位为1，所以是<code>Tagged Pointer</code>。</p>
+<h2 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h2><p>如果对Tagged Pointer有了了解，下面这个问题就很好解决了</p>
+<p>假设有下面这段代码：</p>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">NSObject</span> (<span class="hljs-title">AssociatedObject</span>) </span></span><br><span class="line"><span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">assign</span>) <span class="hljs-built_in">CGFloat</span> someProperty; </span><br><span class="line"><span class="hljs-keyword">@end</span> </span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">NSObject</span> (<span class="hljs-title">AssociatedObject</span>) </span></span><br><span class="line"><span class="hljs-keyword">@dynamic</span> someProperty; </span><br><span class="line">- (<span class="hljs-keyword">void</span>)setSomeProperty:(<span class="hljs-built_in">CGFloat</span>)someProperty&#123; </span><br><span class="line">	<span class="hljs-keyword">return</span> objc_setAssociatedObject(<span class="hljs-keyword">self</span>, <span class="hljs-keyword">@selector</span>(someProperty), @(someProperty), OBJC_ASSOCIATION_ASSIGN); </span><br><span class="line">&#125; </span><br><span class="line">- (<span class="hljs-built_in">CGFloat</span>)someProperty&#123; </span><br><span class="line">	<span class="hljs-keyword">return</span> [objc_getAssociatedObject(<span class="hljs-keyword">self</span>, <span class="hljs-keyword">@selector</span>(someProperty)) floatValue]; </span><br><span class="line">&#125; </span><br><span class="line"><span class="hljs-keyword">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//代码1</span></span><br><span class="line"><span class="hljs-keyword">self</span>.view.someProperty = <span class="hljs-number">100</span>;</span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>, @(<span class="hljs-keyword">self</span>.view.someProperty));</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//代码2</span></span><br><span class="line"><span class="hljs-keyword">self</span>.view.someProperty = <span class="hljs-number">999999999999999.1</span>;</span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span>, @(<span class="hljs-keyword">self</span>.view.someProperty));</span><br></pre></td></tr></table></figure>
+<p>分别执行上面两段代码1 和 2。会发生什么问题嘛？</p>
+<p>代码1不会崩溃，代码2会崩溃。因为@(100)没有malloc分配内存，但是数值过大会分配内存，所以需要使用retain。但是上面代码使用的assign。所以调用get方法时，会访问到坏内存。</p>
+<p>上面这个问题引用自<a href="http://sketchk.xyz/2018/07/29/A-problem-caused-by-Tagged-Pointer/" target="_blank" rel="noopener">由Tagged Pointer联想到的一个问题</a>。具体更详细的解释参考这篇文章就行（我这里就是把这个问题记录下来，方便自己以后回顾，因为经常遇到收藏的文章，过一段时间再去访问文章就不见了。可能是作者服务器挂了或者文章被删除了==）。</p>
+<blockquote>
+<p>参考资料：</p>
+<p><a href="https://swift.gg/2018/10/08/tagged-pointer-strings/" target="_blank" rel="noopener">Tagged Pointer字符串</a></p>
+<p><a href="https://blog.devtang.com/2014/05/30/understand-tagged-pointer/" target="_blank" rel="noopener">深入理解Tagged Pointer</a></p>
+<p><a href="https://www.mikeash.com/pyblog/friday-qa-2012-07-27-lets-build-tagged-pointers.html" target="_blank" rel="noopener">Let’s Build Tagged Pointers</a></p>
+<p><a href="[https://qiubaiying.github.io/2017/12/26/%E4%BB%8E%E4%B8%80%E9%81%93%E7%BD%91%E6%98%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B5%85%E8%B0%88-Tagged-Pointer/](https://qiubaiying.github.io/2017/12/26/从一道网易面试题浅谈-Tagged-Pointer/">从一道网易面试题浅谈Tagged Pointer</a>)</p>
+<p><a href="https://www.jianshu.com/p/3176e30c040b" target="_blank" rel="noopener">聊聊伪指针Tagged Pointer</a></p>
+<p><a href="http://sketchk.xyz/2018/07/29/A-problem-caused-by-Tagged-Pointer/" target="_blank" rel="noopener">由Tagged Pointer联想到的一个问题</a></p>
+</blockquote>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2018/11/06/Tagged-Pointer/">Tagged Pointer</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2018/11/06/Tagged-Pointer/">http://www.wuqihan.cn/2018/11/06/Tagged-Pointer/</a></li>
+            <li><strong>发布时间：</strong>2018-11-06</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Tagged-Pointer/">Tagged Pointer</a>,&nbsp;<a class="has-link-grey -link" href="/tags/内存管理/">内存管理</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="Wechat"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/08/14/在CentOS7上搭建Shadowsocks/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">在CentOS7上搭建Shadowsocks</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/28/汇编学习踩坑记录/">
+                <span class="level-item">汇编学习踩坑记录</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript> Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img style="border-radius:8px" class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        iOS Developer  
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shanghai, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        19
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        10
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        14
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
+                Contact</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Tagged Pointer" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2107-2019 吴启晗&nbsp;
+                <!-- Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
