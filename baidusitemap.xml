@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>http://www.wuqihan.cn/2018/05/15/%E5%85%A5%E9%97%A8%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/</loc>
+    <lastmod>2019-11-06T14:04:12.593Z</lastmod>
+    <data>
+        <display>
+        <title>入门汇编语言</title>
+        <pubTime>2018-05-15T13:07:50.000Z</pubTime>
+        
+        <tag>8086汇编</tag>
+         
+         
+           
+             
+              <breadCrumb title="计算机基础" url="http://www.wuqihan.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+          
+             
+              <breadCrumb title="汇编语言" url="http://www.wuqihan.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wuqihan.cn/2018/11/06/Tagged-Pointer/</loc>
     <lastmod>2019-11-06T11:39:51.726Z</lastmod>
     <data>
@@ -11,9 +34,9 @@
         <title>Tagged Pointer</title>
         <pubTime>2018-11-06T11:18:48.000Z</pubTime>
         
-        <tag>内存管理</tag>
-         
         <tag>Tagged Pointer</tag>
+         
+        <tag>内存管理</tag>
          
          
            
@@ -137,29 +160,6 @@
         <display>
         <title>汇编学习踩坑记录</title>
         <pubTime>2018-05-28T11:15:03.000Z</pubTime>
-        
-        <tag>8086汇编</tag>
-         
-         
-           
-             
-              <breadCrumb title="计算机基础" url="http://www.wuqihan.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
-          
-             
-              <breadCrumb title="汇编语言" url="http://www.wuqihan.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wuqihan.cn/2018/05/15/%E5%85%A5%E9%97%A8%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2019-08-28T13:44:51.053Z</lastmod>
-    <data>
-        <display>
-        <title>入门汇编语言</title>
-        <pubTime>2018-05-15T13:07:50.000Z</pubTime>
         
         <tag>8086汇编</tag>
          
