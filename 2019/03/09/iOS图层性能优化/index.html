@@ -16,7 +16,7 @@
 <meta property="og:description" content="性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。 这里只介绍关于图层方面的性能优化。 了解Core Animation说起图层，你必须能想到的是Core Animation。在iOS上，几乎所有的东西都是通过Core Animation绘制出来的。Core Animation 的核心是">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2019/11/09/zQ4H8Gkxm1r9CIs.jpg">
-<meta property="og:updated_time" content="2019-11-09T13:13:54.619Z">
+<meta property="og:updated_time" content="2019-11-09T13:14:35.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS图层性能优化">
 <meta name="twitter:description" content="性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。 这里只介绍关于图层方面的性能优化。 了解Core Animation说起图层，你必须能想到的是Core Animation。在iOS上，几乎所有的东西都是通过Core Animation绘制出来的。Core Animation 的核心是">
@@ -131,6 +131,10 @@ var _hmt = _hmt || [];
             
             <div class="navbar-end">
                 
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
                 
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
@@ -526,6 +530,69 @@ var _hmt = _hmt || [];
 </div>
     
         
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#了解Core-Animation">
+        <span class="has-mr-6">1</span>
+        <span>了解Core Animation</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#CoreAnimation是如何工作的呢？">
+        <span class="has-mr-6">1.1</span>
+        <span>CoreAnimation是如何工作的呢？</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#CPU-VS-GPU">
+        <span class="has-mr-6">2</span>
+        <span>CPU VS GPU</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#GPU的相关操作">
+        <span class="has-mr-6">2.1</span>
+        <span>GPU的相关操作</span>
+        </a></li><li>
+        <a class="is-flex" href="#CPU的相关操作">
+        <span class="has-mr-6">2.2</span>
+        <span>CPU的相关操作</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#屏幕图像显示原理">
+        <span class="has-mr-6">3</span>
+        <span>屏幕图像显示原理</span>
+        </a></li><li>
+        <a class="is-flex" href="#Instruments工具使用">
+        <span class="has-mr-6">4</span>
+        <span>Instruments工具使用</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#CoreAnimation">
+        <span class="has-mr-6">4.1</span>
+        <span>CoreAnimation</span>
+        </a></li><li>
+        <a class="is-flex" href="#View-Debugging-Rendering">
+        <span class="has-mr-6">4.2</span>
+        <span>View Debugging Rendering</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Color-Blended-Layers">
+        <span class="has-mr-6">4.2.1</span>
+        <span>Color Blended Layers</span>
+        </a></li><li>
+        <a class="is-flex" href="#Color-Offscreen-Rendered-Yellow">
+        <span class="has-mr-6">4.2.2</span>
+        <span>Color Offscreen-Rendered Yellow</span>
+        </a></li><li>
+        <a class="is-flex" href="#Color-Hits-Green-and-Misses-Red">
+        <span class="has-mr-6">4.2.3</span>
+        <span>Color Hits Green and Misses Red</span>
+        </a></li><li>
+        <a class="is-flex" href="#Color-Misaligned-Images">
+        <span class="has-mr-6">4.2.4</span>
+        <span>Color Misaligned Images</span>
+        </a></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
     
     
         <div class="column-right-shadow is-hidden-widescreen ">
