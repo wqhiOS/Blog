@@ -16,7 +16,7 @@
 <meta property="og:description" content="性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。 这里只介绍关于图层方面的性能优化。 了解Core Animation说起图层，你必须能想到的是Core Animation。在iOS上，几乎所有的东西都是通过Core Animation绘制出来的。Core Animation 的核心是">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2019/11/09/zQ4H8Gkxm1r9CIs.jpg">
-<meta property="og:updated_time" content="2019-11-09T13:14:35.655Z">
+<meta property="og:updated_time" content="2019-11-09T13:21:14.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS图层性能优化">
 <meta name="twitter:description" content="性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。 这里只介绍关于图层方面的性能优化。 了解Core Animation说起图层，你必须能想到的是Core Animation。在iOS上，几乎所有的东西都是通过Core Animation绘制出来的。Core Animation 的核心是">
@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    25 minutes read (About 3751 words)
+                    25 minutes read (About 3685 words)
                 </span>
                 
                 
@@ -204,7 +204,8 @@ var _hmt = _hmt || [];
 <a id="more"></a>
 <p>不要被<code>Core Animation</code>的名字所误解，对于<code>Core Animation</code>，它实际是从<strong>Layer Kit</strong>演变而来的。所以做动画，仅仅只是<code>Core Animation</code>的冰山一角。</p>
 <p><code>Core Animation</code>是一个复合引擎，它的职责就是尽可能快地组合屏幕上不同的可视内容，这个内容是被分解成独立的图层，存储在一个叫做图层树的体系之中。<strong>于是这个树形成了UIKit以及在iOS应用程序当中你所能在屏幕上看见的一切的基础</strong>。</p>
-<p>首先看一下<code>Core Animation</code>在cocoa中的位置的关系:<br><img src="https://i.loli.net/2019/11/08/McRstapoSu2YA8K.png" alt="image-20191028112837723.png"></p>
+<p>首先看一下<code>Core Animation</code>在cocoa中的位置的关系:</p>
+<p><img src="https://i.loli.net/2019/11/08/McRstapoSu2YA8K.png" alt="image-20191028112837723.png"></p>
 <p>Core Animation 通过 Core Graphics 的一端和 OpenGL ES 的另一端，精心策划基于 CPU 的位图绘制。因为 Core Animation 处在渲染过程中的重要位置上，所以你如何使用 Core Animation 将会对性能产生极大的影响。</p>
 <h3 id="CoreAnimation是如何工作的呢？"><a href="#CoreAnimation是如何工作的呢？" class="headerlink" title="CoreAnimation是如何工作的呢？"></a>CoreAnimation是如何工作的呢？</h3><ol>
 <li>布局</li>
@@ -216,8 +217,8 @@ var _hmt = _hmt || [];
 </ol>
 <p>1-5是由CPU来负责的，只有第6步是由GPU负责。</p>
 <p>通过下面的两张图，可以更好理解：</p>
-<p><img src="http://images.bestswifter.com/UIKitPerformance/pipeline.png" alt="显示流程"></p>
-<p><img src="http://images.bestswifter.com/UIKitPerformance/commit.png" alt="解码与转换"></p>
+<p><img src="http://images.bestswifter.com/UIKitPerformance/pipeline.png" alt="显示流程" style="zoom: 33%;"></p>
+<p><img src="http://images.bestswifter.com/UIKitPerformance/commit.png" alt="解码与转换" style="zoom: 50%;"></p>
 <h2 id="CPU-VS-GPU"><a href="#CPU-VS-GPU" class="headerlink" title="CPU VS GPU"></a>CPU VS GPU</h2><p>关于图层绘制和动画有两种处理方式：<code>CPU</code>（中央处理器）和<code>GPU</code>（图形处理器）。我们可以说<code>CPU</code>所做的工作都是在软件层面，而<code>GPU</code>做的工作是硬件层面。我们可以用<code>CPU</code>做任何事情，但是对于图像处理(<code>CPU</code>也可以做，但是效率低)，通常用硬件会更快，因为<code>GPU</code>使用图像对高度并行浮点运算做了优化。</p>
 <p><code>GPU</code> 是一个专门为图形高并发计算而量身定做的处理单元。它并发的本性让它能高效的将不同纹理合成起来。它连接到 <code>CPU</code>。从硬件上讲两者之间存在某种类型的总线，并且有像 <code>OpenGL</code>，<code>Core Animation</code> 和 <code>Core Graphics</code> 这样的框架来在 <code>GPU</code> 和 <code>CPU</code> 之间精心安排数据的传输。为了将像素显示到屏幕上，一些处理将在 <code>CPU</code> 上进行。然后数据将会传送到 <code>GPU</code>，这也需要做一些相应的操作，最终像素显示到屏幕上。</p>
 <p><strong>针对图层的性能优化，说白了就是关于如何智能利用GPU和CPU，使他们均衡的被使用，不超出负荷。</strong></p>
@@ -247,9 +248,7 @@ var _hmt = _hmt || [];
 </blockquote>
 <h3 id="CoreAnimation"><a href="#CoreAnimation" class="headerlink" title="CoreAnimation"></a>CoreAnimation</h3><p><img src="https://i.loli.net/2019/11/09/jrOS1RuPX9a27My.png" alt="CoreAnimation.png" style="zoom: 67%;"></p>
 <p>使用CoreAnimation调试，目的是<strong>为了找到程序当前卡顿的原因是CPU超负荷还是GPU超负荷造成的</strong>。</p>
-<p>这里我提供了一个<a href="https://github.com/wqhiOS/TableViewPerformanceOptimizationDemo" target="_blank" rel="noopener">demo</a>用来测试（测试性能的时候不要使用太新的📱，建议使用iPhone6之前的，更不要使用模拟器。我这里使用iPhone5s）:</p>
-<p><img src="https://i.loli.net/2019/11/09/ektFBJnGUEYI3Rr.jpg" alt="homeView.jpg" style="zoom:50%;"></p>
-<p>有两个列表页面，一个是未优化的一个是已优化的，先使用Instruments Core Animation对未优化的列表进行调试，看看问题究竟出在CPU还是GPU。进入未优化的页面如下图，来回滑动列表，肉眼可见的卡顿。</p>
+<p>这里我提供了一个<a href="https://github.com/wqhiOS/TableViewPerformanceOptimizationDemo" target="_blank" rel="noopener">demo</a>用来测试。有两个列表页面，一个是未优化的一个是已优化的，先使用Instruments Core Animation对未优化的列表进行调试，看看问题究竟出在CPU还是GPU。进入未优化的页面如下图，来回滑动列表，肉眼可见的卡顿。</p>
 <p><img src="https://i.loli.net/2019/11/09/gt2OA13TQyLGMwC.jpg" alt="tableView.jpg" style="zoom:50%;"></p>
 <p>那卡顿原因到底出在哪里，是CPU负荷还是GPU呢？</p>
 <p><img src="https://i.loli.net/2019/11/09/qHRZDhWKiCxdQnT.png" alt="core_animation_1-2.png"></p>
