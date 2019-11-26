@@ -2,25 +2,24 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>优雅的使用NSNotification.Name - wuqihan&#39;s blog</title>
+<title>test - wuqihan&#39;s blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="Swift 3之前使用通知： 1NSNotificationCenter.defaultCenter().post(&quot;kReceiveMessageNoti&quot;) Swift 3之后 1NotificationCenter.default.post(Notification.Name(rawValue: &quot;kReceiveMessageNoti&quot;))">
-<meta name="keywords" content="swift tips">
+    <meta name="description" content="👨‍💻‍">
 <meta property="og:type" content="article">
-<meta property="og:title" content="优雅的使用NSNotification.Name">
-<meta property="og:url" content="http://www.wuqihan.cn/2018/05/18/优雅的使用NSNotification-name/index.html">
+<meta property="og:title" content="test">
+<meta property="og:url" content="http://www.wuqihan.cn/2019/11/26/test/index.html">
 <meta property="og:site_name" content="wuqihan&#39;s blog">
-<meta property="og:description" content="Swift 3之前使用通知： 1NSNotificationCenter.defaultCenter().post(&quot;kReceiveMessageNoti&quot;) Swift 3之后 1NotificationCenter.default.post(Notification.Name(rawValue: &quot;kReceiveMessageNoti&quot;))">
+<meta property="og:description" content="👨‍💻‍">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://i.loli.net/2019/08/17/4PSRfjecaE5z89o.jpg">
-<meta property="og:updated_time" content="2019-08-17T13:16:58.218Z">
+<meta property="og:image" content="http://www.wuqihan.cn/images/og_image.png">
+<meta property="og:updated_time" content="2019-11-26T13:10:51.966Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="优雅的使用NSNotification.Name">
-<meta name="twitter:description" content="Swift 3之前使用通知： 1NSNotificationCenter.defaultCenter().post(&quot;kReceiveMessageNoti&quot;) Swift 3之后 1NotificationCenter.default.post(Notification.Name(rawValue: &quot;kReceiveMessageNoti&quot;))">
-<meta name="twitter:image" content="https://i.loli.net/2019/08/17/4PSRfjecaE5z89o.jpg">
+<meta name="twitter:title" content="test">
+<meta name="twitter:description" content="👨‍💻‍">
+<meta name="twitter:image" content="http://www.wuqihan.cn/images/og_image.png">
 
 
 
@@ -109,7 +108,7 @@ var _hmt = _hmt || [];
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="优雅的使用NSNotification.Name" height="28">
+                <img src="/images/logo.svg" alt="test" height="28">
             
             </a>
         </div>
@@ -147,12 +146,6 @@ var _hmt = _hmt || [];
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
     
-    <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="https://i.loli.net/2019/08/17/4PSRfjecaE5z89o.jpg" alt="优雅的使用NSNotification.Name">
-        </span>
-    </div>
-    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -162,21 +155,16 @@ var _hmt = _hmt || [];
 
                 <span class="level-item has-text-grey">
                 <i class="far fa-calendar-alt"></i>&nbsp;
-                <time class="level-item has-text-grey" datetime="2018-05-18T04:34:36.000Z">&nbsp;2018-05-18</time>
+                <time class="level-item has-text-grey" datetime="2019-11-26T13:10:51.000Z">&nbsp;2019-11-26</time>
                 </span>
 
-                
-                <div class="level-item">
-                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
-                <a class="has-link-grey -link" href="/categories/Swift/">Swift</a>
-                </div>
                 
                 
                 <span class="level-item has-text-grey">
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    2 minutes read (About 256 words)
+                    a few seconds read (About 0 words)
                 </span>
                 
                 
@@ -190,46 +178,22 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
             
-                优雅的使用NSNotification.Name
+                test
             
         </h1>
         <div class="content">
-            <p>Swift 3之前使用通知：</p>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">NSNotificationCenter</span>.defaultCenter().post(<span class="hljs-string">"kReceiveMessageNoti"</span>)</span><br></pre></td></tr></table></figure>
-<p>Swift 3之后</p>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">NotificationCenter</span>.<span class="hljs-keyword">default</span>.post(<span class="hljs-type">Notification</span>.<span class="hljs-type">Name</span>(rawValue: <span class="hljs-string">"kReceiveMessageNoti"</span>))</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>显然 这种使用全局字符串常亮的方法不是很好。</p>
-<p>我在阅读<code>Almofire</code>的时候发现，作者是这样使用通知的：</p>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">Notification</span>.<span class="hljs-title">Name</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Task</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> <span class="hljs-type">DidResume</span> = <span class="hljs-type">Notification</span>.<span class="hljs-type">Name</span>(rawValue: <span class="hljs-string">"org.alamofire.notification.name.task.didResume"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用的时候：</p>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">NotificationCenter</span>.<span class="hljs-keyword">default</span>.post(</span><br><span class="line">            name: <span class="hljs-type">Notification</span>.<span class="hljs-type">Name</span>.<span class="hljs-type">Task</span>.<span class="hljs-type">DidResume</span>,</span><br><span class="line">            object: <span class="hljs-keyword">self</span>,</span><br><span class="line">            userInfo: [<span class="hljs-type">Notification</span>.<span class="hljs-type">Key</span>.<span class="hljs-type">Task</span>: task]</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
-<p>利用<code>extension</code>为Notification.Name添加一个结构体，在结构体上添加 静态常量办法。直接使用静态常量就可以，但是作者又使用了 结构体，这样做的好处是为了给通知名称分类。</p>
-<p>显然这种方法比我们直接使用常量字符串要好很多。下面。再给出我使用enum的方法</p>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">DDNotificationName</span>: <span class="hljs-title">String</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/// 注销成功</span></span><br><span class="line">    <span class="hljs-keyword">case</span> logoutSuccess</span><br><span class="line">    <span class="hljs-comment">/// 登录成功</span></span><br><span class="line">    <span class="hljs-keyword">case</span> loginSuccess</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//收到消息</span></span><br><span class="line">    <span class="hljs-keyword">case</span> receiveMessage</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">var</span> name: <span class="hljs-type">NSNotification</span>.<span class="hljs-type">Name</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-type">NSNotification</span>.<span class="hljs-type">Name</span>(<span class="hljs-string">"k"</span> + rawValue)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">NotificationCenter</span>.<span class="hljs-keyword">default</span>.post(name: <span class="hljs-type">DDNotificationName</span>.loginSuccess.name, object: <span class="hljs-literal">nil</span>)</span><br></pre></td></tr></table></figure>
-
+            
         </div>
         
             <ul class="post-copyright">
-            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2018/05/18/优雅的使用NSNotification-name/">优雅的使用NSNotification.Name</a></li>
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2019/11/26/test/">test</a></li>
             <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
-            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2018/05/18/优雅的使用NSNotification-name/">http://www.wuqihan.cn/2018/05/18/优雅的使用NSNotification-name/</a></li>
-            <li><strong>发布时间：</strong>2018-05-18</li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2019/11/26/test/">http://www.wuqihan.cn/2019/11/26/test/</a></li>
+            <li><strong>发布时间：</strong>2019-11-26</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
             </li>
             </ul>
         
-        
-        <hr style="height:1px;margin:1rem 0">
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
-                    <a class="has-link-grey -link" href="/tags/swift-tips/">swift tips</a>
-                </div>
-            </div>
-        </div>
         
         
         
@@ -276,17 +240,10 @@ var _hmt = _hmt || [];
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/05/19/CPU寻址能力到底怎么理解？/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">CPU寻址能力到底怎么理解？</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/15/入门汇编语言/">
-                <span class="level-item">入门汇编语言</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/11/20/Swift实现二叉搜索树/">
+                <span class="level-item">Swift实现二叉搜索树</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -443,7 +400,7 @@ var _hmt = _hmt || [];
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="优雅的使用NSNotification.Name" height="28">
+                    <img src="/images/logo.svg" alt="test" height="28">
                 
                 </a>
                 <p class="is-size-7">
