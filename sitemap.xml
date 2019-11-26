@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.wuqihan.cn/about/index.html</loc>
+    
+    <lastmod>2019-11-26T15:53:56.625Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.wuqihan.cn/2019/11/20/Swift%E5%AE%9E%E7%8E%B0%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/</loc>
     
     <lastmod>2019-11-26T13:25:06.651Z</lastmod>
@@ -61,13 +68,6 @@
     <loc>http://www.wuqihan.cn/2018/05/28/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</loc>
     
     <lastmod>2019-09-03T11:45:58.535Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.wuqihan.cn/about/index.html</loc>
-    
-    <lastmod>2019-08-26T10:25:03.169Z</lastmod>
     
   </url>
   
