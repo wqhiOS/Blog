@@ -147,6 +147,95 @@ var _hmt = _hmt || [];
     <div class="card">
     
     <div class="card-image">
+        <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2018-05-18T17:04:33.000Z">&nbsp;2018-05-19</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    17 minutes read (About 2540 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                <a class="has-link-black-ter" href="/2018/05/19/CPU寻址能力到底怎么理解？/">CPU寻址能力到底怎么理解？</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>首先讲解一下<code>存储器</code></p>
+<p><code>存储器</code>是计算机重要组成部分，他是用来存储数据和部件。存储器的种类很多，按各种说法分类也有很多。下面主要讲解一种通常普遍的说法</p>
+<p>现代计算机存储器按<strong>用途</strong>分类，可以分为：</p>
+<ul>
+<li><p>主存储器，简称主存</p>
+<ul>
+<li>RAM</li>
+<li>ROM</li>
+</ul>
+</li>
+<li><p>辅助存储器</p>
+</li>
+<li><p>Cache(高级缓冲存储器)   (它位于CPU与主存之间，是读写速度比内存还快的存储器，从名字应该就知道它的作用，主要是为了解决CPU和主存速度不匹配而设计的，因为CPU中寄存器的速度更更快，所以出现了速度能接近于CPU的Cache)</p></li></ul>
+        </div>
+        
+        
+        
+            <hr style="height:1px;margin:1rem 0">
+            <div class="level is-mobile is-flex">
+                <div class="level-start">
+                    
+                    <div class="level-item is-size-7 is-uppercase">
+                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                        <a class="has-link-grey -link" href="/tags/8086汇编/">8086汇编</a>,&nbsp;<a class="has-link-grey -link" href="/tags/cpu/">cpu</a>,&nbsp;<a class="has-link-grey -link" href="/tags/内存/">内存</a>,&nbsp;<a class="has-link-grey -link" href="/tags/寻址能力/">寻址能力</a>
+                    </div>
+                    
+                </div>
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2018/05/19/CPU寻址能力到底怎么理解？/#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2018/05/18/优雅的使用NSNotification-name/" class="image is-7by1">
             <img class="thumbnail" src="https://i.loli.net/2019/08/17/4PSRfjecaE5z89o.jpg" alt="优雅的使用NSNotification.Name">
         </a>
@@ -469,75 +558,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-
-                
-
-                <span class="level-item has-text-grey">
-                <i class="far fa-calendar-alt"></i>&nbsp;
-                <time class="level-item has-text-grey" datetime="2017-05-15T08:51:53.000Z">&nbsp;2017-05-15</time>
-                </span>
-
-                
-                
-                <span class="level-item has-text-grey">
-                    <i class="far fa-clock"></i>&nbsp;
-                    
-                    
-                    4 minutes read (About 585 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
-            
-                <a class="has-link-black-ter" href="/2017/05/15/如何继承类簇/">如何继承类簇（例如NSString）</a>
-            
-        </h1>
-        <div class="content">
-            <p>在今天之前 如果有人问我 如果给NSString添加一个方法 ，我最先想到的方法肯定就是使用Category。一直觉得NSString是不能被继承的，因为它是类簇，其实如果真的想继承，也是有办法的。<br>        在Cocoa框架里有许多类簇，比如NSArray，NSString，NSNumber（具体什么是类簇就不解释了。网上关于类簇的介绍很多）。</p>
-<p>具体关于如何为类簇添加子类，需要遵守几条规则：</p>
-<blockquote>
-<ol>
-<li>子类应该继承自类簇中的抽象基类。</li>
-<li>子类应该自定义自己的数据存储方式。（开发者编写NSArray子类时，必须用一个实例变量来存放数组中的对象。这似乎与大家预想的不同，我们以为NSArray自己肯定会保存那些对象，所以在子类中就无须再保存一份了。但是大家要记住，NSArray本身只不过是包在其他隐藏对象外面的壳，它仅仅定义了所有数组都需具备的一些接口。对于这个自定义的数组类来说，可以用NSArray来保存其实例）。</li>
-<li>子类应当覆写超类文档中指明需要覆写的方法。</li>
-</ol>
-</blockquote>
-        </div>
-        
-        
-        
-            <hr style="height:1px;margin:1rem 0">
-            <div class="level is-mobile is-flex">
-                <div class="level-start">
-                    
-                </div>
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2017/05/15/如何继承类簇/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -557,6 +577,8 @@ var _hmt = _hmt || [];
             <li><a class="pagination-link has-text-black-ter" href="/page/3/">3</a></li>
             
             <li><a class="pagination-link has-text-black-ter" href="/page/4/">4</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/5/">5</a></li>
             
         </ul>
     </nav>
@@ -604,7 +626,7 @@ var _hmt = _hmt || [];
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        19
+                        21
                     </p>
                 </a>
             </div>
@@ -614,7 +636,7 @@ var _hmt = _hmt || [];
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        10
+                        11
                     </p>
                 </a>
             </div>
@@ -672,7 +694,7 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/8086汇编/" style="font-size: 16.67px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Darwin/" style="font-size: 10px;">Darwin</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Tagged-Pointer/" style="font-size: 10px;">Tagged Pointer</a> <a href="/tags/XNU/" style="font-size: 10px;">XNU</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/macOS/" style="font-size: 10px;">macOS</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 13.33px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a>
+        <a href="/tags/8086汇编/" style="font-size: 16.67px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Darwin/" style="font-size: 10px;">Darwin</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Tagged-Pointer/" style="font-size: 10px;">Tagged Pointer</a> <a href="/tags/XNU/" style="font-size: 10px;">XNU</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/macOS/" style="font-size: 10px;">macOS</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 13.33px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 13.33px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a>
     </div>
 </div>
 
@@ -684,6 +706,17 @@ var _hmt = _hmt || [];
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/08/">
@@ -812,7 +845,7 @@ var _hmt = _hmt || [];
                     <span class="level-item">July 2016</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -855,6 +888,25 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/11/20/Swift实现二叉搜索树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Swift实现二叉搜索树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T11:30:33.000Z">2019-11-20</time></div>
+                    <a href="/2019/11/20/Swift实现二叉搜索树/" class="has-link-black-ter is-size-6">Swift实现二叉搜索树</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -932,25 +984,6 @@ var _hmt = _hmt || [];
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-18T17:04:33.000Z">2018-05-19</time></div>
-                    <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="has-link-black-ter is-size-6">CPU寻址能力到底怎么理解？</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -985,7 +1018,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C底层原理/">
@@ -999,6 +1032,14 @@ var _hmt = _hmt || [];
         <a class="level is-marginless" href="/categories/iOS/内存管理/">
             <span class="level-start">
                 <span class="level-item">内存管理</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/多线程/">
+            <span class="level-start">
+                <span class="level-item">多线程</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1144,7 +1185,7 @@ var _hmt = _hmt || [];
                 <div class="control">
                     <a class="tags has-addons" href="/tags/多线程/">
                         <span class="tag">多线程</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1184,6 +1225,25 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/11/20/Swift实现二叉搜索树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Swift实现二叉搜索树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-20T11:30:33.000Z">2019-11-20</time></div>
+                    <a href="/2019/11/20/Swift实现二叉搜索树/" class="has-link-black-ter is-size-6">Swift实现二叉搜索树</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1261,25 +1321,6 @@ var _hmt = _hmt || [];
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-18T17:04:33.000Z">2018-05-19</time></div>
-                    <a href="/2018/05/19/CPU寻址能力到底怎么理解？/" class="has-link-black-ter is-size-6">CPU寻址能力到底怎么理解？</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a> / <a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1314,7 +1355,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/iOS/Objective-C底层原理/">
@@ -1328,6 +1369,14 @@ var _hmt = _hmt || [];
         <a class="level is-marginless" href="/categories/iOS/内存管理/">
             <span class="level-start">
                 <span class="level-item">内存管理</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/多线程/">
+            <span class="level-start">
+                <span class="level-item">多线程</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -1473,7 +1522,7 @@ var _hmt = _hmt || [];
                 <div class="control">
                     <a class="tags has-addons" href="/tags/多线程/">
                         <span class="tag">多线程</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
