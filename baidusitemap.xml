@@ -4,21 +4,6 @@
 
     
   <url>
-    <loc>http://www.wuqihan.cn/2019/11/26/test/</loc>
-    <lastmod>2019-11-26T13:10:51.966Z</lastmod>
-    <data>
-        <display>
-        <title>test</title>
-        <pubTime>2019-11-26T13:10:51.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wuqihan.cn/2019/03/09/iOS%E5%9B%BE%E5%B1%82%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
     <lastmod>2019-11-09T13:21:14.858Z</lastmod>
     <data>
@@ -83,29 +68,6 @@
           
              
               <breadCrumb title="内存管理" url="http://www.wuqihan.cn/categories/iOS/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wuqihan.cn/2016/07/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2019-11-05T14:32:16.344Z</lastmod>
-    <data>
-        <display>
-        <title>多线程基础篇</title>
-        <pubTime>2016-07-08T02:05:17.000Z</pubTime>
-        
-        <tag>多线程</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS" url="http://www.wuqihan.cn/categories/iOS/"/>
-          
-             
-              <breadCrumb title="多线程" url="http://www.wuqihan.cn/categories/iOS/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
           
         </display>
     </data>
