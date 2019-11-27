@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>CPU寻址能力到底怎么理解？ - wuqihan&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="内存首先讲解一下存储器 存储器是计算机重要组成部分，他是用来存储数据和部件。存储器的种类很多，按各种说法分类也有很多。下面主要讲解一种通常普遍的说法 现代计算机存储器按用途分类，可以分为：  主存储器，简称主存  RAM ROM   辅助存储器  Cache(高级缓冲存储器)   (它位于CPU与主存之间，是读写速度比内存还快的存储器，从名字应该就知道它的作用，主要是为了解决CPU和主存速度不匹配">
+<meta name="keywords" content="8086汇编,寻址能力,cpu,内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU寻址能力到底怎么理解？">
+<meta property="og:url" content="http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/index.html">
+<meta property="og:site_name" content="wuqihan&#39;s blog">
+<meta property="og:description" content="内存首先讲解一下存储器 存储器是计算机重要组成部分，他是用来存储数据和部件。存储器的种类很多，按各种说法分类也有很多。下面主要讲解一种通常普遍的说法 现代计算机存储器按用途分类，可以分为：  主存储器，简称主存  RAM ROM   辅助存储器  Cache(高级缓冲存储器)   (它位于CPU与主存之间，是读写速度比内存还快的存储器，从名字应该就知道它的作用，主要是为了解决CPU和主存速度不匹配">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png">
+<meta property="og:updated_time" content="2019-11-01T15:25:05.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CPU寻址能力到底怎么理解？">
+<meta name="twitter:description" content="内存首先讲解一下存储器 存储器是计算机重要组成部分，他是用来存储数据和部件。存储器的种类很多，按各种说法分类也有很多。下面主要讲解一种通常普遍的说法 现代计算机存储器按用途分类，可以分为：  主存储器，简称主存  RAM ROM   辅助存储器  Cache(高级缓冲存储器)   (它位于CPU与主存之间，是读写速度比内存还快的存储器，从名字应该就知道它的作用，主要是为了解决CPU和主存速度不匹配">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/xcode.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<!-- <body class="is-2-column"> -->
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="CPU寻址能力到底怎么理解？" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/08/18/A4jBDKIpvy8OVsh.png" alt="CPU寻址能力到底怎么理解？">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2018-05-18T17:04:33.000Z">&nbsp;2018-05-19</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/计算机基础/">计算机基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/计算机基础/汇编语言/">汇编语言</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    17 minutes read (About 2540 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                CPU寻址能力到底怎么理解？
+            
+        </h1>
+        <div class="content">
+            <h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>首先讲解一下<code>存储器</code></p>
+<p><code>存储器</code>是计算机重要组成部分，他是用来存储数据和部件。存储器的种类很多，按各种说法分类也有很多。下面主要讲解一种通常普遍的说法</p>
+<p>现代计算机存储器按<strong>用途</strong>分类，可以分为：</p>
+<ul>
+<li><p>主存储器，简称主存</p>
+<ul>
+<li>RAM</li>
+<li>ROM</li>
+</ul>
+</li>
+<li><p>辅助存储器</p>
+</li>
+<li><p>Cache(高级缓冲存储器)   (它位于CPU与主存之间，是读写速度比内存还快的存储器，从名字应该就知道它的作用，主要是为了解决CPU和主存速度不匹配而设计的，因为CPU中寄存器的速度更更快，所以出现了速度能接近于CPU的Cache)</p>
+<a id="more"></a>
+</li>
+</ul>
+<blockquote>
+<p>通常我们会把主存储器叫做内存。但是严格意义上说，内存是由主存（比如内存条）、Cache两部分组成。但是可能由于Cache相对于内存条容量特别小，以及很久之前的计算机没有Cache，所以很多情况，大家就默认内存就是主存的说法了。</p>
+</blockquote>
+<p>通过上面介绍存储器，我们可以知道 内存 是存储器的一部分，也叫主存。</p>
+<p>内存是CPU能直接寻址的存储空间。计算机中所有的程序的运行都是在内存中进行的。</p>
+<p>内存的特点是速率很快。（这点大家都应该知道。）</p>
+<p>我们平时会说 “我的电脑内存太小，只有4G，需要加内存条”，这里所说的 <strong>4G</strong>是什么意思呢？</p>
+<p>内存中含有大量的存储单元，<code>每个存储单元的大小都是1B</code>，所以上面所说的4G内存，意思就是它是有2<sup>2</sup>*2<sup>30</sup>个存储单元。</p>
+<p>这些个存储单元组成在一起，就叫做 <code>内存空间</code>,那何为内存地址呢？在内存中，每个存储单元都有一个编号，这个编号通常用16进制表示，从0开始编号。这个编号就叫做内存地址。</p>
+<p>理解了 <code>内存地址</code>和 <code>内存空间</code> 才能共清楚的明白CPU寻址。</p>
+<h2 id="寻址空间"><a href="#寻址空间" class="headerlink" title="寻址空间"></a>寻址空间</h2><p>CPU<code>寻址</code>，也就是通过内存地址，找到对应的存储单元。上面已经提到过，一个存储单元是1B。</p>
+<p>解释寻址能力之前，先来看下 <code>寻址空间</code> （<code>Addressing space</code>）的概念。</p>
+<blockquote>
+<p><code>寻址空间</code>一般指的是CPU对于<a href="https://baike.baidu.com/item/内存寻址/1012006" target="_blank" rel="noopener">内存寻址</a>的能力。通俗地说，就是能最多用到多少内存空间的一个问题。数据在<a href="https://baike.baidu.com/item/存储器/1583185" target="_blank" rel="noopener">存储器</a>(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最大能查找多大范围的地址叫做寻址能力 ，CPU的寻址能力以<a href="https://baike.baidu.com/item/字节/1096318" target="_blank" rel="noopener">字节</a>为单位 ，如32位寻址的CPU可以寻址2的32次方大小的地址也就是4G，这也是为什么32位的CPU最大能搭配4G内存的原因 ，再多的话CPU就找不到了。</p>
+</blockquote>
+<p>上面提到了何为<code>寻址能力</code>？就是<code>CPU最大能查找多大范围的地址</code>。<strong>千万不要理解为CPU最大能查找多大的地址</strong> 虽然跟上一句比仅仅少了一个’范围’，但是完全是两个意思。 我最开始就理解成了 最大能查找到多大的地址。。。</p>
+<p>或者也可以理解为：<strong>CPU最多能查找多少个地址</strong> （这里多少个地址，指得是多少个存储单元，存储单位最小单位是Byte，不是b） 。或者可以理解为 <strong>CPU可以对多少个存储单元进行寻址</strong></p>
+<p>到了这里 应该就明白了<code>寻址能力</code>的概念，但是还不够。。</p>
+<blockquote>
+<p>注意：文中的“存储单元”或者“内存单元”意思是一样的。”内存空间”和”存储空间” 意思也是一样的。</p>
+</blockquote>
+<h2 id="寻址能力-Byte-or-Bite"><a href="#寻址能力-Byte-or-Bite" class="headerlink" title="寻址能力 Byte or Bite?"></a>寻址能力 Byte or Bite?</h2><p>思考一个问题：</p>
+<blockquote>
+<p>8086CPU的地址总线宽度是<code>20</code>，那么他的寻址能力是大呢</p>
+</blockquote>
+<p>看到这里如果不明白什么是地址总线，请看我的这篇文章 : <a href="http://www.wuqihan.cn/2018/05/15/入门汇编语言/">入门汇编语言</a></p>
+<p>地址总线的宽度决定了CPU的寻址能力，宽度是20，也就代表有20根导线， 每根导线发射的是高、低电信号两种情况，所以寻址能力为 2<sup>20</sup>B = <code>1M</code> </p>
+<p>但是这里可能会出现很多人都纳闷的问题，20根导线，不就是20位吗，所以应该是2<sup>20</sup>b。那为什么是 2<sup>20</sup>B ，而不是2<sup>20</sup>b 呢？ （B为Byte/字节，b为bite/位）</p>
+<blockquote>
+<p><code>位</code> ，表示的是二进制位，一般称为比特，即0或1，<strong>是计算机存储的最小单位</strong></p>
+<p>字节是计算机中数据处理的基本单位；计算机以字节为单位存储和解释信息，规定一个字节由8个二进制位构成，即1B = 8b</p>
+</blockquote>
+<p>因为地址总线的宽度决定了CPU的 寻址能力，那何为寻址能力呢，说面提到了，寻址能力可以理解为CPU可以对多少个存储单元进行寻址，地址总线是20，那么就代表最多能找到2<sup>20</sup>个存储单元，又因为8086中一个存储单元是1B所以，这里是2<sup>20</sup>B</p>
+<p>看到这里可能又会继续糊涂，因为你可能不明白存储单元、内存地址、内存空间到底是什么，他们之间有什么的联系，所以往下看……</p>
+<h2 id="内存地址、内存单元和内存空间"><a href="#内存地址、内存单元和内存空间" class="headerlink" title="内存地址、内存单元和内存空间"></a>内存地址、内存单元和内存空间</h2><p>首先。在平时开发中，可能有时候你看到的内存地址是4位16进制（0x0001），有时候你看到的内存地址是8位16进制(0x00000001)。这两个内存地址都是表示编号大小为十进制1的内存地址，为什么一个用4位16进制？另外一个又用8位16进制？(注意，0x0001 和 0x00000001 仅仅是表示方式不一样，数值大小可是相等的，可别搞迷糊了！）</p>
+<p><img src="https://i.loli.net/2019/08/18/aW98uSNHC54Jl6i.png" alt="8位16进制"></p>
+<p><img src="https://i.loli.net/2019/08/18/eWXBPmOLKAdtYnD.png" alt="4位16进制"></p>
+<p>这就是因为寻址能力的问题。CPU寻址能力达不到8位16进制，所以用4位16进制表示就可以，理论上你硬要用8位16进制表示也可以。只不过你寻址能力低，不可能超过4位。所以 寻址能力低，不会超过4位的就用4位16进制，能够超过4的cpu就用8位16进制。</p>
+<p>接下来就解释一下<code>内存地址</code>和 <code>内存单元</code></p>
+<p><code>内存地址</code> 仅仅是一个标号，代表一个内存单元。在计算机中存储器的容量是以字节B为基本单位的，所以一个内存地址代表一个字节 1B = 8b 的内存单元，也可以说一个内存单元占8b或1B的存储空间。</p>
+<p>我们平时经常说32位操作 系统，最多支持4G内存空间。就是因为2<sup>32</sup>B = 4G</p>
+<p>所以这里的结论就是：<code>用4位16进制表示的内存地址和用8位16进制表示的内存地址，其实都是代表一个8位/1字节的存储空间，把这8位/1字节的存储空间叫做一个内存单元</code></p>
+<p>比如一个汉字“中”在计算机中是如何存储呢，一个汉字，需要两个存储单元，也就是2B大小，这2B存储空间是连续的，所以不需要全部找到，只需要找到最开始的一部分，就能找到这个“中”</p>
+<p>所以，内存地址是内寸中存储数据的一个标识，并不是数据本身，通过内存地址可以知道内存当中存储的数据，这个数据可能占1个内存单元，也可能占多个内存单元。 </p>
+<p>可以抽象的把内存空间比作房子🏡，如果想要找到房子，就需要通过🚪门牌号来找，所以内存地址就可以比作门牌号，那这个房子多大呢，就可以称为占了多少的内存空间。那这个房子里可能还包括有厨房、卧室、卫生间，这些统统不用继续找了，因为有了门牌号（内存地址），就能找到房子（数据，整个内存空间），找到房子自然就能找打屋里的厨房、卧室……(一个个内存单元)。另外，门牌号是贴在房子上的，所以内存地址不占用内存空间，不要和平时开发中的指针这一概念搞混淆。</p>
+<blockquote>
+<p>参考：</p>
+<p><a href="[https://baike.baidu.com/item/%E5%AF%BB%E5%9D%80%E7%A9%BA%E9%97%B4](https://baike.baidu.com/item/寻址空间">《百度百科-寻址空间》</a>)</p>
+<p><a href="http://www.asmedu.net/bbs/pasteinfo.jsp?part=1&amp;level=book&amp;kind=1002&amp;qkSg=2&amp;qID=27391&amp;readSg=1" target="_blank" rel="noopener">《汇编语言论坛》</a></p>
+<p><a href="https://www.kancloud.cn/chandler/programming_road/695585" target="_blank" rel="noopener">《内存概念》</a></p>
+<p><a href="https://www.cnblogs.com/VIPler/p/4282584.html" target="_blank" rel="noopener">《关于内存地址和内存空间的概念》</a></p>
+<p><a href="https://www.cnblogs.com/Lanht/p/10780364.html" target="_blank" rel="noopener">《内存地址与内存空间》</a></p>
+</blockquote>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/">CPU寻址能力到底怎么理解？</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/">http://www.wuqihan.cn/2018/05/19/CPU寻址能力到底怎么理解？/</a></li>
+            <li><strong>发布时间：</strong>2018-05-19</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/8086汇编/">8086汇编</a>,&nbsp;<a class="has-link-grey -link" href="/tags/cpu/">cpu</a>,&nbsp;<a class="has-link-grey -link" href="/tags/内存/">内存</a>,&nbsp;<a class="has-link-grey -link" href="/tags/寻址能力/">寻址能力</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/ASwmOFftXiTqxEe.jpg" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/lLMy7kZArdoJCN5.jpg" alt="Wechat"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/05/28/汇编学习踩坑记录/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">汇编学习踩坑记录</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/18/优雅的使用NSNotification-name/">
+                <span class="level-item">优雅的使用NSNotification.Name</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript> Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img style="border-radius:8px" class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        iOS Developer  
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shanghai, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        21
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        12
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        17
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
+                Contact</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#内存">
+        <span class="has-mr-6">1</span>
+        <span>内存</span>
+        </a></li><li>
+        <a class="is-flex" href="#寻址空间">
+        <span class="has-mr-6">2</span>
+        <span>寻址空间</span>
+        </a></li><li>
+        <a class="is-flex" href="#寻址能力-Byte-or-Bite">
+        <span class="has-mr-6">3</span>
+        <span>寻址能力 Byte or Bite?</span>
+        </a></li><li>
+        <a class="is-flex" href="#内存地址、内存单元和内存空间">
+        <span class="has-mr-6">4</span>
+        <span>内存地址、内存单元和内存空间</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="CPU寻址能力到底怎么理解？" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2107-2019 吴启晗&nbsp;
+                <!-- Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

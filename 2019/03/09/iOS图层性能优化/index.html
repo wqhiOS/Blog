@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>iOS图层性能优化 - wuqihan&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。 这里只介绍关于图层方面的性能优化。 了解Core Animation说起图层，你必须能想到的是Core Animation。在iOS上，几乎所有的东西都是通过Core Animation绘制出来的。Core Animation 的核心是">
+<meta name="keywords" content="性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS图层性能优化">
+<meta property="og:url" content="http://www.wuqihan.cn/2019/03/09/iOS图层性能优化/index.html">
+<meta property="og:site_name" content="wuqihan&#39;s blog">
+<meta property="og:description" content="性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。 这里只介绍关于图层方面的性能优化。 了解Core Animation说起图层，你必须能想到的是Core Animation。在iOS上，几乎所有的东西都是通过Core Animation绘制出来的。Core Animation 的核心是">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.loli.net/2019/11/09/zQ4H8Gkxm1r9CIs.jpg">
+<meta property="og:updated_time" content="2019-11-09T13:21:14.858Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS图层性能优化">
+<meta name="twitter:description" content="性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。 这里只介绍关于图层方面的性能优化。 了解Core Animation说起图层，你必须能想到的是Core Animation。在iOS上，几乎所有的东西都是通过Core Animation绘制出来的。Core Animation 的核心是">
+<meta name="twitter:image" content="https://i.loli.net/2019/11/09/zQ4H8Gkxm1r9CIs.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/xcode.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<!-- <body class="is-2-column"> -->
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="iOS图层性能优化" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/11/09/zQ4H8Gkxm1r9CIs.jpg" alt="iOS图层性能优化">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2019-03-09T11:46:43.000Z">&nbsp;2019-03-09</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/性能优化/">性能优化</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    25 minutes read (About 3685 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                iOS图层性能优化
+            
+        </h1>
+        <div class="content">
+            <p>性能优化是一个很广的话题，性能优化包括方方面面，比如代码的执行效率、大文件的读取和写入、网络缓存、流量的使用、动画流畅度、程序的启动时间、应用程序包的大小等等。</p>
+<p>这里只介绍关于图层方面的性能优化。</p>
+<h2 id="了解Core-Animation"><a href="#了解Core-Animation" class="headerlink" title="了解Core Animation"></a>了解Core Animation</h2><p>说起图层，你必须能想到的是<code>Core Animation</code>。在iOS上，几乎所有的东西都是通过<code>Core Animation</code>绘制出来的。Core Animation 的核心是 OpenGL ES 的一个抽象物，简而言之，它让你直接使用 OpenGL ES 的功能，却不需要处理 OpenGL ES 做的复杂的事情。</p>
+<a id="more"></a>
+<p>不要被<code>Core Animation</code>的名字所误解，对于<code>Core Animation</code>，它实际是从<strong>Layer Kit</strong>演变而来的。所以做动画，仅仅只是<code>Core Animation</code>的冰山一角。</p>
+<p><code>Core Animation</code>是一个复合引擎，它的职责就是尽可能快地组合屏幕上不同的可视内容，这个内容是被分解成独立的图层，存储在一个叫做图层树的体系之中。<strong>于是这个树形成了UIKit以及在iOS应用程序当中你所能在屏幕上看见的一切的基础</strong>。</p>
+<p>首先看一下<code>Core Animation</code>在cocoa中的位置的关系:</p>
+<p><img src="https://i.loli.net/2019/11/08/McRstapoSu2YA8K.png" alt="image-20191028112837723.png"></p>
+<p>Core Animation 通过 Core Graphics 的一端和 OpenGL ES 的另一端，精心策划基于 CPU 的位图绘制。因为 Core Animation 处在渲染过程中的重要位置上，所以你如何使用 Core Animation 将会对性能产生极大的影响。</p>
+<h3 id="CoreAnimation是如何工作的呢？"><a href="#CoreAnimation是如何工作的呢？" class="headerlink" title="CoreAnimation是如何工作的呢？"></a>CoreAnimation是如何工作的呢？</h3><ol>
+<li>布局</li>
+<li>显示</li>
+<li>准备</li>
+<li>提交</li>
+<li>对所有的图层属性计算中间值，设置Open-GL几何形状（纹理话的三角形）来执行渲染</li>
+<li>在屏幕上渲染可见三角形</li>
+</ol>
+<p>1-5是由CPU来负责的，只有第6步是由GPU负责。</p>
+<p>通过下面的两张图，可以更好理解：</p>
+<p><img src="http://images.bestswifter.com/UIKitPerformance/pipeline.png" alt="显示流程" style="zoom: 33%;"></p>
+<p><img src="http://images.bestswifter.com/UIKitPerformance/commit.png" alt="解码与转换" style="zoom: 50%;"></p>
+<h2 id="CPU-VS-GPU"><a href="#CPU-VS-GPU" class="headerlink" title="CPU VS GPU"></a>CPU VS GPU</h2><p>关于图层绘制和动画有两种处理方式：<code>CPU</code>（中央处理器）和<code>GPU</code>（图形处理器）。我们可以说<code>CPU</code>所做的工作都是在软件层面，而<code>GPU</code>做的工作是硬件层面。我们可以用<code>CPU</code>做任何事情，但是对于图像处理(<code>CPU</code>也可以做，但是效率低)，通常用硬件会更快，因为<code>GPU</code>使用图像对高度并行浮点运算做了优化。</p>
+<p><code>GPU</code> 是一个专门为图形高并发计算而量身定做的处理单元。它并发的本性让它能高效的将不同纹理合成起来。它连接到 <code>CPU</code>。从硬件上讲两者之间存在某种类型的总线，并且有像 <code>OpenGL</code>，<code>Core Animation</code> 和 <code>Core Graphics</code> 这样的框架来在 <code>GPU</code> 和 <code>CPU</code> 之间精心安排数据的传输。为了将像素显示到屏幕上，一些处理将在 <code>CPU</code> 上进行。然后数据将会传送到 <code>GPU</code>，这也需要做一些相应的操作，最终像素显示到屏幕上。</p>
+<p><strong>针对图层的性能优化，说白了就是关于如何智能利用GPU和CPU，使他们均衡的被使用，不超出负荷。</strong></p>
+<p>可以大体粗略的说，图层绘制到屏幕之前或者做动画之前的大多数工作都是由<code>CPU</code>处理的，而<code>GPU</code>是用来采集图片和形状(三角形)，运行变换，应用纹理和混合然后把它们输送才屏幕上。</p>
+<h3 id="GPU的相关操作"><a href="#GPU的相关操作" class="headerlink" title="GPU的相关操作"></a>GPU的相关操作</h3><p>基于GPU的哪些常见操作会降低图层绘制：</p>
+<ul>
+<li>太多的几何结构</li>
+<li>重绘（合成compositing）：主要由重叠半透明图层引起</li>
+<li>离屏渲染 （Off-Screen Rendering）：离屏渲染指的是GPU在当前屏幕缓冲区以外开辟一个新的缓冲区进行渲染。包括设置图层的圆角、图层遮罩(mask)、阴影、光栅化(shouldRasterize )等都会造成离屏渲染。另外补充在屏渲染的概念：指的是GPU的渲染操作在当前用于显示的屏幕缓冲区进行。</li>
+<li>过大的图片：如果视图绘制超出GPU支持的尺寸的纹理，就必须要用CPU在图层每次显示之前对图片预处理，同样也会降低性能。目前的苹果设备最大支持4096x4096尺寸的纹理。如果图片的大小超过4096x4096是无法显示的。必须要用CPU对图片进行预处理。</li>
+<li>等等</li>
+</ul>
+<h3 id="CPU的相关操作"><a href="#CPU的相关操作" class="headerlink" title="CPU的相关操作"></a>CPU的相关操作</h3><p>上文已经提到，大多数工作在Core Animation的CPU都发生在动画开始之前。这意味着它不会影响到帧率，但是他会延迟动画开始的时间，让你的界面看起来会比较迟钝。</p>
+<p>基于CPU的哪些常见操作会延迟图层绘制的开始时间：</p>
+<ul>
+<li>布局计算：因为需要大量的计算，自动布局机制在低版本的iOS系统下尤为明显。</li>
+<li>视图懒加载：视图懒加载对内存的使用是很友好的，但是也会有不好的方面，比如你在视图控制器的ViewDidLoad中写入了大量耗时的操作，那等该视图控制器的view被使用时，就会消耗一定的时间。</li>
+<li>Core Graphics绘制：如果对视图实现了<code>-drawRect:</code>方法或<code>CALayerDelegate</code>的<code>-drawLayer:inContext:</code>方法，那么在绘制任何东西之前都会产生一个巨大的性能开销。为了支持对图层内容的任意绘制，<code>Core Animation</code>必须创建一个内存中等大小的寄宿图片。然后一旦绘制结束之后，必须把图片数据通过IPC传到渲染服务器。所以这也就是为什么很多地方都会提到，尽量避免重写<code>-drawRect:</code>方法的原因。</li>
+<li>解压图片：为了节省内存，iOS通常直到真正绘制的时候才会去解码图片，所以第一次加载图片时都要解压，那对于过大的图片，都会占用一定的时间。</li>
+<li>等等</li>
+</ul>
+<h2 id="屏幕图像显示原理"><a href="#屏幕图像显示原理" class="headerlink" title="屏幕图像显示原理"></a>屏幕图像显示原理</h2><p>这篇文章： <a href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/" target="_blank" rel="noopener">iOS保持界面流畅的技巧</a> 非常详细得介绍了屏幕图像显示原理，具体内容参考这篇文章，我这里用一张图总结一下。</p>
+<p><img src="https://i.loli.net/2019/11/08/1qIsENRlAJeVgP6.png" alt="屏幕图像显示原理.png" style="zoom: 67%;"></p>
+<h2 id="Instruments工具使用"><a href="#Instruments工具使用" class="headerlink" title="Instruments工具使用"></a>Instruments工具使用</h2><blockquote>
+<p> 由于苹果A系列芯片太过于强大，所以建议在测试性能的时候建议至少使用iPhone6以前的手机。我使用的是iPhone5s</p>
+<p> 注意：本文中提到的一些需要性能优化的地方，不是说这样做是错误的，仅仅是因为如果大量的做了某一个操作，这个操作会占用CPU或者GPU，这些操作堆积在一起，可能在老机型的手机上，造成GPU或者CPU单方面的负荷，导致卡顿等问题。</p>
+</blockquote>
+<h3 id="CoreAnimation"><a href="#CoreAnimation" class="headerlink" title="CoreAnimation"></a>CoreAnimation</h3><p><img src="https://i.loli.net/2019/11/09/jrOS1RuPX9a27My.png" alt="CoreAnimation.png" style="zoom: 67%;"></p>
+<p>使用CoreAnimation调试，目的是<strong>为了找到程序当前卡顿的原因是CPU超负荷还是GPU超负荷造成的</strong>。</p>
+<p>这里我提供了一个<a href="https://github.com/wqhiOS/TableViewPerformanceOptimizationDemo" target="_blank" rel="noopener">demo</a>用来测试。有两个列表页面，一个是未优化的一个是已优化的，先使用Instruments Core Animation对未优化的列表进行调试，看看问题究竟出在CPU还是GPU。进入未优化的页面如下图，来回滑动列表，肉眼可见的卡顿。</p>
+<p><img src="https://i.loli.net/2019/11/09/gt2OA13TQyLGMwC.jpg" alt="tableView.jpg" style="zoom:50%;"></p>
+<p>那卡顿原因到底出在哪里，是CPU负荷还是GPU呢？</p>
+<p><img src="https://i.loli.net/2019/11/09/qHRZDhWKiCxdQnT.png" alt="core_animation_1-2.png"></p>
+<p>图中红色框全出的时间，这时候我在未优化的列表页面始终不停滑动列表。从图中监控的数据可以看出，FPS从未超过15，极其卡顿，GPU使用率几乎达到 百分之百。CPU表现正常。</p>
+<p>所以可以得出结论。我们需要对GPU所做的操作进行优化，尽量把GPU所做的一部分工作分给CPU。具体怎么做，上面已经介绍过了。详细可以查看我的这个<a href="https://github.com/wqhiOS/TableViewPerformanceOptimizationDemo" target="_blank" rel="noopener">demo</a>。</p>
+<p>我们在进入另一个展示同样列表，且已经性能优化的页面。来回滑动列表，你会发现非常流畅。那我们在使用CoreAnimation工具测试一下，结果如下图(非常稳定，最低59FPS，GPU使用率维持在30%左右，CPU表现正常)：</p>
+<p><img src="https://i.loli.net/2019/11/09/DSAiCo4HBz2kaq3.png" alt="core_animation_2.png"></p>
+<h3 id="View-Debugging-Rendering"><a href="#View-Debugging-Rendering" class="headerlink" title="View Debugging Rendering"></a>View Debugging Rendering</h3><p>将项目启动运行在真机上。新版Xcode入口在：<code>[Debug] -&gt; [View Debugging] -&gt; [Rendering] &gt;</code></p>
+<h4 id="Color-Blended-Layers"><a href="#Color-Blended-Layers" class="headerlink" title="Color Blended Layers"></a>Color Blended Layers</h4><p>因为上文提到了，图层混合是GPU的工作，所以该优化是针对GPU超负荷的情况。如果你用Instruments-CoreAnimation调试，发现GPU使用率很低，几乎就可以放弃这项检测。</p>
+<p>该选项用于检测哪里发生了图层混合，并用红色标记出来。因此我们需要尽可能减少看到的红色区域。</p>
+<p>如果发现了有大量的红色，我们该如何处理呢？</p>
+<ul>
+<li>关于CALayer的opaque(不透明)属性：该属性可以告诉GPU是否去做合成，YES代表是不透明，GPU不会去做合成，但是对于普通的开发者来说，这个属性用处不大，因为基于UIView的CALayer，它默认的opaque属性就是YES，表示不透明。（虽然很多文章有提到这个属性，但是其实是可以忽略的）</li>
+<li>针对项目中用到的图片素材，不仅它本身要是不透明的，并且图片也不要包含alpha通达(因为有一些图片，你看着它是不透明的，但是它包含有alpha通达，仍然后发生图层混合，影响应能）</li>
+<li>关于UILabel中含有中文字体时，即使UILabel设置了不透明的背景颜色，可是还是会被标记为红色（因为苹果对显示中文做了不知道是好的还是坏的优化，显示中文是，UILabel会多出一个layer），针对这个的解决办法是：<strong>label.layer.masksToBounds = true;</strong> (我觉的这个影响微乎其微，可以忽略没有必要处理)</li>
+</ul>
+<h4 id="Color-Offscreen-Rendered-Yellow"><a href="#Color-Offscreen-Rendered-Yellow" class="headerlink" title="Color Offscreen-Rendered Yellow"></a>Color Offscreen-Rendered Yellow</h4><p>哪些常见操作会造成离屏渲染</p>
+<ul>
+<li><p>阴影 </p>
+<ul>
+<li><p>如何优化？</p>
+<ul>
+<li>使用shadowPath 。因为如果没有手动指定，Core Animation会去自动计算，这就会触发离屏渲染，所以可以手动指定阴影路径</li>
+<li>如果想给文字添加阴影，最好使用富文本，NSShadow</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">layer.shadowPath = <span class="hljs-type">UIBezierPath</span>(rect: cell._imageView2.bounds).cgPath</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> shadow = <span class="hljs-type">NSShadow</span>()</span><br><span class="line">shadow.shadowOffset = <span class="hljs-type">CGSize</span>(width: <span class="hljs-number">0</span>, height: <span class="hljs-number">2</span>)</span><br><span class="line">shadow.shadowBlurRadius = <span class="hljs-number">5</span></span><br><span class="line">shadow.shadowColor = <span class="hljs-type">UIColor</span>(white: <span class="hljs-number">0</span>, alpha: <span class="hljs-number">0.5</span>)</span><br><span class="line"><span class="hljs-keyword">let</span> attText = <span class="hljs-type">NSAttributedString</span>(string: text, attributes: [<span class="hljs-type">NSAttributedString</span>.<span class="hljs-type">Key</span>.shadow: shadow])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>圆角</p>
+<ul>
+<li>设置<code>cornerRadius</code>本身并不会导致离屏渲染，但很多时候它还需要配合<code>layer.masksToBounds = true</code>使用。根据之前的总结，设置<code>masksToBounds</code>会导致离屏渲染</li>
+<li><p>如何优化：</p>
+<ul>
+<li>光栅化 ，等于加了缓存(开启光栅化等于开启离屏渲染，双刃剑、可以解决，但是并不完美)</li>
+<li><p>创建一个圆形CAShapeLayer，然后设置为mask(完全不推荐、自己尝试后觉得没有效果，mask也是离屏渲染)</p>
+</li>
+<li><p>使用UIGraphics把当前image画成圆形生成新的UIImage，重新赋值给UIImageView（原理：GPU做的事情，转给了CPU来做。）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">UIImageView</span> </span>&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">cornerRadiusOptimized</span><span class="hljs-params">(radius: CGFloat)</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">self</span>.image = <span class="hljs-keyword">self</span>.image?.drawRectWithRoundedCorner(radius: radius, <span class="hljs-keyword">self</span>.bounds.size)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">UIImage</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">fileprivate</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">drawRectWithRoundedCorner</span><span class="hljs-params">(radius: CGFloat, <span class="hljs-number">_</span> sizetoFit: CGSize)</span></span> -&gt; <span class="hljs-type">UIImage</span>? &#123;</span><br><span class="line">        <span class="hljs-keyword">let</span> rect = <span class="hljs-type">CGRect</span>(origin: <span class="hljs-type">CGPoint</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>), size: sizetoFit)</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-type">UIGraphicsBeginImageContextWithOptions</span>(rect.size, <span class="hljs-literal">false</span>, <span class="hljs-type">UIScreen</span>.main.scale)</span><br><span class="line">        <span class="hljs-keyword">let</span> context = <span class="hljs-type">UIGraphicsGetCurrentContext</span>()</span><br><span class="line">        context?.addPath(<span class="hljs-type">UIBezierPath</span>(roundedRect: rect, byRoundingCorners: <span class="hljs-type">UIRectCorner</span>.allCorners, cornerRadii: <span class="hljs-type">CGSize</span>(width: radius, height: radius)).cgPath)</span><br><span class="line">        context?.clip()</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">self</span>.draw(<span class="hljs-keyword">in</span>: rect)</span><br><span class="line">        context?.drawPath(using: .fillStroke)</span><br><span class="line">        <span class="hljs-keyword">let</span> output = <span class="hljs-type">UIGraphicsGetImageFromCurrentImageContext</span>()</span><br><span class="line">        <span class="hljs-type">UIGraphicsEndImageContext</span>()</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">return</span> output</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Color-Hits-Green-and-Misses-Red"><a href="#Color-Hits-Green-and-Misses-Red" class="headerlink" title="Color Hits Green and Misses Red"></a>Color Hits Green and Misses Red</h4><p>该选项用于检测图像缓存是否命中，表示如果命中缓存则显示为绿色，否则显示为红色，显然绿色越多越好，红色越少越好。</p>
+<p>这里要提到一个概念：<code>光栅化</code></p>
+<p><code>光栅化</code>是将一个layer预先渲染成位图(bitmap)，然后加入缓存中。如果对于阴影效果这样比较消耗资源的静态内容进行缓存，可以得到一定幅度的性能提升</p>
+<p>CALayer的属性shouldRasterize表示是否设置光栅化 yes代表是</p>
+<p>虽然《iOS核心动画高级技巧》性能调优一节中有光栅化做了性能优化，但是我觉得这样的处理还是指标不治本。因为现在的问题是GPU使用率过高，更好的办法是把该部分工作转移个CPU执行。但是光栅化其实仅仅是加了一个缓存，缓存期限也仅仅只有100ms，即0.1s之后缓存就没有了，所以仅仅是对于快速滑动列表时会有一点作用。</p>
+<p><strong>光栅化同样会造成离屏渲染</strong>。当把光栅化打开的时候，也就代表你手动开启了离屏渲染。</p>
+<h4 id="Color-Misaligned-Images"><a href="#Color-Misaligned-Images" class="headerlink" title="Color Misaligned Images"></a>Color Misaligned Images</h4><p>该选项作用不大，其实就是找出哪些图片进行了缩放，因为缩放也是需要时间的。所以，我们在平时开发中，尽量保证图片素材的的大小与视图的frame保持一致。（这条基本可以忽略，除非你视图大小是40x40，结果你用了一张400x400，这种情况肯定是要避免。基本不会有人这样搞吧。。）</p>
+<blockquote>
+<p>参考资料</p>
+<p><a href="https://github.com/qunten/iOS-Core-Animation-Advanced-Techniques" target="_blank" rel="noopener">《iOS Core Animation Advanced Techniques》</a></p>
+<p><a href="https://github.com/100mango/zen/blob/master/WWDC心得：Advanced%20Graphics%20and%20Animations%20for%20iOS%20Apps/Advanced%20Graphics%20and%20Animations%20for%20iOS%20Apps.md" target="_blank" rel="noopener">WWDC心得：Advanced Graphics and Animations for iOS Apps</a></p>
+<p><a href="https://objccn.io/issue-3-1/" target="_blank" rel="noopener">绘制像素到屏幕上</a></p>
+<p><a href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/" target="_blank" rel="noopener">iOS保持界面流畅的技巧</a></p>
+<p><a href="https://bestswifter.com/uikitxing-neng-diao-you-shi-zhan-jiang-jie/" target="_blank" rel="noopener">UIKit性能调优实战讲解</a></p>
+</blockquote>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2019/03/09/iOS图层性能优化/">iOS图层性能优化</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2019/03/09/iOS图层性能优化/">http://www.wuqihan.cn/2019/03/09/iOS图层性能优化/</a></li>
+            <li><strong>发布时间：</strong>2019-03-09</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/性能优化/">性能优化</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/ASwmOFftXiTqxEe.jpg" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/lLMy7kZArdoJCN5.jpg" alt="Wechat"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/08/14/在CentOS7上搭建Shadowsocks/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">在CentOS7上搭建Shadowsocks</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/06/Tagged-Pointer/">
+                <span class="level-item">Tagged Pointer</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript> Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img style="border-radius:8px" class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        iOS Developer  
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shanghai, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        21
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        12
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        17
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
+                Contact</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#了解Core-Animation">
+        <span class="has-mr-6">1</span>
+        <span>了解Core Animation</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#CoreAnimation是如何工作的呢？">
+        <span class="has-mr-6">1.1</span>
+        <span>CoreAnimation是如何工作的呢？</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#CPU-VS-GPU">
+        <span class="has-mr-6">2</span>
+        <span>CPU VS GPU</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#GPU的相关操作">
+        <span class="has-mr-6">2.1</span>
+        <span>GPU的相关操作</span>
+        </a></li><li>
+        <a class="is-flex" href="#CPU的相关操作">
+        <span class="has-mr-6">2.2</span>
+        <span>CPU的相关操作</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#屏幕图像显示原理">
+        <span class="has-mr-6">3</span>
+        <span>屏幕图像显示原理</span>
+        </a></li><li>
+        <a class="is-flex" href="#Instruments工具使用">
+        <span class="has-mr-6">4</span>
+        <span>Instruments工具使用</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#CoreAnimation">
+        <span class="has-mr-6">4.1</span>
+        <span>CoreAnimation</span>
+        </a></li><li>
+        <a class="is-flex" href="#View-Debugging-Rendering">
+        <span class="has-mr-6">4.2</span>
+        <span>View Debugging Rendering</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Color-Blended-Layers">
+        <span class="has-mr-6">4.2.1</span>
+        <span>Color Blended Layers</span>
+        </a></li><li>
+        <a class="is-flex" href="#Color-Offscreen-Rendered-Yellow">
+        <span class="has-mr-6">4.2.2</span>
+        <span>Color Offscreen-Rendered Yellow</span>
+        </a></li><li>
+        <a class="is-flex" href="#Color-Hits-Green-and-Misses-Red">
+        <span class="has-mr-6">4.2.3</span>
+        <span>Color Hits Green and Misses Red</span>
+        </a></li><li>
+        <a class="is-flex" href="#Color-Misaligned-Images">
+        <span class="has-mr-6">4.2.4</span>
+        <span>Color Misaligned Images</span>
+        </a></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="iOS图层性能优化" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2107-2019 吴启晗&nbsp;
+                <!-- Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
