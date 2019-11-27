@@ -1,112 +1,13 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+<title>多线程基础篇 - wuqihan&#39;s blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
-<style>
-    .pace .pace-progress {
-        background: #ffffff; /*进度条颜色1E92FB*/
-        height: 3px;
-    }
-    .pace .pace-progress-inner {
-         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
-    }
-    .pace .pace-activity {
-        border-top-color: #1E92FB;    /*上边框颜色*/
-        border-left-color: #1E92FB;    /*左边框颜色*/
-    }
-</style>
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-  <meta name="baidu-site-verification" content="yNO1FYVZIJ">
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="多线程,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="wuqihan's blog" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
-
-
-
-
-
-
-<meta name="description" content="进程与线程学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系： 《OS X and iOS Kernel Programming》这本书中对进程和线程分别做了如下定义：  When the user launches an application, the operating system loads the program’s code and data into memory f">
+    <meta name="description" content="进程与线程学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系： 《OS X and iOS Kernel Programming》这本书中对进程和线程分别做了如下定义：  When the user launches an application, the operating system loads the program’s code and data into memory f">
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程基础篇">
@@ -114,343 +15,190 @@
 <meta property="og:site_name" content="wuqihan&#39;s blog">
 <meta property="og:description" content="进程与线程学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系： 《OS X and iOS Kernel Programming》这本书中对进程和线程分别做了如下定义：  When the user launches an application, the operating system loads the program’s code and data into memory f">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://i.loli.net/2019/11/04/OEh7HvtCBMQz2xV.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/04/Bz1Nn6qLbxCct9l.jpg">
 <meta property="og:updated_time" content="2019-11-05T14:32:16.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程基础篇">
 <meta name="twitter:description" content="进程与线程学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系： 《OS X and iOS Kernel Programming》这本书中对进程和线程分别做了如下定义：  When the user launches an application, the operating system loads the program’s code and data into memory f">
-<meta name="twitter:image" content="https://i.loli.net/2019/11/04/OEh7HvtCBMQz2xV.png">
+<meta name="twitter:image" content="https://i.loli.net/2019/11/04/Bz1Nn6qLbxCct9l.jpg">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/xcode.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
 </script>
 
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
 
 
-  <link rel="canonical" href="http://www.wuqihan.cn/2016/07/08/多线程基础/">
-
-
-
-
-
-  <title> 多线程基础篇 | wuqihan's blog </title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-    
-    <a href="https://github.com/wqhiOS" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">wuqihan's blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <h1 class="site-subtitle" itemprop="description">hard work pays off</h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+<!-- <body class="is-2-column"> -->
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+                <img src="/images/logo.svg" alt="多线程基础篇" height="28">
             
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            About
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.wuqihan.cn/2016/07/08/多线程基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="吴启晗">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wuqihan's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                多线程基础篇
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-08T10:05:17+08:00">
-                2016-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/07/08/多线程基础/" class="leancloud_visitors" data-flag-title="多线程基础篇">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  3,249
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  13
-                </span>
-              
-            </div>
-          
-
-          
-
+            </a>
         </div>
-      </header>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
     
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/11/04/Bz1Nn6qLbxCct9l.jpg" alt="多线程基础篇">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
 
+                
 
-    <div class="post-body" itemprop="articleBody">
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2016-07-08T02:05:17.000Z">&nbsp;2016-07-08</time>
+                </span>
 
-      
-      
-
-      
-        <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：</p>
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    22 minutes read (About 3318 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                多线程基础篇
+            
+        </h1>
+        <div class="content">
+            <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>学习多线程之前，首先要了解什么是进程和线程，以及进程与线程的关系：</p>
 <p><a href="https://book.douban.com/subject/7916129/" target="_blank" rel="noopener">《OS X and iOS Kernel Programming</a>》这本书中对进程和线程分别做了如下定义：</p>
 <blockquote>
 <p>When the user launches an application, the operating system loads the program’s code and data into memory from disk and begins executing its code. A program being executed is known as a “process.” Unlike a program, a process is an active entity, and consists of a snapshot of the state of the program at a single instance during execution.</p>
@@ -517,7 +265,7 @@
 <li><p><code>-cancel()</code>：取消，并不会直接取消线程，只是给线程对象添加isCancelled标记。</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">    </span><br><span class="line">    self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(test) object:nil];</span><br><span class="line">    [self.thread start];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)test &#123;</span><br><span class="line">    for (int i = 0; i &lt; 50; i++) &#123;</span><br><span class="line">        NSLog(@&quot;%d&quot;,i);</span><br><span class="line">        if (i == 20) &#123;</span><br><span class="line">            [self.thread cancel];//不会立马结束</span><br><span class="line">            //[NSThread exit];//会立马结束</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">    </span><br><span class="line">    self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(test) object:nil];</span><br><span class="line">    [self.thread start];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)test &#123;</span><br><span class="line">    for (int i = 0; i &lt; 50; i++) &#123;</span><br><span class="line">        NSLog(@&quot;%d&quot;,i);</span><br><span class="line">        if (i == 20) &#123;</span><br><span class="line">            [self.thread cancel];//不会立马结束</span><br><span class="line">            //[NSThread exit];//会立马结束</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="iOS中多线程的实现方案"><a href="#iOS中多线程的实现方案" class="headerlink" title="iOS中多线程的实现方案"></a>iOS中多线程的实现方案</h2><table>
 <thead>
 <tr>
@@ -559,11 +307,11 @@
 </tr>
 </tbody>
 </table>
-<h3 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import &lt;phtread.h&gt;</span></span><br><span class="line"><span class="comment">//1.创建线程对象</span></span><br><span class="line">    pthread_t thread;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2.创建线程</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     第一个参数:线程对象 传递地址</span></span><br><span class="line"><span class="comment">     第二个参数:线程的属性 NULL</span></span><br><span class="line"><span class="comment">     第三个参数:指向函数的指针</span></span><br><span class="line"><span class="comment">     第四个参数:函数需要接受的参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    pthread_create(&amp;thread, <span class="literal">NULL</span>, task, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h3><h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一种创建线程的方式：alloc init.</span></span><br><span class="line"><span class="comment">//特点：需要手动开启线程，可以拿到线程对象进行详细设置</span></span><br><span class="line"><span class="comment">//创建线程</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第一个参数：目标对象</span></span><br><span class="line"><span class="comment">第二个参数：选择器，线程启动要调用哪个方法</span></span><br><span class="line"><span class="comment">第三个参数：前面方法要接收的参数（最多只能接收一个参数，没有则传nil）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">NSThread</span> *thread = [[<span class="built_in">NSThread</span> alloc]initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(run:) object:<span class="string">@"wendingding"</span>];</span><br><span class="line"><span class="comment">//启动线程</span></span><br><span class="line">[thread start];    </span><br><span class="line"><span class="comment">//第二种创建线程的方式：分离出一条子线程</span></span><br><span class="line"><span class="comment">//特点：自动启动线程，无法对线程进行更详细的设置</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第一个参数：线程启动调用的方法</span></span><br><span class="line"><span class="comment">第二个参数：目标对象</span></span><br><span class="line"><span class="comment">第三个参数：传递给调用方法的参数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">[<span class="built_in">NSThread</span> detachNewThreadSelector:<span class="keyword">@selector</span>(run:) toTarget:<span class="keyword">self</span> withObject:<span class="string">@"我是分离出来的子线程"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//第三种创建线程的方式：后台线程</span></span><br><span class="line"><span class="comment">//特点：自动启动线程，无法进行更详细设置</span></span><br><span class="line">[<span class="keyword">self</span> performSelectorInBackground:<span class="keyword">@selector</span>(run:) withObject:<span class="string">@"我是后台线程"</span>];</span><br></pre></td></tr></table></figure>
-<h4 id="设置线程的属性"><a href="#设置线程的属性" class="headerlink" title="设置线程的属性"></a>设置线程的属性</h4><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置线程的属性</span></span><br><span class="line"><span class="comment">//设置线程的名称</span></span><br><span class="line">thread.name = <span class="string">@"线程A"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置线程的优先级,注意线程优先级的取值范围为0.0~1.0之间，1.0表示线程的优先级最高,如果不设置该值，那么理想状态下默认为0.5</span></span><br><span class="line">thread.threadPriority = <span class="number">1.0</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="线程的状态-1"><a href="#线程的状态-1" class="headerlink" title="线程的状态"></a>线程的状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//线程的各种状态：新建-就绪-运行-阻塞-死亡</span><br><span class="line">//常用的控制线程状态的方法</span><br><span class="line">[NSThread exit];//退出当前线程</span><br><span class="line">[NSThread sleepForTimeInterval:2.0];//阻塞线程</span><br><span class="line">[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];//阻塞线程</span><br><span class="line">//注意：线程死了不能复生</span><br></pre></td></tr></table></figure>
-<h4 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)touchesBegan:(<span class="keyword">nonnull</span> <span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//    [self download2];</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//开启一条子线程来下载图片</span></span><br><span class="line">    [<span class="built_in">NSThread</span> detachNewThreadSelector:<span class="keyword">@selector</span>(downloadImage) toTarget:<span class="keyword">self</span> withObject:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)downloadImage</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//1.确定要下载网络图片的url地址，一个url唯一对应着网络上的一个资源</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://p6.qhimg.com/t01d2954e2799c461ab.jpg"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2.根据url地址下载图片数据到本地（二进制数据</span></span><br><span class="line">    <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3.把下载到本地的二进制数据转换成图片</span></span><br><span class="line">    <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//4.回到主线程刷新UI</span></span><br><span class="line">    <span class="comment">//4.1 第一种方式</span></span><br><span class="line"><span class="comment">//    [self performSelectorOnMainThread:@selector(showImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//4.2 第二种方式</span></span><br><span class="line"><span class="comment">//    [self.imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//4.3 第三种方式</span></span><br><span class="line">    [<span class="keyword">self</span>.imageView performSelector:<span class="keyword">@selector</span>(setImage:) onThread:[<span class="built_in">NSThread</span> mainThread] withObject:image waitUntilDone:<span class="literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h3><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// import &lt;phtread.h&gt;</span></span><br><span class="line"><span class="hljs-comment">//1.创建线程对象</span></span><br><span class="line">    pthread_t thread;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//2.创建线程</span></span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">     第一个参数:线程对象 传递地址</span></span><br><span class="line"><span class="hljs-comment">     第二个参数:线程的属性 NULL</span></span><br><span class="line"><span class="hljs-comment">     第三个参数:指向函数的指针</span></span><br><span class="line"><span class="hljs-comment">     第四个参数:函数需要接受的参数</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    pthread_create(&amp;thread, <span class="hljs-literal">NULL</span>, task, <span class="hljs-literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h3><h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//第一种创建线程的方式：alloc init.</span></span><br><span class="line"><span class="hljs-comment">//特点：需要手动开启线程，可以拿到线程对象进行详细设置</span></span><br><span class="line"><span class="hljs-comment">//创建线程</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">第一个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">第二个参数：选择器，线程启动要调用哪个方法</span></span><br><span class="line"><span class="hljs-comment">第三个参数：前面方法要接收的参数（最多只能接收一个参数，没有则传nil）</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"><span class="hljs-built_in">NSThread</span> *thread = [[<span class="hljs-built_in">NSThread</span> alloc]initWithTarget:<span class="hljs-keyword">self</span> selector:<span class="hljs-keyword">@selector</span>(run:) object:<span class="hljs-string">@"wendingding"</span>];</span><br><span class="line"><span class="hljs-comment">//启动线程</span></span><br><span class="line">[thread start];    </span><br><span class="line"><span class="hljs-comment">//第二种创建线程的方式：分离出一条子线程</span></span><br><span class="line"><span class="hljs-comment">//特点：自动启动线程，无法对线程进行更详细的设置</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">第一个参数：线程启动调用的方法</span></span><br><span class="line"><span class="hljs-comment">第二个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">第三个参数：传递给调用方法的参数</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line">[<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(run:) toTarget:<span class="hljs-keyword">self</span> withObject:<span class="hljs-string">@"我是分离出来的子线程"</span>];</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//第三种创建线程的方式：后台线程</span></span><br><span class="line"><span class="hljs-comment">//特点：自动启动线程，无法进行更详细设置</span></span><br><span class="line">[<span class="hljs-keyword">self</span> performSelectorInBackground:<span class="hljs-keyword">@selector</span>(run:) withObject:<span class="hljs-string">@"我是后台线程"</span>];</span><br></pre></td></tr></table></figure>
+<h4 id="设置线程的属性"><a href="#设置线程的属性" class="headerlink" title="设置线程的属性"></a>设置线程的属性</h4><figure class="highlight obj-c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//设置线程的属性</span></span><br><span class="line"><span class="hljs-comment">//设置线程的名称</span></span><br><span class="line">thread.name = <span class="hljs-string">@"线程A"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//设置线程的优先级,注意线程优先级的取值范围为0.0~1.0之间，1.0表示线程的优先级最高,如果不设置该值，那么理想状态下默认为0.5</span></span><br><span class="line">thread.threadPriority = <span class="hljs-number">1.0</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="线程的状态-1"><a href="#线程的状态-1" class="headerlink" title="线程的状态"></a>线程的状态</h4><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//线程的各种状态：新建-就绪-运行-阻塞-死亡</span><br><span class="line">//常用的控制线程状态的方法</span><br><span class="line">[NSThread exit];//退出当前线程</span><br><span class="line">[NSThread sleepForTimeInterval:2.0];//阻塞线程</span><br><span class="line">[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];//阻塞线程</span><br><span class="line">//注意：线程死了不能复生</span><br></pre></td></tr></table></figure>
+<h4 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="hljs-keyword">void</span>)touchesBegan:(<span class="hljs-keyword">nonnull</span> <span class="hljs-built_in">NSSet</span>&lt;<span class="hljs-built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="hljs-keyword">nullable</span> <span class="hljs-built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line"><span class="hljs-comment">//    [self download2];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//开启一条子线程来下载图片</span></span><br><span class="line">    [<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(downloadImage) toTarget:<span class="hljs-keyword">self</span> withObject:<span class="hljs-literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="hljs-keyword">void</span>)downloadImage</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-comment">//1.确定要下载网络图片的url地址，一个url唯一对应着网络上的一个资源</span></span><br><span class="line">    <span class="hljs-built_in">NSURL</span> *url = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@"http://p6.qhimg.com/t01d2954e2799c461ab.jpg"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//2.根据url地址下载图片数据到本地（二进制数据</span></span><br><span class="line">    <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//3.把下载到本地的二进制数据转换成图片</span></span><br><span class="line">    <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.回到主线程刷新UI</span></span><br><span class="line">    <span class="hljs-comment">//4.1 第一种方式</span></span><br><span class="line"><span class="hljs-comment">//    [self performSelectorOnMainThread:@selector(showImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.2 第二种方式</span></span><br><span class="line"><span class="hljs-comment">//    [self.imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//4.3 第三种方式</span></span><br><span class="line">    [<span class="hljs-keyword">self</span>.imageView performSelector:<span class="hljs-keyword">@selector</span>(setImage:) onThread:[<span class="hljs-built_in">NSThread</span> mainThread] withObject:image waitUntilDone:<span class="hljs-literal">YES</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h3><blockquote>
 <p>CGD源码：<a href="https://github.com/apple/swift-corelibs-libdispatch" target="_blank" rel="noopener">https://github.com/apple/swift-corelibs-libdispatch</a></p>
 </blockquote>
@@ -580,8 +328,8 @@
 <li>同步函数+主队列：不开线程，串行执行任务（注意死锁发生）</li>
 </ul>
 <p><strong>注意同步函数和异步函数在执行顺序上面的差异</strong></p>
-<h4 id="GCD间线程通信"><a href="#GCD间线程通信" class="headerlink" title="GCD间线程通信"></a>GCD间线程通信</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//0.获取一个全局的队列</span></span><br><span class="line">    <span class="built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1.先开启一个线程，把下载图片的操作放在子线程中处理</span></span><br><span class="line">    <span class="built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//2.下载图片</span></span><br><span class="line">        <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://h.hiphotos.baidu.com/zhidao/pic/item/6a63f6246b600c3320b14bb3184c510fd8f9a185.jpg"</span>];</span><br><span class="line">        <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line">        <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"下载操作所在的线程--%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3.回到主线程刷新UI</span></span><br><span class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           <span class="keyword">self</span>.imageView.image = image;</span><br><span class="line">           <span class="comment">//打印查看当前线程</span></span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"刷新UI---%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="GCD其他常用函数"><a href="#GCD其他常用函数" class="headerlink" title="GCD其他常用函数"></a>GCD其他常用函数</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"> <span class="comment">//栅栏函数（控制任务的执行顺序）</span></span><br><span class="line"> dispatch_barrier_async(queue, ^&#123;</span><br><span class="line">     <span class="built_in">NSLog</span>(<span class="string">@"--dispatch_barrier_async-"</span>);</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"> <span class="comment">//延迟执行（延迟·控制在哪个线程执行）</span></span><br><span class="line">   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="number">2.0</span> * <span class="built_in">NSEC_PER_SEC</span>)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</span><br><span class="line">     <span class="built_in">NSLog</span>(<span class="string">@"---%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一次性代码（注意不能放到懒加载）</span></span><br><span class="line"> -(<span class="keyword">void</span>)once</span><br><span class="line"> &#123;</span><br><span class="line">     <span class="comment">//整个程序运行过程中只会执行一次</span></span><br><span class="line">     <span class="comment">//onceToken用来记录该部分的代码是否被执行过</span></span><br><span class="line">     <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">     <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line"></span><br><span class="line">         <span class="built_in">NSLog</span>(<span class="string">@"-----"</span>);</span><br><span class="line">     &#125;);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 快速迭代（开多个线程并发完成迭代操作）</span></span><br><span class="line">    dispatch_apply(subpaths.count, queue, ^(size_t index) &#123;</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 队列组（同栅栏函数）</span></span><br><span class="line"> <span class="comment">//创建队列组</span></span><br><span class="line"> dispatch_group_t group = dispatch_group_create();</span><br><span class="line"> <span class="comment">//队列组中的任务执行完毕之后，执行该函数</span></span><br><span class="line"> dispatch_group_notify(dispatch_group_t group,<span class="built_in">dispatch_queue_t</span> queue,dispatch_block_t block);</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 进入群组和离开群组</span></span><br><span class="line"> dispatch_group_enter(group);<span class="comment">//执行该函数后，后面异步执行的block会被gruop监听</span></span><br><span class="line"> dispatch_group_leave(group);<span class="comment">//异步block中，所有的任务都执行完毕，最后离开群组</span></span><br><span class="line"> <span class="comment">//注意：dispatch_group_enter|dispatch_group_leave必须成对使用</span></span><br></pre></td></tr></table></figure>
+<h4 id="GCD间线程通信"><a href="#GCD间线程通信" class="headerlink" title="GCD间线程通信"></a>GCD间线程通信</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//0.获取一个全局的队列</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//1.先开启一个线程，把下载图片的操作放在子线程中处理</span></span><br><span class="line">    <span class="hljs-built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line"></span><br><span class="line">       <span class="hljs-comment">//2.下载图片</span></span><br><span class="line">        <span class="hljs-built_in">NSURL</span> *url = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@"http://h.hiphotos.baidu.com/zhidao/pic/item/6a63f6246b600c3320b14bb3184c510fd8f9a185.jpg"</span>];</span><br><span class="line">        <span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url];</span><br><span class="line">        <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageWithData:data];</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"下载操作所在的线程--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//3.回到主线程刷新UI</span></span><br><span class="line">        <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           <span class="hljs-keyword">self</span>.imageView.image = image;</span><br><span class="line">           <span class="hljs-comment">//打印查看当前线程</span></span><br><span class="line">            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"刷新UI---%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="GCD其他常用函数"><a href="#GCD其他常用函数" class="headerlink" title="GCD其他常用函数"></a>GCD其他常用函数</h4><figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"> <span class="hljs-comment">//栅栏函数（控制任务的执行顺序）</span></span><br><span class="line"> dispatch_barrier_async(queue, ^&#123;</span><br><span class="line">     <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"--dispatch_barrier_async-"</span>);</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">//延迟执行（延迟·控制在哪个线程执行）</span></span><br><span class="line">   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="hljs-number">2.0</span> * <span class="hljs-built_in">NSEC_PER_SEC</span>)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^&#123;</span><br><span class="line">     <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 一次性代码（注意不能放到懒加载）</span></span><br><span class="line"> -(<span class="hljs-keyword">void</span>)once</span><br><span class="line"> &#123;</span><br><span class="line">     <span class="hljs-comment">//整个程序运行过程中只会执行一次</span></span><br><span class="line">     <span class="hljs-comment">//onceToken用来记录该部分的代码是否被执行过</span></span><br><span class="line">     <span class="hljs-keyword">static</span> <span class="hljs-built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">     <span class="hljs-built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line"></span><br><span class="line">         <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"-----"</span>);</span><br><span class="line">     &#125;);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">// 快速迭代（开多个线程并发完成迭代操作）</span></span><br><span class="line">    dispatch_apply(subpaths.count, queue, ^(size_t index) &#123;</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">// 队列组（同栅栏函数）</span></span><br><span class="line"> <span class="hljs-comment">//创建队列组</span></span><br><span class="line"> dispatch_group_t group = dispatch_group_create();</span><br><span class="line"> <span class="hljs-comment">//队列组中的任务执行完毕之后，执行该函数</span></span><br><span class="line"> dispatch_group_notify(dispatch_group_t group,<span class="hljs-built_in">dispatch_queue_t</span> queue,dispatch_block_t block);</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">// 进入群组和离开群组</span></span><br><span class="line"> dispatch_group_enter(group);<span class="hljs-comment">//执行该函数后，后面异步执行的block会被gruop监听</span></span><br><span class="line"> dispatch_group_leave(group);<span class="hljs-comment">//异步block中，所有的任务都执行完毕，最后离开群组</span></span><br><span class="line"> <span class="hljs-comment">//注意：dispatch_group_enter|dispatch_group_leave必须成对使用</span></span><br></pre></td></tr></table></figure>
 <h3 id="NSOperation"><a href="#NSOperation" class="headerlink" title="NSOperation"></a>NSOperation</h3><p>（1）基本概念</p>
 <ul>
 <li>NSOperation是对GCD的包装</li>
@@ -594,589 +342,469 @@
 <li>NSOperation和NSOperationQueue结合使用实现多线程并发</li>
 </ul>
 <p>（3）相关代码</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  01 NSInvocationOperation</span></span><br><span class="line">    <span class="comment">//1.封装操作</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     第一个参数：目标对象</span></span><br><span class="line"><span class="comment">     第二个参数：该操作要调用的方法，最多接受一个参数</span></span><br><span class="line"><span class="comment">     第三个参数：调用方法传递的参数，如果方法不接受参数，那么该值传nil</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">NSInvocationOperation</span> *operation = [[<span class="built_in">NSInvocationOperation</span> alloc]</span><br><span class="line">                                        initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(run) object:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2.启动操作</span></span><br><span class="line">    [operation start];</span><br><span class="line">-------------------------------------------------</span><br><span class="line">    <span class="comment">//  02 NSBlockOperation</span></span><br><span class="line">    <span class="comment">//1.封装操作</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     NSBlockOperation提供了一个类方法，在该类方法中封装操作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">NSBlockOperation</span> *operation = [<span class="built_in">NSBlockOperation</span> blockOperationWithBlock:^&#123;</span><br><span class="line">        <span class="comment">//在主线程中执行</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"---download1--%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2.追加操作，追加的操作在子线程中执行</span></span><br><span class="line">    [operation addExecutionBlock:^&#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"---download2--%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    [operation addExecutionBlock:^&#123;</span><br><span class="line">         <span class="built_in">NSLog</span>(<span class="string">@"---download3--%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3.启动执行操作</span></span><br><span class="line">    [operation start];</span><br><span class="line"></span><br><span class="line">----------------------------------------------</span><br><span class="line"><span class="comment">// 03 自定义NSOperation</span></span><br><span class="line">    <span class="comment">//如何封装操作？</span></span><br><span class="line">    <span class="comment">//自定义的NSOperation,通过重写内部的main方法实现封装操作</span></span><br><span class="line">    -(<span class="keyword">void</span>)main</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"--main--%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>谢谢</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/mywechatMoney.jpeg" alt="吴启晗 WeChat Pay">
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myzhifubao.jpeg" alt="吴启晗 Alipay">
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-  <ul class="post-copyright">
-    <li class="post-copyright-author">
-      <strong>Post author:</strong>
-      吴启晗
-    </li>
-    <li class="post-copyright-link">
-      <strong>Post link:</strong>
-      <a href="http://www.wuqihan.cn/2016/07/08/多线程基础/" title="多线程基础篇">http://www.wuqihan.cn/2016/07/08/多线程基础/</a>
-    </li>
-    <li class="post-copyright-license">
-      <strong>Copyright Notice: </strong>
-      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
-    </li>
-  </ul>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/多线程/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript">
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ=="></div>
-    
-  </div>
-
+<figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//  01 NSInvocationOperation</span></span><br><span class="line">    <span class="hljs-comment">//1.封装操作</span></span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">     第一个参数：目标对象</span></span><br><span class="line"><span class="hljs-comment">     第二个参数：该操作要调用的方法，最多接受一个参数</span></span><br><span class="line"><span class="hljs-comment">     第三个参数：调用方法传递的参数，如果方法不接受参数，那么该值传nil</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-built_in">NSInvocationOperation</span> *operation = [[<span class="hljs-built_in">NSInvocationOperation</span> alloc]</span><br><span class="line">                                        initWithTarget:<span class="hljs-keyword">self</span> selector:<span class="hljs-keyword">@selector</span>(run) object:<span class="hljs-literal">nil</span>];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//2.启动操作</span></span><br><span class="line">    [operation start];</span><br><span class="line">-------------------------------------------------</span><br><span class="line">    <span class="hljs-comment">//  02 NSBlockOperation</span></span><br><span class="line">    <span class="hljs-comment">//1.封装操作</span></span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">     NSBlockOperation提供了一个类方法，在该类方法中封装操作</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-built_in">NSBlockOperation</span> *operation = [<span class="hljs-built_in">NSBlockOperation</span> blockOperationWithBlock:^&#123;</span><br><span class="line">        <span class="hljs-comment">//在主线程中执行</span></span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---download1--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//2.追加操作，追加的操作在子线程中执行</span></span><br><span class="line">    [operation addExecutionBlock:^&#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---download2--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    [operation addExecutionBlock:^&#123;</span><br><span class="line">         <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"---download3--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//3.启动执行操作</span></span><br><span class="line">    [operation start];</span><br><span class="line"></span><br><span class="line">----------------------------------------------</span><br><span class="line"><span class="hljs-comment">// 03 自定义NSOperation</span></span><br><span class="line">    <span class="hljs-comment">//如何封装操作？</span></span><br><span class="line">    <span class="hljs-comment">//自定义的NSOperation,通过重写内部的main方法实现封装操作</span></span><br><span class="line">    -(<span class="hljs-keyword">void</span>)main</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"--main--%@"</span>,[<span class="hljs-built_in">NSThread</span> currentThread]);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
         </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="吴启晗">
-          <p class="site-author-name" itemprop="name">吴启晗</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-           
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">posts</span>
-              </a>
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2016/07/08/多线程基础/">多线程基础篇</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2016/07/08/多线程基础/">http://www.wuqihan.cn/2016/07/08/多线程基础/</a></li>
+            <li><strong>发布时间：</strong>2016-07-08</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/多线程/">多线程</a>
+                </div>
             </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/wqhiOS" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/2065544495" target="_blank" title="微博">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  微博
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg" target="_blank" title="微信">
-                  
-                    <i class="fa fa-fw fa-weixin"></i>
-                  
-                  微信
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="mailto:wuqh_ios@icloud.com" target="_blank" title="邮箱">
-                  
-                    <i class="fa fa-fw fa-envelope"></i>
-                  
-                  邮箱
-                </a>
-              </span>
-            
-          
         </div>
-
         
         
-
         
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
         
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程与线程"><span class="nav-number">1.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-number">2.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的状态"><span class="nav-number">3.</span> <span class="nav-text">线程的状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS中多线程的实现方案"><span class="nav-number">4.</span> <span class="nav-text">iOS中多线程的实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pthread"><span class="nav-number">4.1.</span> <span class="nav-text">pthread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSThread"><span class="nav-number">4.2.</span> <span class="nav-text">NSThread</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本使用"><span class="nav-number">4.2.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置线程的属性"><span class="nav-number">4.2.2.</span> <span class="nav-text">设置线程的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的状态-1"><span class="nav-number">4.2.3.</span> <span class="nav-text">线程的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程间通信"><span class="nav-number">4.2.4.</span> <span class="nav-text">线程间通信</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GCD"><span class="nav-number">4.3.</span> <span class="nav-text">GCD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本概念"><span class="nav-number">4.3.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GCD基本使用"><span class="nav-number">4.3.2.</span> <span class="nav-text">GCD基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GCD间线程通信"><span class="nav-number">4.3.3.</span> <span class="nav-text">GCD间线程通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GCD其他常用函数"><span class="nav-number">4.3.4.</span> <span class="nav-text">GCD其他常用函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSOperation"><span class="nav-number">4.4.</span> <span class="nav-text">NSOperation</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
     </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-吴启晗"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">吴启晗</span>
-   <div class="powered-by">  
-  </div>
-  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/ASwmOFftXiTqxEe.jpg" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/lLMy7kZArdoJCN5.jpg" alt="Wechat"></div>
+</a>
+
+                
+        </div>
+    </div>
 </div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
 
 
-<div class="theme-info">
-  <div class="powered-by">  
-  </div>
-  <span class="post-count">博客全站共3.2k字</span>
-  <!--以下3行为一条竖线和Coding Page-->
-</div>
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
     <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
     </script>
-  
+    <noscript> Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+
+    </div>
+</div>
+</div>
+                
 
 
 
 
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img style="border-radius:8px" class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        iOS Developer  
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shanghai, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        Post
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        1
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        2
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        Tag
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        1
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
+                Contact</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#进程与线程">
+        <span class="has-mr-6">1</span>
+        <span>进程与线程</span>
+        </a></li><li>
+        <a class="is-flex" href="#多线程">
+        <span class="has-mr-6">2</span>
+        <span>多线程</span>
+        </a></li><li>
+        <a class="is-flex" href="#线程的状态">
+        <span class="has-mr-6">3</span>
+        <span>线程的状态</span>
+        </a></li><li>
+        <a class="is-flex" href="#iOS中多线程的实现方案">
+        <span class="has-mr-6">4</span>
+        <span>iOS中多线程的实现方案</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#pthread">
+        <span class="has-mr-6">4.1</span>
+        <span>pthread</span>
+        </a></li><li>
+        <a class="is-flex" href="#NSThread">
+        <span class="has-mr-6">4.2</span>
+        <span>NSThread</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#基本使用">
+        <span class="has-mr-6">4.2.1</span>
+        <span>基本使用</span>
+        </a></li><li>
+        <a class="is-flex" href="#设置线程的属性">
+        <span class="has-mr-6">4.2.2</span>
+        <span>设置线程的属性</span>
+        </a></li><li>
+        <a class="is-flex" href="#线程的状态-1">
+        <span class="has-mr-6">4.2.3</span>
+        <span>线程的状态</span>
+        </a></li><li>
+        <a class="is-flex" href="#线程间通信">
+        <span class="has-mr-6">4.2.4</span>
+        <span>线程间通信</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#GCD">
+        <span class="has-mr-6">4.3</span>
+        <span>GCD</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#基本概念">
+        <span class="has-mr-6">4.3.1</span>
+        <span>基本概念</span>
+        </a></li><li>
+        <a class="is-flex" href="#GCD基本使用">
+        <span class="has-mr-6">4.3.2</span>
+        <span>GCD基本使用</span>
+        </a></li><li>
+        <a class="is-flex" href="#GCD间线程通信">
+        <span class="has-mr-6">4.3.3</span>
+        <span>GCD间线程通信</span>
+        </a></li><li>
+        <a class="is-flex" href="#GCD其他常用函数">
+        <span class="has-mr-6">4.3.4</span>
+        <span>GCD其他常用函数</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#NSOperation">
+        <span class="has-mr-6">4.4</span>
+        <span>NSOperation</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="多线程基础篇" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2107-2019 吴启晗&nbsp;
+                <!-- Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
 
 
-  
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
 
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
 
+    
+    
 
-
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("KXABwl4zSzu6qMd615bfkNMa-gzGzoHsz", "DHuYDbwQ3dhuayE2GvMDaLWl");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
 </script>
 
 
-  
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
 
-  
+    
+    
 
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
 </body>
 </html>
-<!-- 页面点击小红心 -->
-<!-- <script type="text/javascript" src="/js/src/love.js"></script> -->
