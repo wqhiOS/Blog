@@ -160,6 +160,176 @@ var _hmt = _hmt || [];
     <div class="card">
     
     <div class="card-image">
+        <a href="/2019/01/28/深入理解RunLoop/" class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/11/01/HWL1KDmOi3UXo2v.jpg" alt="深入理解RunLoop">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2019-01-28T10:00:17.000Z">&nbsp;2019-01-28</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    13 minutes read (About 1919 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                <a class="has-link-black-ter" href="/2019/01/28/深入理解RunLoop/">深入理解RunLoop</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="如何理解RunLoop"><a href="#如何理解RunLoop" class="headerlink" title="如何理解RunLoop"></a>如何理解RunLoop</h2><blockquote>
+<p>Run loops are part of the fundamental infrastructure associated with threads. A <em>run loop</em> is an event processing loop that you use to schedule work and coordinate the receipt of incoming events. The purpose of a run loop is to keep your thread busy when there is work to do and put your thread to sleep when there is none. </p>
+<p>Run loop management is not entirely automatic. You must still design your thread’s code to start the run loop at appropriate times and respond to incoming events. Both Cocoa and Core Foundation provide <em>run loop objects</em> to help you configure and manage your thread’s run loop. Your application does not need to create these objects explicitly; each thread, including the application’s main thread, has an associated run loop object. Only secondary threads need to run their run loop explicitly, however. The app frameworks automatically set up and run the run loop on the main thread as part of the application startup process.</p>
+<p>- 以上摘自苹果官方文档。</p>
+</blockquote>
+        </div>
+        
+        
+        
+            <hr style="height:1px;margin:1rem 0">
+            <div class="level is-mobile is-flex">
+                <div class="level-start">
+                    
+                    <div class="level-item is-size-7 is-uppercase">
+                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                        <a class="has-link-grey -link" href="/tags/RunLoop/">RunLoop</a>
+                    </div>
+                    
+                </div>
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/01/28/深入理解RunLoop/#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/2016/07/18/Grand-Central-Dispatch/" class="image is-7by1">
+            <img class="thumbnail" src="https://coding.net/u/wqh_iOS/p/tuchuang/git/raw/master/2018/gcd.jpeg" alt="Grand Central Dispatch">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2016-07-18T07:21:44.000Z">&nbsp;2016-07-18</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    29 minutes read (About 4369 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                <a class="has-link-black-ter" href="/2016/07/18/Grand-Central-Dispatch/">Grand Central Dispatch</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>什么是GCD<ul>
+<li>全程：Grand Central Dispatch（强大的中枢调度器）</li>
+<li>纯C语言，提供了非常强大的函数</li>
+</ul>
+</li>
+<li>GCD的优势<ul>
+<li>GCD会自动利用更多的CPU内核</li>
+<li>GCD会自动管理线程的生命周期（创建线程、调度任务、销毁线程）</li>
+<li>程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码</li>
+</ul>
+</li>
+</ul>
+        </div>
+        
+        
+        
+            <hr style="height:1px;margin:1rem 0">
+            <div class="level is-mobile is-flex">
+                <div class="level-start">
+                    
+                    <div class="level-item is-size-7 is-uppercase">
+                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                        <a class="has-link-grey -link" href="/tags/GCD/">GCD</a>,&nbsp;<a class="has-link-grey -link" href="/tags/多线程/">多线程</a>
+                    </div>
+                    
+                </div>
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2016/07/18/Grand-Central-Dispatch/#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2016/07/08/多线程基础/" class="image is-7by1">
             <img class="thumbnail" src="https://i.loli.net/2019/11/04/Bz1Nn6qLbxCct9l.jpg" alt="多线程基础篇">
         </a>
@@ -283,7 +453,7 @@ var _hmt = _hmt || [];
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        23
+                        24
                     </p>
                 </a>
             </div>
@@ -293,7 +463,7 @@ var _hmt = _hmt || [];
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        12
+                        9
                     </p>
                 </a>
             </div>
@@ -303,7 +473,7 @@ var _hmt = _hmt || [];
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        19
+                        21
                     </p>
                 </a>
             </div>
@@ -351,7 +521,7 @@ var _hmt = _hmt || [];
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/8086汇编/" style="font-size: 16.67px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Darwin/" style="font-size: 10px;">Darwin</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Tagged-Pointer/" style="font-size: 10px;">Tagged Pointer</a> <a href="/tags/XNU/" style="font-size: 10px;">XNU</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/macOS/" style="font-size: 10px;">macOS</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/二叉搜索树/" style="font-size: 10px;">二叉搜索树</a> <a href="/tags/二叉树/" style="font-size: 10px;">二叉树</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 13.33px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 13.33px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/类对象/" style="font-size: 10px;">类对象</a>
+        <a href="/tags/8086汇编/" style="font-size: 16.67px;">8086汇编</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Darwin/" style="font-size: 10px;">Darwin</a> <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/ReactiveCocoa/" style="font-size: 20px;">ReactiveCocoa</a> <a href="/tags/RunLoop/" style="font-size: 10px;">RunLoop</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Tagged-Pointer/" style="font-size: 10px;">Tagged Pointer</a> <a href="/tags/XNU/" style="font-size: 10px;">XNU</a> <a href="/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/tags/macOS/" style="font-size: 10px;">macOS</a> <a href="/tags/swift-tips/" style="font-size: 10px;">swift tips</a> <a href="/tags/二叉搜索树/" style="font-size: 10px;">二叉搜索树</a> <a href="/tags/二叉树/" style="font-size: 10px;">二叉树</a> <a href="/tags/内存/" style="font-size: 10px;">内存</a> <a href="/tags/内存管理/" style="font-size: 13.33px;">内存管理</a> <a href="/tags/多线程/" style="font-size: 13.33px;">多线程</a> <a href="/tags/寻址能力/" style="font-size: 10px;">寻址能力</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/类对象/" style="font-size: 10px;">类对象</a>
     </div>
 </div>
 
@@ -401,6 +571,17 @@ var _hmt = _hmt || [];
             <a class="level is-marginless" href="/archives/2019/03/">
                 <span class="level-start">
                     <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2019</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -646,18 +827,18 @@ var _hmt = _hmt || [];
         
         <article class="media">
             
-            <a href="/2018/11/06/Tagged-Pointer/" class="media-left">
+            <a href="/2019/01/28/深入理解RunLoop/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.loli.net/2019/11/06/EWh1eI4kF7BUpmn.jpg" alt="Tagged Pointer">
+                    <img class="thumbnail" src="https://i.loli.net/2019/11/01/HWL1KDmOi3UXo2v.jpg" alt="深入理解RunLoop">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-06T11:18:48.000Z">2018-11-06</time></div>
-                    <a href="/2018/11/06/Tagged-Pointer/" class="has-link-black-ter is-size-6">Tagged Pointer</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-01-28T10:00:17.000Z">2019-01-28</time></div>
+                    <a href="/2019/01/28/深入理解RunLoop/" class="has-link-black-ter is-size-6">深入理解RunLoop</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/内存管理/">内存管理</a>
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
                     </p>
                 </div>
             </div>
@@ -676,14 +857,6 @@ var _hmt = _hmt || [];
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/categories/Objective-C/">
-            <span class="level-start">
-                <span class="level-item">Objective-C</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">8</span>
-            </span>
-        </a></li><li>
         <a class="level is-marginless" href="/categories/Swift/">
             <span class="level-start">
                 <span class="level-item">Swift</span>
@@ -697,31 +870,15 @@ var _hmt = _hmt || [];
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">15</span>
             </span>
         </a><ul><li>
-        <a class="level is-marginless" href="/categories/iOS/Objective-C底层原理/">
-            <span class="level-start">
-                <span class="level-item">Objective-C底层原理</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">2</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/iOS/内存管理/">
-            <span class="level-start">
-                <span class="level-item">内存管理</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/多线程/">
             <span class="level-start">
                 <span class="level-item">多线程</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/性能优化/">
@@ -807,6 +964,13 @@ var _hmt = _hmt || [];
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/GCD/">
+                        <span class="tag">GCD</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Objective-C/">
                         <span class="tag">Objective-C</span>
                         <span class="tag is-grey">1</span>
@@ -817,6 +981,13 @@ var _hmt = _hmt || [];
                     <a class="tags has-addons" href="/tags/ReactiveCocoa/">
                         <span class="tag">ReactiveCocoa</span>
                         <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RunLoop/">
+                        <span class="tag">RunLoop</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1019,18 +1190,18 @@ var _hmt = _hmt || [];
         
         <article class="media">
             
-            <a href="/2018/11/06/Tagged-Pointer/" class="media-left">
+            <a href="/2019/01/28/深入理解RunLoop/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.loli.net/2019/11/06/EWh1eI4kF7BUpmn.jpg" alt="Tagged Pointer">
+                    <img class="thumbnail" src="https://i.loli.net/2019/11/01/HWL1KDmOi3UXo2v.jpg" alt="深入理解RunLoop">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-06T11:18:48.000Z">2018-11-06</time></div>
-                    <a href="/2018/11/06/Tagged-Pointer/" class="has-link-black-ter is-size-6">Tagged Pointer</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-01-28T10:00:17.000Z">2019-01-28</time></div>
+                    <a href="/2019/01/28/深入理解RunLoop/" class="has-link-black-ter is-size-6">深入理解RunLoop</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/内存管理/">内存管理</a>
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
                     </p>
                 </div>
             </div>
@@ -1049,14 +1220,6 @@ var _hmt = _hmt || [];
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/categories/Objective-C/">
-            <span class="level-start">
-                <span class="level-item">Objective-C</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">8</span>
-            </span>
-        </a></li><li>
         <a class="level is-marginless" href="/categories/Swift/">
             <span class="level-start">
                 <span class="level-item">Swift</span>
@@ -1070,31 +1233,15 @@ var _hmt = _hmt || [];
                 <span class="level-item">iOS</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">15</span>
             </span>
         </a><ul><li>
-        <a class="level is-marginless" href="/categories/iOS/Objective-C底层原理/">
-            <span class="level-start">
-                <span class="level-item">Objective-C底层原理</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">2</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/iOS/内存管理/">
-            <span class="level-start">
-                <span class="level-item">内存管理</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/多线程/">
             <span class="level-start">
                 <span class="level-item">多线程</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/iOS/性能优化/">
@@ -1180,6 +1327,13 @@ var _hmt = _hmt || [];
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/GCD/">
+                        <span class="tag">GCD</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Objective-C/">
                         <span class="tag">Objective-C</span>
                         <span class="tag is-grey">1</span>
@@ -1190,6 +1344,13 @@ var _hmt = _hmt || [];
                     <a class="tags has-addons" href="/tags/ReactiveCocoa/">
                         <span class="tag">ReactiveCocoa</span>
                         <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RunLoop/">
+                        <span class="tag">RunLoop</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 

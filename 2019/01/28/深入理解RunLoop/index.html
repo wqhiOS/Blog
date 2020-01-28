@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>深入理解RunLoop - wuqihan&#39;s blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="如何理解RunLoop Run loops are part of the fundamental infrastructure associated with threads. A run loop is an event processing loop that you use to schedule work and coordinate the receipt of incoming ev">
+<meta name="keywords" content="RunLoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解RunLoop">
+<meta property="og:url" content="http://www.wuqihan.cn/2019/01/28/深入理解RunLoop/index.html">
+<meta property="og:site_name" content="wuqihan&#39;s blog">
+<meta property="og:description" content="如何理解RunLoop Run loops are part of the fundamental infrastructure associated with threads. A run loop is an event processing loop that you use to schedule work and coordinate the receipt of incoming ev">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.loli.net/2019/11/01/HWL1KDmOi3UXo2v.jpg">
+<meta property="og:updated_time" content="2020-01-28T10:06:00.555Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解RunLoop">
+<meta name="twitter:description" content="如何理解RunLoop Run loops are part of the fundamental infrastructure associated with threads. A run loop is an event processing loop that you use to schedule work and coordinate the receipt of incoming ev">
+<meta name="twitter:image" content="https://i.loli.net/2019/11/01/HWL1KDmOi3UXo2v.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/xcode.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?f05e5a7c4a4cc725742f6b78a200b97d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<!-- <body class="is-2-column"> -->
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="深入理解RunLoop" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://i.loli.net/2019/11/01/HWL1KDmOi3UXo2v.jpg" alt="深入理解RunLoop">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+
+                
+
+                <span class="level-item has-text-grey">
+                <i class="far fa-calendar-alt"></i>&nbsp;
+                <time class="level-item has-text-grey" datetime="2019-01-28T10:00:17.000Z">&nbsp;2019-01-28</time>
+                </span>
+
+                
+                <div class="level-item">
+                <i class="far fa-folder-open has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/多线程/">多线程</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    13 minutes read (About 1919 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal" style="color:#ff9300">
+            
+                深入理解RunLoop
+            
+        </h1>
+        <div class="content">
+            <h2 id="如何理解RunLoop"><a href="#如何理解RunLoop" class="headerlink" title="如何理解RunLoop"></a>如何理解RunLoop</h2><blockquote>
+<p>Run loops are part of the fundamental infrastructure associated with threads. A <em>run loop</em> is an event processing loop that you use to schedule work and coordinate the receipt of incoming events. The purpose of a run loop is to keep your thread busy when there is work to do and put your thread to sleep when there is none. </p>
+<p>Run loop management is not entirely automatic. You must still design your thread’s code to start the run loop at appropriate times and respond to incoming events. Both Cocoa and Core Foundation provide <em>run loop objects</em> to help you configure and manage your thread’s run loop. Your application does not need to create these objects explicitly; each thread, including the application’s main thread, has an associated run loop object. Only secondary threads need to run their run loop explicitly, however. The app frameworks automatically set up and run the run loop on the main thread as part of the application startup process.</p>
+<p>- 以上摘自苹果官方文档。</p>
+</blockquote>
+<a id="more"></a> 
+<p>具体的关于RunLoop的深入了解可以查看这两篇很好的资料，一篇是YYKit作者写的，另一篇是苹果官方文档：</p>
+<p><a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">深入理解RunLoop</a></p>
+<p><a href="https://www.cnblogs.com/kenshincui/p/6823841.html" target="_blank" rel="noopener">https://www.cnblogs.com/kenshincui/p/6823841.html</a> 这篇文章也很好</p>
+<p><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW1" target="_blank" rel="noopener">Apple Threading Programming Guide - Run Loops</a></p>
+<p>YYKit作者的这篇文章中参考的CF源码虽然已经有点过时了，但是核心思想基本是差不多的，具体的可以自己去下载最新官方源码作为参考。</p>
+<p>如果想要深入理解RunLoop，一定要阅读源码：</p>
+<p><a href="https://opensource.apple.com/tarballs/CF/" target="_blank" rel="noopener">Core Foundation源码</a></p>
+<p><a href="https://github.com/apple/swift-corelibs-foundation/" target="_blank" rel="noopener">Swift版Core Foundation源码</a></p>
+<h2 id="RunLoop源码解读"><a href="#RunLoop源码解读" class="headerlink" title="RunLoop源码解读"></a>RunLoop源码解读</h2><p><a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">深入理解RunLoop</a> 这篇文章对RunLoop源码解读部分，源代码有点过时了，所以我这里使用最新的CoreFoundation源码重新整理一下。</p>
+<p>CFRunLoopRef对外公开的的运行方法有两个 <code>CFRunLoopRunInMode(:::)</code> 和 <code>CFRunLoopRun()：</code></p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CFRunLoopRun</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>&#123;	<span class="hljs-comment">/* DOES CALLOUT */</span></span><br><span class="line">    <span class="hljs-keyword">int32_t</span> result;</span><br><span class="line">    <span class="hljs-keyword">do</span> &#123;</span><br><span class="line">        result = CFRunLoopRunSpecific(CFRunLoopGetCurrent(), kCFRunLoopDefaultMode, <span class="hljs-number">1.0e10</span>, <span class="hljs-literal">false</span>);</span><br><span class="line">        CHECK_FOR_FORK();</span><br><span class="line">    &#125; <span class="hljs-keyword">while</span> (kCFRunLoopRunStopped != result &amp;&amp; kCFRunLoopRunFinished != result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function">SInt32 <span class="hljs-title">CFRunLoopRunInMode</span><span class="hljs-params">(CFStringRef modeName, CFTimeInterval seconds, Boolean returnAfterSourceHandled)</span> </span>&#123;     <span class="hljs-comment">/* DOES CALLOUT */</span></span><br><span class="line">    CHECK_FOR_FORK();</span><br><span class="line">    <span class="hljs-keyword">return</span> CFRunLoopRunSpecific(CFRunLoopGetCurrent(), modeName, seconds, returnAfterSourceHandled);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过源码可以很清楚的看到两个方法的区别了吧。两个方法的本质都是最后调用<code>CFRunLoopRunSpecific()</code>，但是<code>CFRunLoopRunInMode(:::)</code> 里面给它包了一层<strong>do-while循环</strong>。</p>
+<p><code>CFRunLoopRunSpecific()</code>源码(看我的注释即可)：</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function">SInt32 <span class="hljs-title">CFRunLoopRunSpecific</span><span class="hljs-params">(CFRunLoopRef rl, CFStringRef modeName, CFTimeInterval seconds, Boolean returnAfterSourceHandled)</span> </span>&#123;     <span class="hljs-comment">/* DOES CALLOUT */</span></span><br><span class="line">    CHECK_FOR_FORK();</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">if</span> (__CFRunLoopIsDeallocating(rl)) <span class="hljs-keyword">return</span> kCFRunLoopRunFinished;</span><br><span class="line">    </span><br><span class="line">    __CFRunLoopLock(rl);</span><br><span class="line">    </span><br><span class="line">    CFRunLoopModeRef currentMode = __CFRunLoopFindMode(rl, modeName, <span class="hljs-literal">false</span>);</span><br><span class="line">    <span class="hljs-keyword">if</span> (<span class="hljs-literal">NULL</span> == currentMode || __CFRunLoopModeIsEmpty(rl, currentMode, rl-&gt;_currentMode)) &#123;</span><br><span class="line">        Boolean did = <span class="hljs-literal">false</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> (currentMode) __CFRunLoopModeUnlock(currentMode);	__CFRunLoopUnlock(rl);</span><br><span class="line">        <span class="hljs-keyword">return</span> did ? kCFRunLoopRunHandledSource : kCFRunLoopRunFinished;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">volatile</span> _per_run_data *previousPerRun = __CFRunLoopPushPerRunData(rl);</span><br><span class="line">    CFRunLoopModeRef previousMode = rl-&gt;_currentMode;</span><br><span class="line">    rl-&gt;_currentMode = currentMode;</span><br><span class="line">    <span class="hljs-keyword">int32_t</span> result = kCFRunLoopRunFinished;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//通知Observers kCFRunLoopEntry</span></span><br><span class="line">	<span class="hljs-keyword">if</span> (currentMode-&gt;_observerMask &amp; kCFRunLoopEntry ) __CFRunLoopDoObservers(rl, currentMode, kCFRunLoopEntry);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//__CFRunLoopRun(:::::)是RunLoop的核心代码！！！！！</span></span><br><span class="line">	result = __CFRunLoopRun(rl, currentMode, seconds, returnAfterSourceHandled, previousMode);</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">//通知Observers kCFRunLoopExit</span></span><br><span class="line">	<span class="hljs-keyword">if</span> (currentMode-&gt;_observerMask &amp; kCFRunLoopExit ) __CFRunLoopDoObservers(rl, currentMode, kCFRunLoopExit);</span><br><span class="line"></span><br><span class="line">        __CFRunLoopModeUnlock(currentMode);</span><br><span class="line">        __CFRunLoopPopPerRunData(rl, previousPerRun);</span><br><span class="line">	rl-&gt;_currentMode = previousMode;</span><br><span class="line">    __CFRunLoopUnlock(rl);</span><br><span class="line">    <span class="hljs-keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于RunLoop的运行逻辑，最核心的部分就是<code>static int32_t __CFRunLoopRun(CFRunLoopRef rl, CFRunLoopModeRef rlm, CFTimeInterval seconds, Boolean stopAfterHandle, CFRunLoopModeRef previousMode) __attribute__((noinline));</code>该方法了。通过该方法可以基本完整的看到RunLoop的运行逻辑(一个loop的完整流程)。</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int32_t</span> __CFRunLoopRun(CFRunLoopRef rl, CFRunLoopModeRef rlm, CFTimeInterval seconds, Boolean stopAfterHandle, CFRunLoopModeRef previousMode) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">int32_t</span> retVal = <span class="hljs-number">0</span>;</span><br><span class="line">  	<span class="hljs-comment">// 开启一个 do while 来保活线程，持续处理事件</span></span><br><span class="line">    <span class="hljs-keyword">do</span> &#123;</span><br><span class="line">        <span class="hljs-comment">// 通知Observers -&gt; kCFRunLoopBeforeTimers 接下来将要处理Timer回调</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (rlm-&gt;_observerMask &amp; kCFRunLoopBeforeTimers) __CFRunLoopDoObservers(rl, rlm, kCFRunLoopBeforeTimers);</span><br><span class="line">        <span class="hljs-comment">// 通知Observers -&gt; kCFRunLoopBeforeSources 接下来将要处理Source0回调</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (rlm-&gt;_observerMask &amp; kCFRunLoopBeforeSources) __CFRunLoopDoObservers(rl, rlm, kCFRunLoopBeforeSources);</span><br><span class="line">        <span class="hljs-comment">// 处理block</span></span><br><span class="line">        __CFRunLoopDoBlocks(rl, rlm);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 是否有Source0</span></span><br><span class="line">        Boolean sourceHandledThisLoop = __CFRunLoopDoSources0(rl, rlm, stopAfterHandle);</span><br><span class="line">        <span class="hljs-comment">// 如果有Source0就处理Source0 Blocks回调</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (sourceHandledThisLoop) &#123;</span><br><span class="line">            __CFRunLoopDoBlocks(rl, rlm);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 如果有Sorce1就跳到handle_msg去处理</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (__CFRunLoopServiceMachPort(dispatchPort, &amp;msg, <span class="hljs-keyword">sizeof</span>(msg_buffer), &amp;livePort, <span class="hljs-number">0</span>, &amp;voucherState, <span class="hljs-literal">NULL</span>)) &#123;</span><br><span class="line">            <span class="hljs-keyword">goto</span> handle_msg;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        <span class="hljs-comment">// 如果没有Source1 通知Observers kCFRunLoopBeforeWaiting RunLoop的线程即将进入休眠状态</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (!poll &amp;&amp; (rlm-&gt;_observerMask &amp; kCFRunLoopBeforeWaiting)) &#123;</span><br><span class="line">           __CFRunLoopDoObservers(rl, rlm, kCFRunLoopBeforeWaiting);</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        <span class="hljs-comment">// 休眠，</span></span><br><span class="line">        __CFRunLoopSetSleeping(rl);</span><br><span class="line">        __CFPortSetInsert(dispatchPort, waitSet);</span><br><span class="line">        <span class="hljs-comment">// 等待被唤醒</span></span><br><span class="line">        <span class="hljs-keyword">do</span> &#123;</span><br><span class="line">            __CFRunLoopServiceMachPort(waitSet, &amp;msg, <span class="hljs-keyword">sizeof</span>(msg_buffer), &amp;livePort, poll ? <span class="hljs-number">0</span> : TIMEOUT_INFINITY, &amp;voucherState, &amp;voucherCopy);</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">if</span> (modeQueuePort != MACH_PORT_NULL &amp;&amp; livePort == modeQueuePort) &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> (rlm-&gt;_timerFired) &#123;</span><br><span class="line">                    <span class="hljs-comment">// Leave livePort as the queue port, and service timers below</span></span><br><span class="line">                    rlm-&gt;_timerFired = <span class="hljs-literal">false</span>;</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (msg &amp;&amp; msg != (<span class="hljs-keyword">mach_msg_header_t</span> *)msg_buffer) <span class="hljs-built_in">free</span>(msg);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                <span class="hljs-comment">// Go ahead and leave the inner loop.</span></span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 通知Observers kCFRunLoopAfterWaiting</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (!poll &amp;&amp; (rlm-&gt;_observerMask &amp; kCFRunLoopAfterWaiting)) __CFRunLoopDoObservers(rl, rlm, kCFRunLoopAfterWaiting);</span><br><span class="line"></span><br><span class="line">handle_msg:;</span><br><span class="line">        <span class="hljs-comment">// 如果 Timer 时间到，就触发 Timer 回调</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (is_timer) &#123;</span><br><span class="line">            __CFRunLoopDoTimers(rl, rlm, mach_absolute_time())</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-comment">// 如果 dispatch 就执行 block</span></span><br><span class="line">        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (is_dispatch) &#123;</span><br><span class="line">            __CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__(msg);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-comment">// Source1 事件的话，就处理这个事件</span></span><br><span class="line">        <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            sourceHandledThisLoop = __CFRunLoopDoSource1(rl, rlm, rls, msg, msg-&gt;msgh_size, &amp;reply) || sourceHandledThisLoop;</span><br><span class="line">            (<span class="hljs-keyword">void</span>)mach_msg(reply, MACH_SEND_MSG, reply-&gt;msgh_size, <span class="hljs-number">0</span>, MACH_PORT_NULL, <span class="hljs-number">0</span>, MACH_PORT_NULL);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment">// 执行Blocks</span></span><br><span class="line">        __CFRunLoopDoBlocks(rl, rlm);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 根据情况 设置对应的retval retVal也决定是runloop是退出还是继续下一个roop</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (sourceHandledThisLoop &amp;&amp; stopAfterHandle) &#123;</span><br><span class="line">          <span class="hljs-comment">//事件已处理</span></span><br><span class="line">            retVal = kCFRunLoopRunHandledSource;</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (timeout_context-&gt;termTSR &lt; mach_absolute_time()) &#123;</span><br><span class="line">          <span class="hljs-comment">//超时</span></span><br><span class="line">            retVal = kCFRunLoopRunTimedOut;</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (__CFRunLoopIsStopped(rl)) &#123;</span><br><span class="line">          <span class="hljs-comment">//被停止</span></span><br><span class="line">            __CFRunLoopUnsetStopped(rl);</span><br><span class="line">            retVal = kCFRunLoopRunStopped;</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rlm-&gt;_stopped) &#123;</span><br><span class="line">          <span class="hljs-comment">//被停止</span></span><br><span class="line">            rlm-&gt;_stopped = <span class="hljs-literal">false</span>;</span><br><span class="line">            retVal = kCFRunLoopRunStopped;</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (__CFRunLoopModeIsEmpty(rl, rlm, previousMode)) &#123;</span><br><span class="line">          <span class="hljs-comment">//mode空，结束</span></span><br><span class="line">            retVal = kCFRunLoopRunFinished;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125; <span class="hljs-keyword">while</span> (<span class="hljs-number">0</span> == retVal)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> retVal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="RunLoop在开发中的应用"><a href="#RunLoop在开发中的应用" class="headerlink" title="RunLoop在开发中的应用"></a>RunLoop在开发中的应用</h2><h3 id="常驻线程"><a href="#常驻线程" class="headerlink" title="常驻线程"></a>常驻线程</h3><p>苹果官方文档里有提到只有主线程在程序启动的时候会自动创建RunLoop，其他线程需要我们显示的去创建RunLoop。</p>
+<p>所以如果想设计一个常驻线程，就必须显示的去创建一个RunLoop，保持线程能够时刻接收事件。RunLoop如果没有Source和Timer，会立马结束。所以创建完RunLoop后，需要给它添加一个Source，保证其不结束。最后运行RunLoop即可。</p>
+<p><strong>注意：在显示创建RunLoop后，如果打算结束该线程，需要手动关闭RunLoop，否则线程将无法释放。</strong></p>
+<p>代码如下：</p>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerThread</span>: <span class="hljs-title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">deinit</span> &#123;</span><br><span class="line">        <span class="hljs-built_in">print</span>(<span class="hljs-string">"InnerThread Dealloc"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PermanentThread</span>: <span class="hljs-title">NSObject</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">let</span> thread: <span class="hljs-type">InnerThread</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>() &#123;</span><br><span class="line">        thread = <span class="hljs-type">InnerThread</span>.<span class="hljs-keyword">init</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">var</span> context = <span class="hljs-type">CFRunLoopSourceContext</span>()</span><br><span class="line">            <span class="hljs-comment">//Swift中 create 后不需要调用CFRelease</span></span><br><span class="line">            <span class="hljs-keyword">let</span> source = <span class="hljs-type">CFRunLoopSourceCreate</span>(kCFAllocatorDefault, <span class="hljs-number">0</span>, &amp;context)!</span><br><span class="line">            <span class="hljs-type">CFRunLoopAddSource</span>(<span class="hljs-type">CFRunLoopGetCurrent</span>(), source, <span class="hljs-type">CFRunLoopMode</span>.defaultMode)</span><br><span class="line">            <span class="hljs-comment">//设置为true的话，处理一次事件就会返回</span></span><br><span class="line">            <span class="hljs-type">CFRunLoopRunInMode</span>(<span class="hljs-type">CFRunLoopMode</span>.defaultMode, <span class="hljs-number">1.0e10</span>, <span class="hljs-literal">false</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        thread.start()</span><br><span class="line">        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">deinit</span> &#123;</span><br><span class="line">        exit()</span><br><span class="line">        <span class="hljs-built_in">print</span>(<span class="hljs-string">"PermanentThread Dealloc"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">executeTask</span><span class="hljs-params">(block: <span class="hljs-params">(<span class="hljs-params">()</span></span></span></span>-&gt;<span class="hljs-type">Void</span>)?) &#123;</span><br><span class="line">        perform(#selector(doExecuteTask(block:)), on: thread, with: block, waitUntilDone: <span class="hljs-literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">exit</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> thread.isExecuting &#123;</span><br><span class="line">            perform(#selector(doExit), on: thread, with: <span class="hljs-literal">nil</span>, waitUntilDone: <span class="hljs-literal">true</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">PermanentThread</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">// 这里的参数不能写 ()-&gt;Void, 必须写Any。不然传过来的参数会被改变。调用block就会崩溃。</span></span><br><span class="line">    <span class="hljs-meta">@objc</span> <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">doExecuteTask</span><span class="hljs-params">(block: Any)</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> _block = block <span class="hljs-keyword">as</span>? (()-&gt;<span class="hljs-type">Void</span>) &#123;</span><br><span class="line">            _block()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-meta">@objc</span> <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">doExit</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line">        thread.cancel()</span><br><span class="line">        <span class="hljs-type">CFRunLoopStop</span>(<span class="hljs-type">CFRunLoopGetCurrent</span>())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="卡顿监控"><a href="#卡顿监控" class="headerlink" title="卡顿监控"></a>卡顿监控</h3><p>我之前总结了一篇文章：《iOS图形性能优化》，文章里提到通过Instruments查看fps来判断卡顿。但是着也并不是完全准确，举个可能很极端的例子，比如一个动画是60fps，但是它有可能花了60分之1秒来绘制了59帧，第60帧花了60分之59秒来绘制。所以这里给出一个相对来说更加精确的方法：</p>
+<p>通过RunLoop的状态可以来判断是否出现卡顿。</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//RunLoop的几个状态</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">CF_OPTIONS</span><span class="hljs-params">(CFOptionFlags, CFRunLoopActivity)</span> </span>&#123;</span><br><span class="line">    kCFRunLoopEntry , <span class="hljs-comment">// 即将进入loop</span></span><br><span class="line">    kCFRunLoopBeforeTimers , <span class="hljs-comment">// 即将触发 Timer 回调</span></span><br><span class="line">    kCFRunLoopBeforeSources , <span class="hljs-comment">// 即将触发 Source0 回调</span></span><br><span class="line">    kCFRunLoopBeforeWaiting , <span class="hljs-comment">// 即将休眠，等待 mach_port 消息</span></span><br><span class="line">    kCFRunLoopAfterWaiting ), <span class="hljs-comment">// 即将被唤醒，接收 mach_port 消息</span></span><br><span class="line">    kCFRunLoopExit , <span class="hljs-comment">// 退出 loop</span></span><br><span class="line">    kCFRunLoopAllActivities  <span class="hljs-comment">// loop 所有状态改变</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序卡顿后会对RunLoop造成的影响就是休眠被延迟，以及唤醒被延迟。</p>
+<p>代码实例为：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">dispatchSemaphore = dispatch_semaphore_create(0);</span><br><span class="line">CFRunLoopObserverContext context = &#123;0,(__bridge void *)self,NULL,NULL&#125;;</span><br><span class="line">runLoopObserver = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopAllActivities, YES, 0, &amp;runloopObserverCallBack, &amp;context);</span><br><span class="line">CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;</span><br><span class="line">    while (YES) &#123;</span><br><span class="line">        //dispatch_semaphore_wait方法如果超时则会返回一个不等于0的整数，收到dispatch_semaphore_signal的时候会返回0</span><br><span class="line">        long semaphoreWait = dispatch_semaphore_wait(self-&gt;dispatchSemaphore, dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC));</span><br><span class="line">        if (semaphoreWait != 0)&#123;</span><br><span class="line">            if (!self-&gt;runLoopObserver)&#123;</span><br><span class="line">                self-&gt;timeoutCount = 0;</span><br><span class="line">                self-&gt;dispatchSemaphore = 0;</span><br><span class="line">                self-&gt;runloopActivity = 0;</span><br><span class="line">                return ;</span><br><span class="line">            &#125;</span><br><span class="line">            //BeforeSource和AfterWaiting这两个状态区间能够监测到是否卡顿</span><br><span class="line">            if (self-&gt;runloopActivity == kCFRunLoopBeforeSources || self-&gt;runloopActivity == kCFRunLoopAfterWaiting)&#123;</span><br><span class="line">                NSLog(@&quot;monitor trigger&quot;);</span><br><span class="line">                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^&#123;</span><br><span class="line">                    //上报堆栈</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        self-&gt;timeoutCount = 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://www.wuqihan.cn/2019/01/28/深入理解RunLoop/">深入理解RunLoop</a></li>
+            <li><strong>本文作者：</strong><a href="http://www.wuqihan.cn">吴启晗</a></li>
+            <li><strong>本文链接：</strong><a href="http://www.wuqihan.cn/2019/01/28/深入理解RunLoop/">http://www.wuqihan.cn/2019/01/28/深入理解RunLoop/</a></li>
+            <li><strong>发布时间：</strong>2019-01-28</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/RunLoop/">RunLoop</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/ASwmOFftXiTqxEe.jpg" alt="Alipay"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="https://i.loli.net/2019/11/06/lLMy7kZArdoJCN5.jpg" alt="Wechat"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/03/09/iOS图层性能优化/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">iOS图层性能优化</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/06/Tagged-Pointer/">
+                <span class="level-item">Tagged Pointer</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2Ni8xMTYwMQ==">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript> Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img style="border-radius:8px" class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="吴启晗">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        吴启晗
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        iOS Developer  
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shanghai, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        24
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        9
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        21
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="mailto:wuqh_ios@icloud.com" target="_blank">
+                Contact</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/wqhiOS">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Weibo" href="http://weibo.com/2065544495">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://raw.githubusercontent.com/wqhiOS/blogSources/master/qrCode/myWechat.jpeg">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="深入理解RunLoop" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2107-2020 吴启晗&nbsp;
+                <!-- Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

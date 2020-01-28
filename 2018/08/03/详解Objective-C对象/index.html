@@ -16,7 +16,7 @@
 <meta property="og:description" content="两年前写过一篇文章：Objective-C类对象。当初对OC的理解还仅仅是刚入门，也没有遇到问题看源码的习惯，所以两年后，重新对Objective-C对象做一个总结。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2019/12/03/6t9bnROrxPdUisz.jpg">
-<meta property="og:updated_time" content="2019-12-03T15:20:08.942Z">
+<meta property="og:updated_time" content="2020-01-28T10:18:06.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解Objective-C对象">
 <meta name="twitter:description" content="两年前写过一篇文章：Objective-C类对象。当初对OC的理解还仅仅是刚入门，也没有遇到问题看源码的习惯，所以两年后，重新对Objective-C对象做一个总结。">
@@ -168,7 +168,7 @@ var _hmt = _hmt || [];
                 
                 <div class="level-item">
                 <i class="far fa-folder-open has-text-grey"></i>&nbsp;
-                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/iOS/Objective-C底层原理/">Objective-C底层原理</a>
+                <a class="has-link-grey -link" href="/categories/iOS/">iOS</a>
                 </div>
                 
                 
@@ -176,7 +176,7 @@ var _hmt = _hmt || [];
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    22 minutes read (About 3370 words)
+                    22 minutes read (About 3361 words)
                 </span>
                 
                 
@@ -270,7 +270,6 @@ var _hmt = _hmt || [];
 <p>我在Mac电脑上，x86架构下测试，发现instance的isa地址和class的地址是一样的。并且isa &amp; ISA_MASK后，结果仍然是isa的值。</p>
 <p>于是我使用真机测试，发现isa的值和class的地址确实不一样了，需要isa &amp; ISA_MASK，才能获取class的地址</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Person *person = [[Person alloc] init];</span><br><span class="line">Class personClass = object_getClass(person);</span><br></pre></td></tr></table></figure>
-<p><img src="../../../../../Library/Application Support/typora-user-images/image-20191203092933165.png" alt="image-20191203092933165"></p>
 <h2 id="一道测试题"><a href="#一道测试题" class="headerlink" title="一道测试题"></a>一道测试题</h2><p>做一个小测试，检验上面的学习成果。</p>
 <figure class="highlight objc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">BOOL</span> res1 = [[<span class="hljs-built_in">NSObject</span> <span class="hljs-keyword">class</span>] isKindOfClass:[<span class="hljs-built_in">NSObject</span> <span class="hljs-keyword">class</span>]];</span><br><span class="line"><span class="hljs-built_in">BOOL</span> res2 = [[Person <span class="hljs-keyword">class</span>] isKindOfClass:[Person <span class="hljs-keyword">class</span>]];</span><br><span class="line"><span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%d %d"</span>,res1,res2);</span><br></pre></td></tr></table></figure>
 <p>如下代码打印结果是什么？（<strong>这道题目本身就很扯，没有什么价值，会与不会无关紧要，仅仅就是加深对类对象、元类对象之间关系的理解。</strong>）</p>
@@ -440,7 +439,7 @@ var _hmt = _hmt || [];
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        23
+                        24
                     </p>
                 </a>
             </div>
@@ -450,7 +449,7 @@ var _hmt = _hmt || [];
                         Categories
                     </p>
                     <p class="title has-text-weight-normal">
-                        12
+                        9
                     </p>
                 </a>
             </div>
@@ -460,7 +459,7 @@ var _hmt = _hmt || [];
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        19
+                        21
                     </p>
                 </a>
             </div>
